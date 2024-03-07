@@ -8,16 +8,17 @@ orbs:
 
 jobs: 
   cicd-tests-and-lint:
-    executor: 
-      name: node/default
+    runs-on: ubuntu-latest
     steps: 
-      - checkout 
-      - run: 
-          name: enter backend folder 
-          command: cd backend
-      - run: 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Enter backend folder 
+        run: cd backend
+      
+      - run: npm install
         name: Install backend npm packages 
-        command: npm install
+
       
 
 # Invoke jobs via workflows
