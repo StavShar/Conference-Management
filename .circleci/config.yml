@@ -9,17 +9,11 @@ orbs:
 jobs: 
   cicd-tests-and-lint:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      
-      - name: Enter backend folder 
-        run: cd backend
-      
-      - run: npm install
-        name: Install backend npm packages 
-
-      
+       steps: 
+      - checkout 
+      - run: 
+          name: install backend folder 
+          command: npm --prefix ./backend/ npm install
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
