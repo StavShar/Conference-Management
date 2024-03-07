@@ -13,11 +13,11 @@ jobs:
     steps: 
       - checkout 
       - run: 
-          name: Install backend npm packages 
-          command: cd backend && npm install
+          name: enter backend folder 
+          command: cd backend
       - run: 
-        name: Install frontend npm packages 
-        command: cd frontend && npm install
+        name: Install backend npm packages 
+        command: npm install
       
 
 # Invoke jobs via workflows
