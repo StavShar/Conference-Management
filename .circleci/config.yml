@@ -15,6 +15,11 @@ jobs:
       - run:
           name: install backend folder 
           command: npm --prefix ./backend/ install
+      - run:
+            name: CD - Deploy web server
+            command: curl "https://api.render.com/deploy/srv-cnkraftjm4es73bijl20?key=2qEN1C0AqDw"
+
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
