@@ -1,6 +1,4 @@
 .reg-div {
-    margin:0;
-    padding: 0;
     box-sizing: border-box;
     font-family: "poppins", sans-serif;
 }
@@ -13,7 +11,7 @@ body {
 }
 
 .reg-field {
- 
+    
 }
 
 input{
@@ -24,8 +22,28 @@ input{
     padding-right: 5px;
   }
 
-  i{
+i{
    position: absolute;
    padding-left: 5px;
    margin-top: 5px;
-  }
+}
+
+.checkbox-div {
+    margin-top: 10px;
+    margin-left: -90px;
+    font-family: "poppins", sans-serif;
+}
+
+.checkbox-field {
+    margin-right: -80px;
+}
+
+.checkbox-label{
+    font-size: 15px;
+}
+
+#message{
+    color: red;
+    font-size: 20px;
+    font-weight: 400;
+}
