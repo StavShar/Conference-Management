@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/Users.js");
+const AuthDataModel = require("../models/AuthData.js");
 
 require('dotenv').config();
 const router = express.Router();
@@ -29,6 +30,13 @@ router.post("/register", async (req, res) => {
         joinedConferences: req.body.data.joinedConferences */
     });
     await newUser.save();
+
+    const newAuthData = new AuthDataModel({
+        email: req.body.data.email,
+        password: req.body.data.password
+    });
+    await newAuthData.save();
+
     res.json({ message: "User registered successfully" });
 });
 
