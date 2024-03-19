@@ -3,10 +3,12 @@
 import React from 'react';
 import './styles/RegisterStyle.css';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { registration } from '../../services/authService'
 
 function register() {
     const [creator, setCreator] = useState(false);
+    const navigate = useNavigate();
 
     const creatorToggler = () => {
         if (creator)
@@ -71,11 +73,18 @@ function register() {
                 phone: phone,
                 email: email,
                 password: password,
-                dateOfBirth: dateOfBirth
+                dateOfBirth: dateOfBirth,
+                isCreator: creator
             }
             console.log(JSON.stringify(data));
 
+            const res = await registration(data);
+            if (res.status == 200)
+                navigate('/login');
+            else
+                printErrorMsg(res);
         }
+
 
     }
 
