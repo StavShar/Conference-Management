@@ -12,7 +12,7 @@ import Navbar from './Navbar';
 
 /** --- Pages Imports --- */
 import Home from './pages/Home';
-import SignUp from './pages/SignUp';
+import Register from './pages/Register';
 import Login from './pages/Login';
 import MyConference from './pages/MyConferences';
 function NavigationRoutes() {
@@ -30,7 +30,7 @@ function NavigationRoutes() {
                 <Route path='/' element={<Home />} />
                 <Route path='/home' element={<Home />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/Signup' element={<SignUp />} />
+                <Route path='/Register' element={<Register />} />
                 <Route path='/myconferences' element={<MyConference />} />
             </Routes>
 

@@ -10,7 +10,7 @@ function Navbar() {
           <a href="/login" className="nav-link">Login</a>
         </li>
         <li className="nav-item">
-          <a href="/signup" className="nav-link">SignUp</a>
+          <a href="/register" className="nav-link">Register</a>
         </li>
         <li className="nav-item">
           <a href="/myconference" className="nav-link nav-link-special">MyConference</a>
