@@ -1,13 +1,15 @@
 import './App.css';
+import NavigationRoutes from './components/NavigationRoutes';
+import React from 'react';
+import Navbar from './components/Navbar';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Home Page</p>
-      </header>
+    <div>
+      <NavigationRoutes />
     </div>
-  );
+  )
 }
 
 export default App;
