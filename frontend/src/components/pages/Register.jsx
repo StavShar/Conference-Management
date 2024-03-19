@@ -4,7 +4,8 @@ import React from 'react';
 import './styles/RegisterStyle.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registration } from '../../services/authService'
+import { registration } from '../../services/authService';
+import bcrypt from 'bcryptjs';
 
 function register() {
     const [creator, setCreator] = useState(false);
@@ -66,20 +67,23 @@ function register() {
         else {
             printErrorMsg('');
 
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
             /* Packs data to 'JSON' format to send via web */
             const data = {
                 firstname: firstname,
                 lastname: lastname,
                 phone: phone,
                 email: email,
-                password: password,
+                password: hashedPassword,
                 dateOfBirth: dateOfBirth,
                 isCreator: creator
             }
             console.log(JSON.stringify(data));
 
             const res = await registration(data);
-            if (res.status == 200)
+            if (res && res.status == 200)
                 navigate('/login');
             else
                 printErrorMsg(res);

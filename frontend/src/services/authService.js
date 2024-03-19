@@ -1,7 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-
 
 async function registration(data) {
     try {

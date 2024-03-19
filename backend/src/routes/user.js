@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const UserModel = require("../models/Users.js");
 
 require('dotenv').config();
@@ -17,13 +16,13 @@ router.post("/register", async (req, res) => {
     if (user1) {
         return res.status(400).json({ message: "Phone number already exists" });
     }
-    const hashedPassword = req.body.data.password;//await bcrypt.hash(password, 10);
+
     const newUser = new UserModel({
         firstname: req.body.data.firstname,
         lastname: req.body.data.lastname,
         phone: req.body.data.phone,
         email: req.body.data.email,
-        password: hashedPassword,
+        password: req.body.data.password,
         dateOfBirth: req.body.data.dateOfBirth,
         isCreator: req.body.data.isCreator/*,
         conferencesCreated: req.body.data.conferencesCreated,
