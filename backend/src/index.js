@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { userRouter } = require('./routes/user.js');
 
 require('dotenv').config();
 const port = process.env.PORT;
@@ -10,7 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
+app.use('/auth', userRouter);
 
 async function connecttoDB() {
     try {
