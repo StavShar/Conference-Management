@@ -8,15 +8,8 @@ import { registration } from '../../services/authService';
 import bcrypt from 'bcryptjs';
 
 function register() {
-    const [creator, setCreator] = useState(false);
-    const navigate = useNavigate();
 
-    const creatorToggler = () => {
-        if (creator)
-            setCreator(false);
-        else
-            setCreator(true);
-    }
+    const navigate = useNavigate();
 
     const printErrorMsg = (msg) => {
         document.getElementById('message').textContent = msg;
@@ -78,7 +71,6 @@ function register() {
                 email: email,
                 password: hashedPassword,
                 dateOfBirth: dateOfBirth,
-                isCreator: creator
             }
             console.log(JSON.stringify(data));
 
@@ -87,6 +79,8 @@ function register() {
                 navigate('/login');
             else
                 printErrorMsg(res);
+            console.log(res);
+            //console.log(JSON.stringify(res));
         }
 
 
@@ -131,11 +125,6 @@ function register() {
                 <div className='reg-div'>
                     <input className='reg-field' type="date" placeholder="date of birth" id="date" required />
                     <i className='bx bxs-calendar' ></i>
-                </div>
-
-                <div className='checkbox-div'>
-                    <input className='checkbox-field' type="checkbox" onClick={creatorToggler} />
-                    <label className='checkbox-label'>I'm a conference creator (optional)</label>
                 </div>
 
                 <p id="message"></p>
