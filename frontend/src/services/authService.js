@@ -10,6 +10,7 @@ async function registration(data) {
             return (JSON.stringify(err.response.data.message)); //{ printErrorMsg(JSON.stringify(err.response.data.message)); console.log("hello") }
         else
             console.error(err);
+        return (err.message); // returning "network error" if server is down
     }
 }
 

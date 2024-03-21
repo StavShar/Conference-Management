@@ -1,20 +1,21 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/Users.js");
-const AuthDataModel = require("../models/AuthData.js");
 
 require('dotenv').config();
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
-    console.log(req.body.data);
+    console.log('\nTrying to register as: ', req.body.data);
     const user = await UserModel.findOne({ email: req.body.data.email });// $or: [{ email: mail }, { phone: phon }] });
 
     if (user) {
+        console.log('Failed: Email already exists');
         return res.status(400).json({ message: "Email already exists" });
     }
     const user1 = await UserModel.findOne({ phone: req.body.data.phone });
     if (user1) {
+        console.log('Failed: Phone number already exists');
         return res.status(400).json({ message: "Phone number already exists" });
     }
 
@@ -25,18 +26,11 @@ router.post("/register", async (req, res) => {
         email: req.body.data.email,
         password: req.body.data.password,
         dateOfBirth: req.body.data.dateOfBirth,
-        isCreator: req.body.data.isCreator/*,
-        conferencesCreated: req.body.data.conferencesCreated,
-        joinedConferences: req.body.data.joinedConferences */
+        //conferencesCreated: [],
+        //joinedConferences: []
     });
     await newUser.save();
-
-    const newAuthData = new AuthDataModel({
-        email: req.body.data.email,
-        password: req.body.data.password
-    });
-    await newAuthData.save();
-
+    console.log('\nRegistered successfully as: ', newUser);
     res.json({ message: "User registered successfully" });
 });
 
