@@ -7,7 +7,6 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     dateOfBirth: { type: String, required: true },
-    isCreator: { type: String, required: true },
     //conferencesCreated: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
     //joinedConferences: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
 });
