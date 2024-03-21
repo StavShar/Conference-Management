@@ -2,10 +2,8 @@
 /* the line above disables eslint check for this file (temporarily) todo:delete */
 import React from 'react';
 import './styles/RegisterStyle.css';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginAuth } from '../../services/authService';
-import bcrypt from 'bcryptjs';
+import { login } from '../../services/authService';
 import { useCookies } from "react-cookie";
 
 function Login() {
@@ -50,9 +48,10 @@ function Login() {
         email: email,
         password: password
       }
-      console.log(JSON.stringify(data));
+      console.log('Trying to login: ', JSON.stringify(data));
 
-      const res = await loginAuth(data);
+      const res = await login(data);
+      console.log('log res ' + res)
       if (res && res.status == 200) {
         console.log('res login: ' + JSON.stringify(res.data));
         setCookies("access_token", res.data.token);

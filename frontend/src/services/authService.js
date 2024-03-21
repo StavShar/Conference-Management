@@ -8,26 +8,25 @@ async function registration(data) {
         return (res);
     } catch (err) {
         if (err.response && err.response.status === 400)
-            return (JSON.stringify(err.response.data.message)); //{ printErrorMsg(JSON.stringify(err.response.data.message)); console.log("hello") }
+            return (err.response.data.message); //{ printErrorMsg(JSON.stringify(err.response.data.message)); console.log("hello") }
         else
             console.error(err);
         return (err.message); // returning "network error" if server is down
     }
 }
 
-
-async function loginAuth(data) {
+async function login(data) {
     try {
-        const res = await axios.post(backendURL + "/auth/loginAuth", { data });
+        const res = await axios.post(backendURL + "/auth/login", { data });
         alert("Login successfully!");
         return (res);
     } catch (err) {
         if (err.response && err.response.status === 400)
-            return (JSON.stringify(err.response.data.message)); //{ printErrorMsg(JSON.stringify(err.response.data.message)); console.log("hello") }
+            return (err.response.data.message); //{ printErrorMsg(JSON.stringify(err.response.data.message)); console.log("hello") }
         else
             console.error(err);
+        return (err.message); // returning "network error" if server is down
     }
 }
 
-
-export { registration, loginAuth };
+export { registration, login };

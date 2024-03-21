@@ -35,22 +35,24 @@ router.post("/register", async (req, res) => {
     res.json({ message: "User registered successfully" });
 });
 
-router.post("/loginAuth", async (req, res) => {
-    const user = await AuthDataModel.findOne({ email: req.body.data.email });
+router.post("/login", async (req, res) => {
+    console.log('Trying to login as: ', JSON.stringify(req.body.data));
+    const user = await UserModel.findOne({ email: req.body.data.email });
 
     if (!user) {
+        console.log("Email does not exists")
         return res.status(400).json({ message: "Email does not exists" });
     }
     const isPasswordValid = await bcrypt.compare(req.body.data.password, user.password);
     if (!isPasswordValid) {
-        console.log("password is incorrect")
+        console.log("Password is incorrect")
         return res.status(400).json({ message: "Password is incorrect" });
     }
     const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_TOKEN_EXPIRATION });
 
     res.status(200).json({ token: accessToken, userID: user._id });
-    console.log('token: ' + accessToken + ', sending it to client...');
-    console.log('Logging as: ' + user);
+    console.log('\ntoken: ' + accessToken + ', \n' + 'sending it to client...');
+    console.log('\nLogging as: ' + user);
 });
 
 module.exports = { userRouter: router };
