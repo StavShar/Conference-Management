@@ -26,6 +26,9 @@ function Navbar() {
         }
         {cookies.access_token &&
           <>
+          <li className="nav-item">
+              <a href="/createconferences" className="nav-link nav-link-special">Create conferences</a>
+            </li>
             <li className="nav-item">
               <a href="/myconference" className="nav-link nav-link-special">MyConference</a>
             </li>
