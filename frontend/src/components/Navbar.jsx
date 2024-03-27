@@ -30,7 +30,7 @@ function Navbar() {
               <a href="/createconferences" className="nav-link nav-link-special">Create conferences</a>
             </li>
             <li className="nav-item">
-              <a href="/myconferences" className="nav-link nav-link-special">MyConference</a>
+              <a href="/myconferences" className="nav-link nav-link-special">MyConferences</a>
             </li>
             <li className="nav-item">
               <a href="/login" className="nav-link nav-link-special" onClick={() => logout()}>Logout</a>
