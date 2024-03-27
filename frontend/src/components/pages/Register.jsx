@@ -8,6 +8,7 @@ import { registration } from '../../services/authService';
 import bcrypt from 'bcryptjs';
 
 function register() {
+    const [inputDateOfBirthType, setInputDateOfBirthType] = useState('text');
 
     const navigate = useNavigate();
 
@@ -123,7 +124,7 @@ function register() {
                 </div>
 
                 <div className='reg-div'>
-                    <input className='reg-field' type="date" placeholder="date of birth" id="date" required />
+                    <input className='reg-field' id="date" placeholder="date of birth" type={inputDateOfBirthType} onFocus={() => { setInputDateOfBirthType("date") }} onBlur={() => { document.getElementById('date').value ? setInputDateOfBirthType('date') : setInputDateOfBirthType('text') }} required />
                     <i className='bx bxs-calendar' ></i>
                 </div>
 

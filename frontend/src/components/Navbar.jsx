@@ -26,11 +26,11 @@ function Navbar() {
         }
         {cookies.access_token &&
           <>
-          <li className="nav-item">
+            <li className="nav-item">
               <a href="/createconferences" className="nav-link nav-link-special">Create conferences</a>
             </li>
             <li className="nav-item">
-              <a href="/myconference" className="nav-link nav-link-special">MyConference</a>
+              <a href="/myconferences" className="nav-link nav-link-special">MyConference</a>
             </li>
             <li className="nav-item">
               <a href="/login" className="nav-link nav-link-special" onClick={() => logout()}>Logout</a>
