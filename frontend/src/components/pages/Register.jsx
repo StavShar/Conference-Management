@@ -18,13 +18,13 @@ function register() {
 
     const handleSubmit = async () => {
 
-        let firstname = document.getElementById('firstname').value;
-        let lastname = document.getElementById('lastname').value;
-        let phone = document.getElementById('phone-number').value;
-        let email = document.getElementById('email').value;
-        let password = document.getElementById('password').value;
-        let cnfrmPassword = document.getElementById('cnfrm-password').value;
-        let dateOfBirth = document.getElementById('date').value;
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const phone = document.getElementById('phone-number').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const cnfrmPassword = document.getElementById('cnfrm-password').value;
+        const dateOfBirth = new Date(document.getElementById('date').value);
 
         const mailValidation = (mail) => {
             const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z]+$/;

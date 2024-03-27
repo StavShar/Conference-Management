@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     phone: { type: Number, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    dateOfBirth: { type: String, required: true },
+    dateOfBirth: { type: Date, required: true },
     //conferencesCreated: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
     //joinedConferences: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
 });

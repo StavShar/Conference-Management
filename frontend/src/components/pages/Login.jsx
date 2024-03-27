@@ -16,8 +16,8 @@ function Login() {
 
   const handleSubmit = async () => {
 
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
     const mailValidation = (mail) => {
       const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z]+$/;

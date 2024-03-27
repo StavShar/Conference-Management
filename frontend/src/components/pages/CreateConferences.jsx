@@ -1,28 +1,97 @@
 import React, { useState } from 'react';
+import { createConference } from '../../services/conService';
+import { useNavigate } from 'react-router-dom';
 
 function CreateConferences() {
   const [inputDateType, setInputDateType] = useState('text');
   const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
+  const navigate = useNavigate();
 
+  const printErrorMsg = (msg) => {
+    document.getElementById('message').textContent = msg;
+  }
 
-  function createCon() {
+  async function createCon() {
     const title = document.getElementById('title').value;
     const maxParticipants = document.getElementById('max-participants').value;
     const location = document.getElementById('location').value;
     const description = document.getElementById('description').value;
     const durationTime = document.getElementById('time').value;
-    const date = document.getElementById('date').value;
+    const date = new Date(document.getElementById('date').value);
 
-    const data = {
-      title,
-      maxParticipants,
-      location,
-      description,
-      durationTime,
-      date
+    const maxParticipantsValidation = (maxParticipants) => {
+      if (maxParticipants >= 10 && maxParticipants <= 200)
+        return true;
+      return false;
     }
 
-    console.log(data);
+    const locationValidation = (location) => {
+      // we dont know how to implement it yet
+      return true;
+    }
+
+    const durationTimeValidation = (durationTime) => {
+      if (durationTime >= "00:30" && durationTime <= "5:00")
+        return true;
+      return false;
+    }
+
+    const dateValidation = (date) => {
+      const now = new Date();
+      const diff = (date - now) / 36e5;
+      // console.log('now: ', now, '\ndate: ', date, '\n diff: ', diff)
+
+      if (diff >= 24)
+        return true;
+      return false;
+    }
+
+
+    // checking if there are empty fields
+    if (!(title && maxParticipants && location && description && durationTime && date))
+      printErrorMsg("Error! fields can't be empty");
+
+    //checking validation of max participants
+    else if (!maxParticipantsValidation(maxParticipants))
+      printErrorMsg("Error! max participants must be between 10 to 200")
+
+    //checking validation of location
+    else if (!locationValidation(location))
+      printErrorMsg("Error! location is invalid")
+
+    //checking validation of duration time
+    else if (!durationTimeValidation(durationTime))
+      printErrorMsg("Error! duration time must be between 00:30 to 5:00")
+
+    //checking validation of the date
+    else if (!dateValidation(date))
+      printErrorMsg("Error! the conference should start at least 24 hours from now")
+
+
+    else {
+      printErrorMsg('');
+
+      /* Packs data to 'JSON' format to send via web */
+      const data = {
+        title: title,
+        maxParticipants: maxParticipants,
+        location: location,
+        description: description,
+        durationTime: durationTime,
+        date: date
+      }
+
+      console.log(data);
+
+      const res = await createConference(data);
+      if (res && res.status == 200)
+        navigate('/');
+      else
+        printErrorMsg(res);
+      console.log(res);
+    }
+
+
   }
 
   return (
