@@ -23,6 +23,17 @@ async function createConference(data) {
 
 async function getAllConferences(data) {
 
+    try {
+        const res = await axios.get(backendURL + "/con/getAllConferences", { data }, headers);
+        console.log("All conference has been retrieved !");
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
 }
 
 export { createConference, getAllConferences };

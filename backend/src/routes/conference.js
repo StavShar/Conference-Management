@@ -42,5 +42,21 @@ router.post("/createConference", verifyToken, async (req, res) => {
     console.log('temp: ', userCreator);
 });
 
+
+router.get("/getAllConferences", async (req, res) => {
+    console.log('Getting all conferences from DB...');
+    const conferences = await ConferenceModel.find();
+
+    if (!conferences) {
+        console.log('ERROR! no conferences found');
+        return res.status(404).send({ error: 'No conferences found' });
+    }
+
+    console.log('All conferences: ', conferences);
+
+    console.log('sending all posts to client...');
+    return res.status(200).json({ data: conferences });
+});
+
 module.exports = { conferenceRouter: router };
 
