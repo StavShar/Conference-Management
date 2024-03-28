@@ -54,8 +54,23 @@ router.get("/getAllConferences", async (req, res) => {
 
     console.log('All conferences: ', conferences);
 
-    console.log('sending all posts to client...');
+    console.log('sending all conferences to client...');
     return res.status(200).json({ data: conferences });
+});
+
+router.get("/getCreatedConferences", verifyToken, async (req, res) => {
+    console.log('Getting all created conferences from DB...');
+    const user = await UserModel.findOne({ _id: req.headers.userid });
+
+    if (!user) {
+        console.log('ERROR! user not found');
+        return res.status(404).send({ error: 'User not found' });
+    }
+    console.log('User ID: ', user._id);
+    console.log('All conferences that created by this user: ', user.conferencesCreated);
+
+    console.log('sending all created conferences to client...');
+    return res.status(200).json({ data: user.conferencesCreated });
 });
 
 module.exports = { conferenceRouter: router };

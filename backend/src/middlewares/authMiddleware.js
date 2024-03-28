@@ -3,6 +3,7 @@ require('dotenv').config();
 
 function verifyToken(req, res, next) {
     const token = req.headers.token;
+
     console.log('hi from middleware! there is the token: ', token)
     if (token) {
         try {

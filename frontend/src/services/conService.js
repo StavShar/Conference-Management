@@ -21,11 +21,10 @@ async function createConference(data) {
     }
 }
 
-async function getAllConferences(data) {
-
+async function getAllConferences() {
     try {
-        const res = await axios.get(backendURL + "/con/getAllConferences", { data }, headers);
-        console.log("All conference has been retrieved !");
+        const res = await axios.get(backendURL + "/con/getAllConferences", headers);
+        console.log("All conferences has been retrieved !");
         return (res.data);
     } catch (err) {
         if (err.response && err.response.status === 400)
@@ -36,4 +35,21 @@ async function getAllConferences(data) {
     }
 }
 
-export { createConference, getAllConferences };
+//getting the list of the conferences that created by specific user
+async function getCreatedConferences() {
+
+    try {
+        const res = await axios.get(backendURL + "/con/getCreatedConferences", headers);
+        console.log("All created conferences has been retrieved !");
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+
+export { createConference, getAllConferences, getCreatedConferences };

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getAllConferences } from '../../services/conService';
+import { getAllConferences, getCreatedConferences } from '../../services/conService';
 import './styles/Home.css';
 
 const Home = () => {
-  const [conferences, setConferences] = useState([]);
-  const [joinedConferences, setJoinedConferences] = useState([]);
-  const [createdConferences, setCreatedConferences] = useState([]);
+  const [conferences, setConferences] = useState([]); // refers to all conferences list
+  const [joinedConferences, setJoinedConferences] = useState([]); // refers to the conferences that specific user joined to
+  const [createdConferences, setCreatedConferences] = useState([]); // refers to the conferences that created by the specific user
 
   useEffect(() => {
     const fetchConferences = async () => {
@@ -18,18 +18,40 @@ const Home = () => {
     };
 
     const fetchJoinedConferences = async () => {
+      // try {
+      //   const res = await getJoinedConferences();
+      //   setJoinedConferences(res.data);
+      // } catch (err) {
+      //   console.log(err);
+      // }
+    };
 
+    const fetchCreatedConferences = async () => {
+      try {
+        const res = await getCreatedConferences();
+
+        setCreatedConferences(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchConferences();
-    fetchJoinedConferences();
+    // fetchJoinedConferences();
+    fetchCreatedConferences();
   }, []);
 
   const joinConference = async (conference) => {
-
+    // try {
+    //   const res = await joinConference(conference._id)
+    //   setJoinedConferences(res.data);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
-  const isJoinedConference = (id) => joinedConferences.includes(id);
+  const isJoinedConference = (id) => joinedConferences ? joinedConferences.includes(id) : false;
+  const isCreatedConference = (id) => createdConferences ? createdConferences.includes(id) : false;
 
   function extractDate(datetime) {
     const [date, time] = datetime.split("T");
@@ -57,12 +79,12 @@ const Home = () => {
               <p>Duratrion time: {conference.durationTime}</p>
               <p>Date: {extractDate(conference.date)}</p>
               <p>Starting time: {extractTime(conference.date)}</p>
-              <button
+              {!isCreatedConference(conference._id) && <button
                 onClick={() => joinConference(conference._id)}
                 disabled={isJoinedConference(conference._id)}
               >
                 {isJoinedConference(conference._id) ? "Joined" : "Join"}
-              </button>
+              </button>}
             </div>
           </lu>
         </div>
