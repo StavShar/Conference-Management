@@ -23,7 +23,7 @@ router.post("/createConference", verifyToken, async (req, res) => {
         description: req.body.data.description,
         durationTime: req.body.data.durationTime,
         date: req.body.data.date,
-        //conferencesCreator: req.headers.userid,
+        conferencesCreator: req.headers.userid,
     });
 
     await newConference.save();
@@ -32,6 +32,15 @@ router.post("/createConference", verifyToken, async (req, res) => {
     console.log('\n A new conference was successfully created with the details: ', newConference);
     res.json({ message: "Conference was successfully created" });
 
+    await UserModel.updateOne({ _id: newConference.conferencesCreator }, { $push: { conferencesCreated: newConference._id } });
+    const userCreator = await UserModel.findOne({ _id: newConference.conferencesCreator });
+    if (!userCreator) {
+        console.log('Failed: The creator not found in the users table');
+        return res.status(400).json({ message: "The creator not found in the users table" });
+    }
 
-    module.exports = { conferenceRouter: router };
+    console.log('temp: ', userCreator);
+});
+
+module.exports = { conferenceRouter: router };
 
