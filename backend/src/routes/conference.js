@@ -1,12 +1,14 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const ConferenceModel = require("../models/Conference.js");
+const UserModel = require("../models/Users.js")
+const { verifyToken } = require('../middlewares/authMiddleware.js');
 
 require('dotenv').config();
 const router = express.Router();
 
-router.post("/createConference", async (req, res) => {
-    console.log(req.body.data);
+router.post("/createConference", verifyToken, async (req, res) => {
+    console.log("creating post with the following details: ", req.body.data);
     const conference = await ConferenceModel.findOne({ location: req.body.data.location, date: req.body.data.date });
 
     if (conference) {
@@ -21,12 +23,15 @@ router.post("/createConference", async (req, res) => {
         description: req.body.data.description,
         durationTime: req.body.data.durationTime,
         date: req.body.data.date,
+        //conferencesCreator: req.headers.userid,
     });
 
     await newConference.save();
+
+
     console.log('\n A new conference was successfully created with the details: ', newConference);
     res.json({ message: "Conference was successfully created" });
-});
 
-module.exports = { conferenceRouter: router };
+
+    module.exports = { conferenceRouter: router };
 

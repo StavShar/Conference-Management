@@ -1,9 +1,15 @@
 import axios from 'axios';
 const backendURL = 'http://localhost:3001';
 
+const headers = {
+    headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
+}
+
+
 async function createConference(data) {
     try {
-        const res = await axios.post(backendURL + "/con/createConference", { data });
+        const res = await axios.post(backendURL + "/con/createConference", { data }, headers);
+
         alert("Conference has been created !");
         return (res);
     } catch (err) {
