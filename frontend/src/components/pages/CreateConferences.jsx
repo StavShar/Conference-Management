@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { createConference } from '../../services/conService';
 import { useNavigate } from 'react-router-dom';
+import QaFormat from '../QaFormat';
+import './styles/CreateConferences.css'
 
 function CreateConferences() {
   const [inputDateType, setInputDateType] = useState('text');
   const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
+  const [personalForm,setPersonalForm] = useState(false);
+  const [qaFormData, setQaFormData] = useState([]);
+  
+
   const navigate = useNavigate();
+
+  const receiveQaFormData = (data) => {
+    setQaFormData(data);
+  };
 
   const printErrorMsg = (msg) => {
     document.getElementById('message').textContent = msg;
   }
 
   async function createCon() {
+    console.log("this is creat " + qaFormData[0].question + "   "+qaFormData[0].answers);
     const title = document.getElementById('title').value;
     const maxParticipants = document.getElementById('max-participants').value;
     const location = document.getElementById('location').value;
     const description = document.getElementById('description').value;
     const durationTime = document.getElementById('time').value;
     const date = new Date(document.getElementById('date').value);
+    const form = qaFormData
 
     const maxParticipantsValidation = (maxParticipants) => {
       if (maxParticipants >= 10 && maxParticipants <= 200)
@@ -78,7 +90,8 @@ function CreateConferences() {
         location: location,
         description: description,
         durationTime: durationTime,
-        date: date
+        date: date,
+        form: form
       }
 
       console.log(data);
@@ -94,7 +107,14 @@ function CreateConferences() {
 
   }
 
+  const handleForm = () => {
+    setPersonalForm(true);
+  };
+
+ 
+
   return (
+    
     <div>
       <h2>Create Conference Form</h2>
       <link href="https://font.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"></link>
@@ -123,11 +143,20 @@ function CreateConferences() {
         <div className='create-div'>
           <input className='create-field' type="text" id="description" placeholder="Description" required />
         </div>
-
+        <div>
+        {!personalForm && (
+          <button type="button" onClick={handleForm}>Do you want make personal Form</button>
+        )}
+        {personalForm && (
+        <QaFormat data={receiveQaFormData}/>
+        )}
+        </div>
         <p id="message"></p>
+        
         <input type="button" onClick={createCon} value='Create'></input>
       </form>
     </div>
+
   );
 }
 

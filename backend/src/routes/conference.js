@@ -21,6 +21,7 @@ router.post("/createConference", async (req, res) => {
         description: req.body.data.description,
         durationTime: req.body.data.durationTime,
         date: req.body.data.date,
+        form: req.body.data.form
     });
 
     await newConference.save();
