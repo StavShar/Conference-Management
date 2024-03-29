@@ -1,20 +1,23 @@
 import { React } from 'react';
 import './pages/styles/Navbar.css'
-import { useCookies } from "react-cookie";
 
 function Navbar() {
-  const [cookies, setCookies] = useCookies(["access_token"]);
 
   const logout = () => {
-    setCookies("access_token", "");
     window.localStorage.clear();
+  };
+
+  const isLoggedIn = () => {
+    if ((localStorage.getItem("access_token")) && (localStorage.getItem("userID")))
+      return true;
+    return false;
   };
 
   return (
     <nav className="navbar">
       <a href="/" className="navbar-brand">Home</a>
       <ul className="navbar-nav">
-        {!cookies.access_token &&
+        {!isLoggedIn() &&
           <>
             <li className="nav-item">
               <a href="/login" className="nav-link">Login</a>
@@ -24,7 +27,7 @@ function Navbar() {
             </li>
           </>
         }
-        {cookies.access_token &&
+        {isLoggedIn() &&
           <>
             <li className="nav-item">
               <a href="/createconferences" className="nav-link nav-link-special">Create conferences</a>

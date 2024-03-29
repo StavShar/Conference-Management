@@ -4,11 +4,9 @@ import React from 'react';
 import './styles/RegisterStyle.css';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../services/authService';
-import { useCookies } from "react-cookie";
 
 function Login() {
   const navigate = useNavigate();
-  const [_, setCookies] = useCookies(["access_token"]);
 
   const printErrorMsg = (msg) => {
     document.getElementById('message').textContent = msg;
@@ -54,9 +52,10 @@ function Login() {
       console.log('log res ' + res)
       if (res && res.status == 200) {
         console.log('res login: ' + JSON.stringify(res.data));
-        setCookies("access_token", res.data.token);
-        window.localStorage.setItem("userID", res.data.userID);
+        localStorage.setItem("access_token", res.data.token)
+        localStorage.setItem("userID", res.data.userID);
         navigate("/");
+        window.location.reload();
       }
       else
         printErrorMsg(res);

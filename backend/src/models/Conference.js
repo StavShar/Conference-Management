@@ -8,6 +8,8 @@ const ConferenceSchema = new mongoose.Schema({
     durationTime: { type: String, required: true },
     date: { type: Date, required: true },
     form: {type:Array,required: false}
+    conferencesCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
+    //participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
 });
 
 // Creating a unique composite index on title and date
