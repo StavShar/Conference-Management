@@ -51,5 +51,39 @@ async function getCreatedConferences() {
     }
 }
 
+//getting the list of the conferences that a specific user has been joined
+async function getJoinedConferences() {
 
-export { createConference, getAllConferences, getCreatedConferences };
+    try {
+        const res = await axios.get(backendURL + "/con/getJoinedConferences", headers);
+        console.log("All joined conferences has been retrieved !");
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+//getting the list of the conferences that a specific user has been joined
+async function joinConference(data) {
+
+    try {
+        console.log('joinConferences data: ', data)
+        const res = await axios.post(backendURL + "/con/joinConference", { data }, headers);
+        console.log("Join a conference has been succeed !");
+        return (res);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data);
+        else if (err.response && err.response.status === 404)
+            return (err.response.data);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+export { createConference, getAllConferences, getCreatedConferences, getJoinedConferences, joinConference };

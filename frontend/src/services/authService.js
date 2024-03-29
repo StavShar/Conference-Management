@@ -22,7 +22,7 @@ async function login(data) {
         return (res);
     } catch (err) {
         if (err.response && err.response.status === 400)
-            return (err.response.data.message); //{ printErrorMsg(JSON.stringify(err.response.data.message)); console.log("hello") }
+            return (err.response.data.message);
         else
             console.error(err);
         return (err.message); // returning "network error" if server is down

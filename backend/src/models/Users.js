@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
     conferencesCreated: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
-    //joinedConferences: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
+    joinedConferences: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
 });
 
 const UserModel = mongoose.model("users", UserSchema);

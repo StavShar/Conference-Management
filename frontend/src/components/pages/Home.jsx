@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllConferences, getCreatedConferences } from '../../services/conService';
+import { getAllConferences, getCreatedConferences, getJoinedConferences, joinConference } from '../../services/conService';
 import './styles/Home.css';
 
 const Home = () => {
@@ -18,12 +18,12 @@ const Home = () => {
     };
 
     const fetchJoinedConferences = async () => {
-      // try {
-      //   const res = await getJoinedConferences();
-      //   setJoinedConferences(res.data);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+      try {
+        const res = await getJoinedConferences();
+        setJoinedConferences(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     const fetchCreatedConferences = async () => {
@@ -37,20 +37,28 @@ const Home = () => {
     };
 
     fetchConferences();
-    // fetchJoinedConferences();
+    fetchJoinedConferences();
     fetchCreatedConferences();
   }, []);
 
-  const joinConference = async (conference) => {
-    // try {
-    //   const res = await joinConference(conference._id)
-    //   setJoinedConferences(res.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  const joinCon = async (id) => {
+    try {
+      const data = { conferenceID: id };
+      console.log('hi from join copnference: ', data)
+      const res = await joinConference(data)
+
+      if (res.status && res.status === 200)
+        setJoinedConferences([...joinedConferences, id]);
+      else
+        alert("FAIL! " + res.data);
+
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const isJoinedConference = (id) => joinedConferences ? joinedConferences.includes(id) : false;
+
   const isCreatedConference = (id) => createdConferences ? createdConferences.includes(id) : false;
 
   function extractDate(datetime) {
@@ -80,7 +88,7 @@ const Home = () => {
               <p>Date: {extractDate(conference.date)}</p>
               <p>Starting time: {extractTime(conference.date)}</p>
               {!isCreatedConference(conference._id) && <button
-                onClick={() => joinConference(conference._id)}
+                onClick={() => joinCon(conference._id)}
                 disabled={isJoinedConference(conference._id)}
               >
                 {isJoinedConference(conference._id) ? "Joined" : "Join"}
