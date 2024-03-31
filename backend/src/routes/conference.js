@@ -23,7 +23,7 @@ router.post("/createConference", verifyToken, async (req, res) => {
         description: req.body.data.description,
         durationTime: req.body.data.durationTime,
         date: req.body.data.date,
-        conferencesCreator: req.headers.userid,
+        conferenceCreator: req.headers.userid,
     });
 
     await newConference.save();
@@ -32,8 +32,8 @@ router.post("/createConference", verifyToken, async (req, res) => {
     console.log('\n A new conference was successfully created with the details: ', newConference);
     res.json({ message: "Conference was successfully created" });
 
-    await UserModel.updateOne({ _id: newConference.conferencesCreator }, { $push: { conferencesCreated: newConference._id } });
-    const userCreator = await UserModel.findOne({ _id: newConference.conferencesCreator });
+    await UserModel.updateOne({ _id: newConference.conferenceCreator }, { $push: { conferencesCreated: newConference._id } });
+    const userCreator = await UserModel.findOne({ _id: newConference.conferenceCreator });
     if (!userCreator) {
         console.log('Failed: The creator not found in the users table');
         return res.status(400).json({ message: "The creator not found in the users table" });
@@ -104,14 +104,17 @@ router.post("/joinConference", verifyToken, async (req, res) => {
         console.log('ERROR! conference not found');
         return res.status(404).json({ data: 'Conference not found' });
     }
-    if (conference.conferencesCreator.equals(user._id)) {
+
+    if (conference.conferenceCreator.equals(user._id)) {
         console.log("ERROR! This conference created by you");
         return res.status(404).json({ data: 'This conference created by you' });
     }
+
     if (user.joinedConferences.includes(conferenceID) || conference.participants.includes(userID)) {
         console.log("ERROR! This user already joined to this conference")
         return res.status(404).json({ data: 'This user already joined to this conference' });
     }
+
     await UserModel.updateOne({ _id: userID }, { $push: { joinedConferences: conferenceID } });
     await ConferenceModel.updateOne({ _id: conferenceID }, { $push: { participants: userID } });
 
