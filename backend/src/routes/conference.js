@@ -104,7 +104,10 @@ router.post("/joinConference", verifyToken, async (req, res) => {
         console.log('ERROR! conference not found');
         return res.status(404).json({ data: 'Conference not found' });
     }
-
+    if (conference.conferencesCreator.equals(user._id)) {
+        console.log("ERROR! This conference created by you");
+        return res.status(404).json({ data: 'This conference created by you' });
+    }
     if (user.joinedConferences.includes(conferenceID) || conference.participants.includes(userID)) {
         console.log("ERROR! This user already joined to this conference")
         return res.status(404).json({ data: 'This user already joined to this conference' });
