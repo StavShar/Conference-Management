@@ -87,6 +87,27 @@ const Home = () => {
               <p>Duratrion time: {conference.durationTime}</p>
               <p>Date: {extractDate(conference.date)}</p>
               <p>Starting time: {extractTime(conference.date)}</p>
+              <div>
+              <div>
+              <div>
+  {conference.form && conference.form.map((question, qIndex) => (
+    <div key={qIndex}>
+      <p>Question {qIndex+1}   : {question.question}</p>
+      <select>
+        <option value="">Select an answer</option>
+        {question.answers.map((answer, aIndex) => (
+          <option key={aIndex} value={answer}>{answer}</option>
+        ))}
+      </select>
+    </div>
+  ))}
+</div>
+
+</div>
+
+</div>
+
+              
               {!isCreatedConference(conference._id) && <button
                 onClick={() => joinCon(conference._id)}
                 disabled={isJoinedConference(conference._id)}

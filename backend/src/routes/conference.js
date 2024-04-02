@@ -23,7 +23,8 @@ router.post("/createConference", verifyToken, async (req, res) => {
         description: req.body.data.description,
         durationTime: req.body.data.durationTime,
         date: req.body.data.date,
-        conferenceCreator: req.headers.userid,
+        form: req.body.data.form,
+        conferenceCreator: req.headers.userid
     });
 
     await newConference.save();
