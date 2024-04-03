@@ -22,7 +22,7 @@ function CreateConferences() {
   }
 
   async function createCon() {
-    console.log("this is creat " + qaFormData[0].question + "   "+qaFormData[0].answers);
+
     const title = document.getElementById('title').value;
     const maxParticipants = document.getElementById('max-participants').value;
     const location = document.getElementById('location').value;
