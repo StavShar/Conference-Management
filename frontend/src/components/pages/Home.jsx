@@ -174,7 +174,7 @@ const Home = () => {
                 )}
               </div>
             </div>
-          </ul>
+          </lu>
         </div>
       ))}
     </div>
