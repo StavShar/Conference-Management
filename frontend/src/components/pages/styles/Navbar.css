@@ -9,7 +9,7 @@ html, body {
 
 .navbar {
   background-color: #f8f9fa; /* Light background color */
-  padding: 20px; /* Adjust padding as needed */
+  padding: 10px; /* Adjust padding as needed */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +36,7 @@ html, body {
 .nav-link {
   color: #333; /* Dark text color */
   text-decoration: none;
-  font-size: 1rem; /* Adjust font size as needed */
+  font-size: 1.5rem; /* Adjust font size as needed */
   transition: color 0.3s ease; /* Smooth color transition */
 }
 

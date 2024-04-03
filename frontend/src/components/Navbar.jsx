@@ -15,7 +15,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <a href="/" className="navbar-brand">Home</a>
+      <a href="/" className="nav-link">Home</a>
       <ul className="navbar-nav">
         {!isLoggedIn() &&
           <>
