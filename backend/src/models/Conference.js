@@ -8,8 +8,8 @@ const ConferenceSchema = new mongoose.Schema({
     durationTime: { type: String, required: true },
     date: { type: Date, required: true },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
-    form: {type:Array,required: false},
-    conferencesCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true }
+    form: { type: Array, required: false },
+    conferenceCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true }
     //participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
 });
 

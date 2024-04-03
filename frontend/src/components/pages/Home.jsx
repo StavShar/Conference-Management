@@ -79,41 +79,42 @@ const Home = () => {
       {conferences.map((conference) => (
         <div className="conference">
           <lu key={conference._id}>
-            <div>
-              <h1>Title: {conference.title}</h1>
-              <p>Participants: temporary unavailable</p>
-              <p>Location: {conference.location}</p>
-              <p>Description: {conference.description}</p>
-              <p>Duratrion time: {conference.durationTime}</p>
-              <p>Date: {extractDate(conference.date)}</p>
-              <p>Starting time: {extractTime(conference.date)}</p>
-              <div>
-              <div>
-              <div>
-  {conference.form && conference.form.map((question, qIndex) => (
-    <div key={qIndex}>
-      <p>Question {qIndex+1}   : {question.question}</p>
-      <select>
-        <option value="">Select an answer</option>
-        {question.answers.map((answer, aIndex) => (
-          <option key={aIndex} value={answer}>{answer}</option>
-        ))}
-      </select>
-    </div>
-  ))}
-</div>
+            <div className="con-tomplate">
+              <div className="con-title">Title: {conference.title}</div>
+              <div className="con-date-time">
+                <div className="con-date">Date: {extractDate(conference.date)}</div>
+                <div className="con-starting-time">Starting time: {extractTime(conference.date)}</div>
+                <div className="con-duration-time">Duratrion time: {conference.durationTime}</div>
+              </div>
+              <div className="con-location-participants">
+                <div className="con-location">Location: {conference.location}</div>
+                <div className="con-participants">Participants: 12/35</div>
+              </div>
+              <div className="con-description">Description: {conference.description}</div>
+              <div className="con-questions">
+                {conference.form && conference.form.map((question, qIndex) => (
+                  <div key={qIndex}>
+                    <div className="con-question">{qIndex + 1}) {question.question}
+                      <select className="con-select">
+                        <option value="">Select an answer</option>
+                        {question.answers.map((answer, aIndex) => (
+                          <option key={aIndex} value={answer}>{answer}</option>
 
-</div>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                ))}
 
-</div>
-
-              
-              {!isCreatedConference(conference._id) && <button
-                onClick={() => joinCon(conference._id)}
-                disabled={isJoinedConference(conference._id)}
-              >
-                {isJoinedConference(conference._id) ? "Joined" : "Join"}
-              </button>}
+              </div>
+              <div className="con-btn">
+                {!isCreatedConference(conference._id) &&
+                  <button className="btn-join"
+                    onClick={() => joinCon(conference._id)}
+                    disabled={isJoinedConference(conference._id)}>
+                    {isJoinedConference(conference._id) ? "Joined" : "Join"}
+                  </button>}
+              </div>
             </div>
           </lu>
         </div>
