@@ -112,20 +112,6 @@ const Home = () => {
     }));
   };
 
-  const addToCalendar = async (conference) => {
-
-    console.log("add to google");
-    <AddToCalendarButton
-  name={conference.title}
-  options={'Google'}
-  location={conference.location}
-  startDate={extractDate(conference.date)}
-  endDate={extractDate(conference.date)}
-  startTime={extractTime(conference.date)}
-  endTime="23:30"
-  timeZone="America/Los_Angeles"
-></AddToCalendarButton>
-  };
 
  
 
