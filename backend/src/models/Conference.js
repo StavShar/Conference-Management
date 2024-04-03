@@ -9,7 +9,7 @@ const ConferenceSchema = new mongoose.Schema({
     date: { type: Date, required: true },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     form: {type:Array,required: false},
-    conferencesCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true }
+    conferenceCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true }
     //participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
 });
 
