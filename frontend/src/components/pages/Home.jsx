@@ -139,12 +139,10 @@ const Home = () => {
                 {conference.form && conference.form.map((question, qIndex) => (
                   <div key={qIndex}>
                     <div className="con-question">{qIndex + 1}) {question.question}
-                      <select onChange={(event) => handleAnswerSelect(event, qIndex, conference._id)}></select>
-                      <select className="con-select">
+                      <select className="con-select" onChange={(event) => handleAnswerSelect(event, qIndex, conference._id)}>
                         <option value="">Select an answer</option>
                         {question.answers.map((answer, aIndex) => (
                           <option key={aIndex} value={answer}>{answer}</option>
-
                         ))}
                       </select>
                     </div>
@@ -169,6 +167,7 @@ const Home = () => {
                     startTime={extractTime(conference.date)}
                     description={conference.description}
                     endTime="23:30"
+                    size="0"
                     timeZone="Israel"
                   ></AddToCalendarButton>
                 )}

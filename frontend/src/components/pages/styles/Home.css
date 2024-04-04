@@ -85,6 +85,13 @@
     background: transparent;
 }
 
+.con-btn{
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+}
+
 .btn-join:hover{
     border: 1px solid black;
     color: white;
