@@ -23,7 +23,7 @@ function QaFormat({data}) {
   };
 
   const handleAddAnswer = () => {
-    if (!isEditMode && currentQuestion.answers.length < 4) {
+    if (!isEditMode && currentQuestion.answers.length < 5) {
       setCurrentQuestion({ ...currentQuestion, answers: [...currentQuestion.answers, ''] });
     } else if (isEditMode && currentQuestion.answers.length < 4) {
       const newQuestions = [...questions];
@@ -163,7 +163,7 @@ function QaFormat({data}) {
               </label>
             </div>
           ))}
-          {!isEditMode && currentQuestion.answers.length < 4 && (
+          {!isEditMode && currentQuestion.answers.length < 5 && (
             <button type="button" onClick={handleAddAnswer}>Add Another Answer</button>
           )}
           {!isEditMode && addQuestion &&(
@@ -212,7 +212,7 @@ function QaFormat({data}) {
           <button onClick={handleDoneEditing}>Done</button>
         </div>
       )}
-      {!addQuestion &&(
+      {!addQuestion && questions.length < 3 && (
       <button type="button" onClick={handleAddNewQuestion}>Add New Question</button>
       )}
     </div>
