@@ -6,7 +6,7 @@ const ConferenceSchema = new mongoose.Schema({
     description: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    pic: { type: Image, required: false },
+    picURL: { type: String, required: false },
 
     conferenceCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],

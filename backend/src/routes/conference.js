@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const ConferenceModel = require("../models/Conference.js");
+const ConferenceModel = require("../models/Conferences.js");
 const UserModel = require("../models/Users.js")
 const { verifyToken } = require('../middlewares/authMiddleware.js');
 
