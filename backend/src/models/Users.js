@@ -7,8 +7,12 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
+
     conferencesCreated: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
+    lecturesCreated: [{ type: mongoose.Schema.Types.ObjectId, ref: "lectures" }],
+
     joinedConferences: [{ type: mongoose.Schema.Types.ObjectId, ref: "conferences" }],
+    joinedLectures: [{ type: mongoose.Schema.Types.ObjectId, ref: "lectures" }],
 });
 
 const UserModel = mongoose.model("users", UserSchema);
