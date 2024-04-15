@@ -112,10 +112,6 @@ const Home = () => {
     }));
   };
 
-
-
-
-
   return (
     <div className="homepage">
       <h1>HomePage</h1>
@@ -125,31 +121,11 @@ const Home = () => {
           <lu key={conference._id}>
             <div className="con-tomplate">
               <div className="con-title">Title: {conference.title}</div>
-              <div className="con-date-time">
-                <div className="con-date">Date: {extractDate(conference.date)}</div>
-                <div className="con-starting-time">Starting time: {extractTime(conference.date)}</div>
-                <div className="con-duration-time">Duratrion time: {conference.durationTime}</div>
-              </div>
-              <div className="con-location-participants">
-                <div className="con-location">Location: {conference.location}</div>
-                <div className="con-participants">Participants: 12/35</div>
-              </div>
+              <div className="con-location">Location: {conference.location}</div>
+              <div className="con-date">Start date: {extractDate(conference.startDate)}</div>
+              <div className="con-date">End date: {extractDate(conference.endDate)}</div>
               <div className="con-description">Description: {conference.description}</div>
-              <div className="con-questions">
-                {conference.form && conference.form.map((question, qIndex) => (
-                  <div key={qIndex}>
-                    <div className="con-question">{qIndex + 1}) {question.question}
-                      <select className="con-select" onChange={(event) => handleAnswerSelect(event, qIndex, conference._id)}>
-                        <option value="">Select an answer</option>
-                        {question.answers.map((answer, aIndex) => (
-                          <option key={aIndex} value={answer}>{answer}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                ))}
-
-              </div>
+              <div> <img src={conference.picURL} alt="" /></div>
               <div className="con-btn">
                 {!isCreatedConference(conference._id) &&
                   <button className="btn-join"
@@ -157,20 +133,6 @@ const Home = () => {
                     disabled={isJoinedConference(conference._id)}>
                     {isJoinedConference(conference._id) ? "Joined" : "Join"}
                   </button>}
-                {isJoinedConference(conference._id) && (
-                  <AddToCalendarButton
-                    name={conference.title}
-                    options={['Apple', 'Google']}
-                    location={conference.location}
-                    startDate={extractDate(conference.date)}
-                    endDate={extractDate(conference.date)}
-                    startTime={extractTime(conference.date)}
-                    description={conference.description}
-                    endTime="23:30"
-                    size="0"
-                    timeZone="Israel"
-                  ></AddToCalendarButton>
-                )}
               </div>
             </div>
           </lu>

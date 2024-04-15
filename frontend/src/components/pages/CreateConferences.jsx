@@ -1,21 +1,13 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createConference } from '../../services/conService';
 import { useNavigate } from 'react-router-dom';
-import QaFormat from '../QaFormat';
 import './styles/CreateConferences.css'
 
 function CreateConferences() {
-  const [inputDateType, setInputDateType] = useState('text');
-  const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
-  const [personalForm,setPersonalForm] = useState(false);
-  const [qaFormData, setQaFormData] = useState([]);
-  
+  const [startDate, setStartDate] = useState('text');
+  const [endDate, setEndDate] = useState('text');
 
   const navigate = useNavigate();
-
-  const receiveQaFormData = (data) => {
-    setQaFormData(data);
-  };
 
   const printErrorMsg = (msg) => {
     document.getElementById('message').textContent = msg;
@@ -24,61 +16,37 @@ function CreateConferences() {
   async function createCon() {
 
     const title = document.getElementById('title').value;
-    const maxParticipants = document.getElementById('max-participants').value;
-    const location = document.getElementById('location').value;
+    const country = document.getElementById('country').value;
+    const city = document.getElementById('city').value;
+    const startDate = new Date(document.getElementById('start-date').value);
+    const endDate = new Date(document.getElementById('end-date').value);
     const description = document.getElementById('description').value;
-    const durationTime = document.getElementById('time').value;
-    const date = new Date(document.getElementById('date').value);
-    const form = qaFormData
-
-    const maxParticipantsValidation = (maxParticipants) => {
-      if (maxParticipants >= 10 && maxParticipants <= 200)
-        return true;
-      return false;
-    }
+    const picURL = document.getElementById('conference-picture').value;
+    const location = city + ', ' + country;
 
     const locationValidation = (location) => {
       // we dont know how to implement it yet
       return true;
     }
 
-    const durationTimeValidation = (durationTime) => {
-      if (durationTime >= "00:30" && durationTime <= "5:00")
-        return true;
-      return false;
-    }
-
-    const dateValidation = (date) => {
-      const now = new Date();
-      const diff = (date - now) / 36e5;
-      // console.log('now: ', now, '\ndate: ', date, '\n diff: ', diff)
-
-      if (diff >= 24)
+    const datesValidation = (startDate, endDate) => {
+      if ((endDate - startDate) > 0)
         return true;
       return false;
     }
 
 
     // checking if there are empty fields
-    if (!(title && maxParticipants && location && description && durationTime && date))
+    if (!(title && description && country && city && startDate && endDate))
       printErrorMsg("Error! fields can't be empty");
-
-    //checking validation of max participants
-    else if (!maxParticipantsValidation(maxParticipants))
-      printErrorMsg("Error! max participants must be between 10 to 200")
 
     //checking validation of location
     else if (!locationValidation(location))
       printErrorMsg("Error! location is invalid")
 
-    //checking validation of duration time
-    else if (!durationTimeValidation(durationTime))
-      printErrorMsg("Error! duration time must be between 00:30 to 5:00")
-
-    //checking validation of the date
-    else if (!dateValidation(date))
-      printErrorMsg("Error! the conference should start at least 24 hours from now")
-
+    //checking validation of the dates
+    else if (!datesValidation(startDate, endDate))
+      printErrorMsg("Error! dates are invalid")
 
     else {
       printErrorMsg('');
@@ -86,12 +54,11 @@ function CreateConferences() {
       /* Packs data to 'JSON' format to send via web */
       const data = {
         title: title,
-        maxParticipants: maxParticipants,
         location: location,
         description: description,
-        durationTime: durationTime,
-        date: date,
-        form: form
+        startDate: startDate,
+        endDate: endDate,
+        picURL: picURL
       }
 
       console.log(data);
@@ -107,14 +74,9 @@ function CreateConferences() {
 
   }
 
-  const handleForm = () => {
-    setPersonalForm(true);
-  };
-
- 
 
   return (
-    
+
     <div>
       <h2>Create Conference Form</h2>
       <link href="https://font.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"></link>
@@ -125,34 +87,30 @@ function CreateConferences() {
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="text" id="max-participants" placeholder="Max participants" required />
+          <input className='create-field' type="text" id="country" placeholder="Country" required />
+        </div>
+        <div className='create-div'>
+          <input className='create-field' type="text" id="city" placeholder="City" required />
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="text" id="location" placeholder="Location" required />
+          <input className='create-field' id="start-date" type={startDate} placeholder="Start date" onFocus={() => { setStartDate('Date') }} onBlur={() => { document.getElementById('start-date').value ? setStartDate('Date') : setStartDate('text') }} required />
         </div>
 
         <div className='create-div'>
-          <input className='create-field' id="date" type={inputDateType} placeholder="Date and starting time" onFocus={() => { setInputDateType('datetime-local') }} onBlur={() => { document.getElementById('date').value ? setInputDateType('datetime-local') : setInputDateType('text') }} required />
-        </div>
-
-        <div className='create-div'>
-          <input className='create-field' type={inputDurationTimeType} placeholder='Duration time' id="time" min="00:00" max="5:00" onFocus={() => { setInputDurationTimeType('time') }} onBlur={() => { document.getElementById('time').value ? setInputDurationTimeType('time') : setInputDurationTimeType('text') }} required />
+          <input className='create-field' type={endDate} placeholder='End date' id="end-date" onFocus={() => { setEndDate('Date') }} onBlur={() => { document.getElementById('end-date').value ? setEndDate('Date') : setEndDate('text') }} required />
         </div>
 
         <div className='create-div'>
           <input className='create-field' type="text" id="description" placeholder="Description" required />
         </div>
-        <div>
-        {!personalForm && (
-          <button type="button" onClick={handleForm}>Do you want make personal Form</button>
-        )}
-        {personalForm && (
-        <QaFormat data={receiveQaFormData}/>
-        )}
+
+        <div className='create-div'>
+          <input className='create-field' type="text" id="conference-picture" placeholder="Conference picture URL" />
         </div>
+
         <p id="message"></p>
-        
+
         <input type="button" onClick={createCon} value='Create'></input>
       </form>
     </div>
