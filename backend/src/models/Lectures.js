@@ -9,7 +9,7 @@ const LectureSchema = new mongoose.Schema({
     description: { type: String, required: true },
     lecturerName: { type: String, required: true },
     lecturerInfo: { type: String, required: true },
-    lecturerPic: { type: Buffer, required: false },
+    lecturerPic: { type: String, required: false },
     form: { type: Array, required: false },
 
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],

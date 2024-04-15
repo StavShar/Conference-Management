@@ -32,7 +32,7 @@ function CreateLecture() {
         const form = qaFormData
         const lecturerName = document.getElementById('lecturer-name').value;
         const lecturerInfo = document.getElementById('lecturer-info').value;
-        const lecturerPic = document.getElementById('lecturer-picture').value ? document.getElementById('lecturer-picture').value : '';
+        const lecturerPic = document.getElementById('lecturer-picture').value;
         //  conferenceID: { type: mongoose.Schema.Types.ObjectId, ref: "conferences", required: true }
 
         const maxParticipantsValidation = (maxParticipants) => {
@@ -157,7 +157,7 @@ function CreateLecture() {
                     <input className='create-field' type="text" id="lecturer-info" placeholder="Lecturer's info" required />
                 </div>
                 <div className='create-div'>
-                    <input className='create-field' type="file" accept="image/*" id="lecturer-picture" placeholder="Lecturer's picture" />
+                    <input className='create-field' type="text" id="lecturer-picture" placeholder="Lecturer's picture URL" />
                 </div>
                 <div>
                     {!personalForm && (

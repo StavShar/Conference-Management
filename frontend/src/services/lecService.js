@@ -21,18 +21,4 @@ async function createLecture(data) {
     }
 }
 
-async function getAllLectures() {
-    try {
-        const res = await axios.get(backendURL + "/lec/getAllLectures", headers);
-        console.log("All lectures has been retrieved !");
-        return (res.data);
-    } catch (err) {
-        if (err.response && err.response.status === 400)
-            return (err.response.data.message);
-        else
-            console.error(err);
-        return (err.message); // returning "network error" if server is down
-    }
-}
-
 export { createLecture };
