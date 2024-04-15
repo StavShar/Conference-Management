@@ -1,0 +1,15 @@
+.question-input-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .question {
+    margin-bottom: 20px;
+  }
+  
+  .answer-input {
+    margin-bottom: 10px;
+  }
+  

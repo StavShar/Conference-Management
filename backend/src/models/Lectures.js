@@ -9,12 +9,12 @@ const LectureSchema = new mongoose.Schema({
     description: { type: String, required: true },
     lecturerName: { type: String, required: true },
     lecturerInfo: { type: String, required: true },
-    lecturerPic: { type: Image, required: false },
+    lecturerPic: { type: Buffer, required: false },
     form: { type: Array, required: false },
 
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     lectureCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
-    conferenceID: { type: mongoose.Schema.Types.ObjectId, ref: "conferences", required: true }
+    // conferenceID: { type: mongoose.Schema.Types.ObjectId, ref: "conferences", required: true }
 });
 
 // Creating a unique composite index on location and date

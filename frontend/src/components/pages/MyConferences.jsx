@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MyConference() {
+function MyConferences() {
   return (
     <div>
       <h2>My Conferences Page</h2>
@@ -9,4 +9,4 @@ function MyConference() {
   );
 }
 
-export default MyConference;
+export default MyConferences;

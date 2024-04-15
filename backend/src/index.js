@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { userRouter } = require('./routes/user.js');
+const { lectureRouter } = require('./routes/lecture.js');
 const { conferenceRouter } = require('./routes/conference.js');
 
 require('dotenv').config();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/auth', userRouter);
 app.use('/con', conferenceRouter)
+app.use('/lec', lectureRouter)
 
 async function connecttoDB() {
     try {

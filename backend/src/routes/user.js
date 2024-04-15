@@ -27,8 +27,11 @@ router.post("/register", async (req, res) => {
         email: req.body.data.email,
         password: req.body.data.password,
         dateOfBirth: req.body.data.dateOfBirth,
-        //conferencesCreated: [],
-        //joinedConferences: []
+
+        conferencesCreated: [],
+        lecturesCreated: [],
+        joinedConferences: [],
+        joinedLectures: [],
     });
     await newUser.save();
     console.log('\nRegistered successfully as: ', newUser);

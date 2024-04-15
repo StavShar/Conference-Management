@@ -14,8 +14,10 @@ import Navbar from './Navbar';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import MyConference from './pages/MyConferences';
-import CreateConferences  from './pages/CreateConferences';
+import MyConferences from './pages/MyConferences';
+import CreateConferences from './pages/CreateConferences';
+import CreateLecture from './pages/CreateLecture';
+
 function NavigationRoutes() {
 
     /** todo: Implement later */
@@ -32,9 +34,9 @@ function NavigationRoutes() {
                 <Route path='/home' element={<Home />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/myconferences' element={<MyConference />} />
+                <Route path='/myConferences' element={<MyConferences />} />
                 <Route path='/createconferences' element={<CreateConferences />} />
-
+                <Route path='/createLecture' element={<CreateLecture />} />
             </Routes>
 
             {/* <div className='devmessage'>
