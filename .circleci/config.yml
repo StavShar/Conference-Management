@@ -34,8 +34,8 @@ jobs:
           command: npm --prefix ./frontend/ start
           background: true
       - run:
-          name: Wait for backend and frontend to be ready
-          command: ./wait-for-it.sh localhost:3000 --timeout=60 && ./wait-for-it.sh localhost:8000 --timeout=60
+          name: waiting for servers
+          command: sleep 20
       - run:
           name: Run all tests
           command: npm --prefix ./frontend/ run test
