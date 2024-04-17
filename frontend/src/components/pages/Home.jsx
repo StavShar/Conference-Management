@@ -126,14 +126,6 @@ const Home = () => {
               <div className="con-date">End date: {extractDate(conference.endDate)}</div>
               <div className="con-description">Description: {conference.description}</div>
               <div> <img src={conference.picURL} alt="" /></div>
-              <div className="con-btn">
-                {!isCreatedConference(conference._id) &&
-                  <button className="btn-join"
-                    onClick={() => joinCon(conference._id)}
-                    disabled={isJoinedConference(conference._id)}>
-                    {isJoinedConference(conference._id) ? "Joined" : "Join"}
-                  </button>}
-              </div>
             </div>
           </lu>
         </div>
