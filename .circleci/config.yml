@@ -27,6 +27,9 @@ jobs:
           command: npm --prefix ./frontend/ start
           background: true
       - run:
+          name: wait for backend and frontend to be ready
+          command: sleep 60 
+      - run:
           name: run all tests
           command: npm --prefix ./frontend/ run test
 
