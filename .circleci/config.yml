@@ -4,16 +4,11 @@ orbs:
   node: circleci/node@5.1.0
 
 jobs:
-  cicd-tests-and-lint:
+  cicd-tests:
     executor:
       name: node/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
       - run:
           name: Install backend dependencies
           command: npm --prefix ./backend/ install
@@ -34,22 +29,6 @@ jobs:
           command: npm --prefix ./frontend/ start
           background: true
       - run:
-          name: Install Chrome and ChromeDriver
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y libappindicator1 fonts-liberation
-            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo dpkg -i google-chrome-stable_current_amd64.deb
-            sudo apt-get install -f
-            sudo rm google-chrome-stable_current_amd64.deb
-            CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+\.\d+")
-            CHROMEDRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-            wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            sudo mv chromedriver /usr/bin/chromedriver
-            sudo chown root:root /usr/bin/chromedriver
-            sudo chmod +x /usr/bin/chromedriver
-      - run:
           name: waiting for servers
           command: sleep 20
       - run:
@@ -59,4 +38,4 @@ jobs:
 workflows:
   sample:
     jobs:
-      - cicd-tests-and-lint
+      - cicd-tests
