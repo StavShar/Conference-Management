@@ -129,7 +129,7 @@ function register() {
                 </div>
 
                 <p id="message"></p>
-                <input type="button" onClick={handleSubmit} value='Register'></input>
+                <input id='button' type="button" onClick={handleSubmit} value='Register'></input>
             </form>
         </div>
     );

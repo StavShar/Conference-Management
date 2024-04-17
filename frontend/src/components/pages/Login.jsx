@@ -79,7 +79,7 @@ function Login() {
         </div>
 
         <p id="message"></p>
-        <input type="button" onClick={handleSubmit} value='Login'></input>
+        <input type="button" id='button' onClick={handleSubmit} value='Login'></input>
       </form>
     </div>
   );
