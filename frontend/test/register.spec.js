@@ -21,8 +21,8 @@ describe("register test", function() {
                 
                 await driver.findElement(By.id('firstname')).sendKeys('test');
                 await driver.findElement(By.id('lastname')).sendKeys('test');
-                await driver.findElement(By.id('phone-number')).sendKeys('1234567890')
-                await driver.findElement(By.id('email')).sendKeys('test@test.test');
+                await driver.findElement(By.id('phone-number')).sendKeys('1234567891')
+                await driver.findElement(By.id('email')).sendKeys('test123@test.test');
                 await driver.findElement(By.id('password')).sendKeys('test123');
                 await driver.findElement(By.id('cnfrm-password')).sendKeys('test123'); 
                 const input_field = await driver.findElement(By.id("date"))

@@ -49,6 +49,16 @@ function QaFormat({data}) {
   };
 
   const handleAddQuestion = () => {
+    console.log(currentQuestion.answers.every((answer => answer.trim())));
+    if(currentQuestion.question.trim() === '')
+    {
+      alert('Please fill the question');
+    }
+    if(currentQuestion.answers.every(answer => answer === ""))
+    {
+      
+      alert('Please fill all the answers');
+    }
     if (!isEditMode && currentQuestion.question.trim() !== '' && currentQuestion.answers.every(answer => answer.trim() !== '')) {
       const updatedQuestions = [...questions, currentQuestion];
       setQuestions(updatedQuestions);

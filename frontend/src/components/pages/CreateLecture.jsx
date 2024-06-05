@@ -104,7 +104,7 @@ function CreateLecture() {
             console.log(data);
 
             const res = await createLecture(data);
-            if (res && res.status == 200)
+            if (res && res.status === 200)
                 navigate('/myConferences');
             else
                 printErrorMsg(res);

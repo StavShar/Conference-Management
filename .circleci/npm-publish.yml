@@ -1,0 +1,55 @@
+on:
+  push:
+    branches:
+      - develop
+      
+
+jobs:
+  npm_install_and_run_tests:
+    name: Install dependencies and run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install backend dependencies
+        run: npm --prefix ./backend/ install
+
+      - name: Install frontend dependencies
+        run: npm --prefix ./frontend/ install
+
+      - name: Install Google Chrome
+        run: sudo apt-get install -y google-chrome-stable
+
+      - name: Download Selenium Server
+        run: wget https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+
+      - name: Start Selenium Server
+        run: java -jar selenium-server-standalone-3.141.59.jar -port 4444 &
+        continue-on-error: true
+
+      - name: Wait for Selenium Server to be ready
+        run: |
+          sudo apt-get install -y jq
+          while ! nc -z localhost 4444; do   
+            sleep 1
+          done
+      # - name: Start the backend
+      #   run: npm --prefix ./backend/ start &
+
+      # - name: Start the frontend
+      #   run: npm --prefix ./frontend/ start &
+
+      # - name: Wait for servers to be ready
+      #   run: sleep 10
+
+      - name: Run all tests
+        run: |
+         npm --prefix ./frontend/  docker build -t katzir/ci-test .
+         npm --prefix ./frontend/ docker run katzir/ci-test

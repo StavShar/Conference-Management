@@ -74,9 +74,9 @@ describe("register eror test", function() {
        const input_field = await driver.findElement(By.id("date"))
        input_field.click()
        input_field.sendKeys("2000-01-01")
-       await driver.sleep(2000);
+       await driver.sleep(1000);
        await driver.findElement(By.id('button')).click();
-      await driver.sleep(2000);
+      await driver.sleep(1000);
   
       const erorMsg = await driver.findElement((By.id('message')));
       const msgValue = await erorMsg.getText();
