@@ -114,7 +114,7 @@ const Home = () => {
 
   return (
     <div className="homepage">
-      <h1>HomePage</h1>
+      <p className="home-p">HomePage</p>
 
       {conferences.map((conference) => (
         <div className="conference">
@@ -126,10 +126,9 @@ const Home = () => {
               <div className="con-date">End date: {extractDate(conference.endDate)}</div>
               <div className="con-description">Description: {conference.description}</div>
               <div> <img src={conference.picURL} alt="" /></div>
-              <div><Link to={{
-                pathname: `/ConferencePage/${conference.title}`,
-                state: { id: 52 }
-              }}>More info...</Link></div>
+              <div><Link to={`/ConferencePage/${conference.title}`}
+                state={{ conference }}
+              >More info...</Link></div>
             </div>
           </lu>
         </div>
