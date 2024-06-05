@@ -32,8 +32,7 @@ jobs:
       - run:
           name: run all tests
           command: |
-            docker build -t katzir/ci-test ./frontend/
-            docker run katzir/ci-test
+            npm --prefix ./frontend/  run test
 
 workflows:
   sample:

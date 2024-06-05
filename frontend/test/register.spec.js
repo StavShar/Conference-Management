@@ -1,8 +1,30 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const assert = require('assert');
+const chrome = require('selenium-webdriver/chrome');
 
 describe("register test", function() {
-    this.timeout(10000); // Set a longer timeout, e.g., 10 seconds
+    this.timeout(10000);
+    let driver;
+
+    // Hook to setup WebDriver instance before tests
+    beforeEach(async function() {
+        let options = new chrome.Options();
+        options.addArguments('--headless'); // Run in headless mode
+        options.addArguments('--no-sandbox'); // Needed if running as root
+        options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
+
+        driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(options)
+            .build();
+    });
+
+    // Hook to close WebDriver instance after tests
+    afterEach(async function() {
+        if (driver) {
+            await driver.quit();
+        }
+    });
 
     it("register test", function() { // No need for async function declaration
         return new Promise(async (resolve, reject) => { // Return a Promise

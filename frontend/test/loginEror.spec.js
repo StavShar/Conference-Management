@@ -1,11 +1,20 @@
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
-
+const chrome = require('selenium-webdriver/chrome');
 describe("Login Eror test", function() {
     let driver 
+
      // Hook to setup WebDriver instance before tests
   beforeEach(async function() {
-    driver = await new Builder().forBrowser('chrome').build();
+     let options = new chrome.Options();
+        options.addArguments('--headless'); // Run in headless mode
+        options.addArguments('--no-sandbox'); // Needed if running as root
+        options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
+
+        driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(options)
+            .build()
   });
 
   // Hook to close WebDriver instance after tests

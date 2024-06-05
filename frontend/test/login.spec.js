@@ -1,12 +1,18 @@
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
-
+const chrome = require('selenium-webdriver/chrome');
 describe("Login test", function() {
     this.timeout(20000);
     it("should login successfully", async function() { 
         let driver = await new Builder().forBrowser('chrome').build();
 
         try {
+
+            let options = new chrome.Options();
+            options.addArguments('--headless'); // Run in headless mode
+            options.addArguments('--no-sandbox'); // Needed if running as root
+            options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
+
             await driver.get("http://localhost:3000/");
             await driver.findElement(By.linkText('Login')).click();
             let pageURL = await driver.getCurrentUrl();
