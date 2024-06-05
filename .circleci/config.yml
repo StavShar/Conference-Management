@@ -1,16 +1,16 @@
-# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/2.0/orb-intro/
 orbs:
   node: circleci/node@5.1.0
 
 jobs:
   cicd-tests-and-lint:
-    executor:
-      name: node/default
+    docker:
+      - image: circleci/node:16.10-browsers
+        environment:
+          DOCKER_BUILDKIT: 1
     steps:
+      - setup_remote_docker
       - checkout
       - run:
           name: install backend folder 
@@ -32,20 +32,10 @@ jobs:
       - run:
           name: run all tests
           command: |
-             npm --prefix ./frontend/  docker build -t katzir/ci-test .
-             npm --prefix ./frontend/ docker run katzir/ci-test
+            docker build -t katzir/ci-test ./frontend/
+            docker run katzir/ci-test
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  sample:
     jobs:
       - cicd-tests-and-lint
-      # - node/test:
-      #     # This is the node version to use for the `cimg/node` tag
-      #     # Relevant tags can be found on the CircleCI Developer Hub
-      #     # https://circleci.com/developer/images/image/cimg/node
-      #     version: '16.10'
-      #     # If you are using yarn, change the line below from "npm" to "yarn"
-      #     pkg-manager: npm
