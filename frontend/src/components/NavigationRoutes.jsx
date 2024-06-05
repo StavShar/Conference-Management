@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import MyConferences from './pages/MyConferences';
 import CreateConferences from './pages/CreateConferences';
 import CreateLecture from './pages/CreateLecture';
+import ConferencePage from './pages/ConferencePage';
 
 function NavigationRoutes() {
 
@@ -37,6 +38,7 @@ function NavigationRoutes() {
                 <Route path='/myConferences' element={<MyConferences />} />
                 <Route path='/createconferences' element={<CreateConferences />} />
                 <Route path='/createLecture' element={<CreateLecture />} />
+                <Route path='/ConferencePage/:title' element={<ConferencePage />} />
             </Routes>
 
             {/* <div className='devmessage'>
