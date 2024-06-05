@@ -31,7 +31,9 @@ jobs:
           command: sleep 60 
       - run:
           name: run all tests
-          command: npm --prefix ./frontend/ run test
+          command: |
+             npm --prefix ./frontend/  docker build -t katzir/ci-test .
+             npm --prefix ./frontend/ docker run katzir/ci-test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
