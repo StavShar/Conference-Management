@@ -15,6 +15,23 @@ jobs:
       - run:
           name: install backend folder 
           command: npm --prefix ./backend/ install
+      - run:
+          name: run backend
+          command: npm --prefix ./backend/ start
+          background: true
+      - run:
+          name: install frontend folder 
+          command: npm --prefix ./frontend/ install
+      - run:
+          name: run frontend
+          command: npm --prefix ./frontend/ start
+          background: true
+      - run:
+          name: wait for backend and frontend to be ready
+          command: sleep 60 
+      - run:
+          name: run all tests
+          command: npm --prefix ./frontend/ run test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
