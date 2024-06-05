@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to run the server and execute tests in the background
-CMD ["sh", "-c", "chromium-browser --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 & npm start & npm run test_webDriver"]
+CMD ["sh", "-c", "chromium-browser --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 & npm start & npm run test"]
