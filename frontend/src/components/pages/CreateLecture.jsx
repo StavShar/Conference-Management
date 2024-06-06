@@ -10,7 +10,7 @@ function CreateLecture() {
     const [personalForm, setPersonalForm] = useState(false);
     const [qaFormData, setQaFormData] = useState([]);
     const conference = useLocation().state.conference;
-    console.log(conference)
+
     const navigate = useNavigate();
 
     const receiveQaFormData = (data) => {

@@ -1,8 +1,9 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import './styles/ConferencePage.css';
 import { useLocation, Link } from 'react-router-dom';
 
 function ConferencePage() {
+    const [isCreator, setIsCreator] = useState(false);
     const { conference } = useLocation().state || {};
     // console.log('conference: ', conference)
 
@@ -10,6 +11,11 @@ function ConferencePage() {
         const [date, time] = datetime.split("T");
         return date;
     }
+
+    useEffect(() => {
+        if (conference.conferenceCreator == localStorage.getItem("userID"))
+            setIsCreator(true);
+    },);
 
     return (
         <div className='conference-page'>
@@ -25,9 +31,9 @@ function ConferencePage() {
                     <div className="con-description">Description: {conference.description}</div>
                     <div> <img src={conference.picURL} alt="" /></div>
                     <div style={{ marginBottom: '20px' }}>
-                        <Link class="create-lecture-button" to={`/createlecture`}
+                        {isCreator && <Link class="create-lecture-button" to={`/createlecture`}
                             state={{ conference }}
-                        >+ Lecture</Link>
+                        >+ Lecture</Link>}
                     </div>
                 </div>
             </div>
