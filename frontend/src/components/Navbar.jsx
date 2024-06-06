@@ -30,9 +30,6 @@ function Navbar() {
         {isLoggedIn() &&
           <>
             <li className="nav-item">
-              <a href="/createlecture" className="nav-link nav-link-special">Create lecture (tomporary)  </a>
-            </li>
-            <li className="nav-item">
               <a href="/createconferences" className="nav-link nav-link-special">Create conference</a>
             </li>
             <li className="nav-item">
