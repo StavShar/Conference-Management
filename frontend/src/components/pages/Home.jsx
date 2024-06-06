@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllConferences, getCreatedConferences, getJoinedConferences, joinConference } from '../../services/conService';
-import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import { Link } from 'react-router-dom';
 
 import './styles/Home.css';
 
@@ -114,7 +114,7 @@ const Home = () => {
 
   return (
     <div className="homepage">
-      <h1>HomePage</h1>
+      <p className="home-p">HomePage</p>
 
       {conferences.map((conference) => (
         <div className="conference">
@@ -126,6 +126,9 @@ const Home = () => {
               <div className="con-date">End date: {extractDate(conference.endDate)}</div>
               <div className="con-description">Description: {conference.description}</div>
               <div> <img src={conference.picURL} alt="" /></div>
+              <div><Link to={`/ConferencePage/${conference.title}`}
+                state={{ conference }}
+              >More info...</Link></div>
             </div>
           </lu>
         </div>

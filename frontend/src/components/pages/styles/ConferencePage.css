@@ -1,0 +1,48 @@
+.conference-page{
+    position:relative;
+    padding-top: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    gap: 50px;
+    flex-direction: column;
+}
+
+.conference{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border: 2px solid #000000;
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
+    border-radius: 6px;
+    padding-left: 30px;
+    padding-right: 30px;
+ 
+            
+}
+
+.con-page-p{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -400px;
+
+}
+
+.con-details{
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+}
+
+.create-lecture-button {
+    background-color: #2455e9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.create-lecture-button:hover {
+    background-color: #0d2672; 
+}

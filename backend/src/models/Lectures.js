@@ -14,7 +14,7 @@ const LectureSchema = new mongoose.Schema({
 
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     lectureCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
-    // conferenceID: { type: mongoose.Schema.Types.ObjectId, ref: "conferences", required: true }
+    conferenceID: { type: mongoose.Schema.Types.ObjectId, ref: "conferences", required: true }
 });
 
 // Creating a unique composite index on location and date

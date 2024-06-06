@@ -2,7 +2,7 @@ import axios from 'axios';
 const backendURL = 'http://localhost:3001';
 
 const headers = {
-    headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID'), conferenceID: 'f' }
+    headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
 }
 
 

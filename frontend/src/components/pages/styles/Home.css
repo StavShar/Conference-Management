@@ -110,22 +110,7 @@
     width: 130px;;
 }
 
-.con-participants{
-
-}
-
-.con-location{
-   
-}
-
-.con-duration-time{
-   
-}
-
-.con-date{
-  
-}
-
-.con-starting-time{
-    
+.home-p{
+    font-size: 30px;
+    font-weight: bold;
 }

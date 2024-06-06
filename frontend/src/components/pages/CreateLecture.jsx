@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createLecture } from '../../services/lecService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import QaFormat from '../QaFormat';
 import './styles/CreateLecture.css'
 
@@ -9,7 +9,7 @@ function CreateLecture() {
     const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
     const [personalForm, setPersonalForm] = useState(false);
     const [qaFormData, setQaFormData] = useState([]);
-
+    const conference = useLocation().state.conference;
 
     const navigate = useNavigate();
 
@@ -33,7 +33,6 @@ function CreateLecture() {
         const lecturerName = document.getElementById('lecturer-name').value;
         const lecturerInfo = document.getElementById('lecturer-info').value;
         const lecturerPic = document.getElementById('lecturer-picture').value;
-        //  conferenceID: { type: mongoose.Schema.Types.ObjectId, ref: "conferences", required: true }
 
         const maxParticipantsValidation = (maxParticipants) => {
             if (maxParticipants >= 10 && maxParticipants <= 200)
@@ -98,7 +97,10 @@ function CreateLecture() {
                 form: form,
                 lecturerName: lecturerName,
                 lecturerInfo: lecturerInfo,
-                lecturerPic: lecturerPic
+                lecturerPic: lecturerPic,
+                conferenceID: conference._id,
+                // lectureCreator: conference.conferenceCreator // get creator id from userID in header
+                // participants: []
             }
 
             console.log(data);
