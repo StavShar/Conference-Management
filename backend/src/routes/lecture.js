@@ -29,7 +29,7 @@ router.post("/createLecture", verifyToken, async (req, res) => {
         lecturerInfo: req.body.data.lecturerInfo,
         lecturerPic: req.body.data.lecturerPic,
         lectureCreator: req.headers.userid,
-        conferenceID: req.headers.conferenceid,
+        conferenceID: req.body.data.conferenceID,
         participants: [],
     });
     console.log('newLecture data: ', newLecture)
@@ -46,12 +46,12 @@ router.post("/createLecture", verifyToken, async (req, res) => {
         return res.status(400).json({ message: "The creator not found in the users table" });
     }
 
-    // await ConferenceModel.updateOne({ _id: newLecture.conferenceID }, { $push: { lectures: newLecture._id } });
-    // const linkedConference = await ConferenceModel.findOne({ _id: newLecture.conferenceID });
-    // if (!linkedConference) {
-    //     console.log('Failed: The linked conference not found in the conferences table');
-    //     return res.status(400).json({ message: "The linked conference not found in the conferences table" });
-    // }
+    await ConferenceModel.updateOne({ _id: newLecture.conferenceID }, { $push: { lectures: newLecture._id } });
+    const linkedConference = await ConferenceModel.findOne({ _id: newLecture.conferenceID });
+    if (!linkedConference) {
+        console.log('Failed: The linked conference not found in the conferences table');
+        return res.status(400).json({ message: "The linked conference not found in the conferences table" });
+    }
 });
 
 module.exports = { lectureRouter: router };

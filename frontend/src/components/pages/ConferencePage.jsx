@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/ConferencePage.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 function ConferencePage() {
     const { conference } = useLocation().state || {};
@@ -25,7 +25,9 @@ function ConferencePage() {
                     <div className="con-description">Description: {conference.description}</div>
                     <div> <img src={conference.picURL} alt="" /></div>
                     <div style={{ marginBottom: '20px' }}>
-                        <a href="/createlecture" class="create-lecture-button">+ Lecture</a>
+                        <Link class="create-lecture-button" to={`/createlecture`}
+                            state={{ conference }}
+                        >+ Lecture</Link>
                     </div>
                 </div>
             </div>
