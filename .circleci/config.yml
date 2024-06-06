@@ -4,11 +4,10 @@ orbs:
   node: circleci/node@5.1.0
 
 jobs:
-  cicd-tests-and-lint:
+  cicd-tests:
     executor:
       name: node/default
     steps:
-      - setup_remote_docker
       - checkout
       - run:
           name: Install backend dependencies
@@ -33,17 +32,10 @@ jobs:
           name: waiting for servers
           command: sleep 20
       - run:
-          name: run all tests
+          name: Run all tests
           command: npm --prefix ./frontend/ run test
 
 workflows:
   sample:
     jobs:
-      - cicd-tests-and-lint
-      # - node/test:
-      #     # This is the node version to use for the `cimg/node` tag
-      #     # Relevant tags can be found on the CircleCI Developer Hub
-      #     # https://circleci.com/developer/images/image/cimg/node
-      #     version: '16.10'
-      #     # If you are using yarn, change the line below from "npm" to "yarn"
-      #     pkg-manager: npm
+      - cicd-tests
