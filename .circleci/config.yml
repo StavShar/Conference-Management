@@ -4,38 +4,37 @@ orbs:
   node: circleci/node@5.1.0
 
 jobs:
-  cicd-tests:
-    executor:
-      name: node/default
+  cicd-tests-and-lint:
+    docker:
+      - image: circleci/node:16.10-browsers
+        environment:
+          DOCKER_BUILDKIT: 1
     steps:
+      - setup_remote_docker
       - checkout
       - run:
-          name: Install backend dependencies
+          name: install backend folder 
           command: npm --prefix ./backend/ install
       - run:
-          name: Install frontend dependencies
-          command: npm --prefix ./frontend/ install
-      - save_cache:
-          paths:
-            - backend/node_modules
-            - frontend/node_modules
-          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run:
-          name: Start backend
+          name: run backend
           command: npm --prefix ./backend/ start
           background: true
       - run:
-          name: Start frontend
+          name: install frontend folder 
+          command: npm --prefix ./frontend/ install
+      - run:
+          name: run frontend
           command: npm --prefix ./frontend/ start
           background: true
       - run:
-          name: waiting for servers
-          command: sleep 20
+          name: wait for backend and frontend to be ready
+          command: sleep 60 
       - run:
-          name: Run all tests
-          command: npm --prefix ./frontend/ run test
+          name: run all tests
+          command: |
+            npm --prefix ./frontend/  run test
 
 workflows:
   sample:
     jobs:
-      - cicd-tests
+      - cicd-tests-and-lint
