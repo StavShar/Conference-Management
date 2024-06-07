@@ -1,18 +1,21 @@
 import { React, useState, useEffect } from 'react';
 import './styles/ConferencePage.css';
 import { useLocation, Link } from 'react-router-dom';
-import { getLecures } from '../../services/conService';
+import { getLectures } from '../../services/conService';
 
 function ConferencePage() {
     const [isCreator, setIsCreator] = useState(false);
     const { conference } = useLocation().state || {};
     const [lectures, setLectures] = useState([]);
+    const data = {
+        conferenceID: conference._id
+    }
 
     function extractDate(datetime) {
         const [date] = datetime.split("T");
         return date;
     }
-
+    
     useEffect(() => {
         if (conference.conferenceCreator === localStorage.getItem("userID")) {
             setIsCreator(true);
@@ -20,7 +23,7 @@ function ConferencePage() {
 
         const fetchLectures = async () => {
             try {
-                const res = await getLecures(conference._id);
+                const res = await getLectures(conference._id);
                 console.log('Lectures:', res);
                 setLectures(res);
             } catch (err) {
@@ -52,13 +55,17 @@ function ConferencePage() {
                     </div>
                     
                     <div className="lectures-list">
-                        {lectures.map(lecture => (
-                            <div key={lecture._id} className="lecture-item">
-                                <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }}>
-                                    <h3>{lecture.title}</h3>
-                                </Link>
-                            </div>
-                        ))}
+                        {lectures.length > 0 ? (
+                            lectures.map(lecture => (
+                                <div key={lecture._id} className="lecture-item">
+                                    <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }}>
+                                        <h3>{lecture.title}</h3>
+                                    </Link>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No lectures yet</p>
+                        )}
                     </div>
                 </div>
             </div>

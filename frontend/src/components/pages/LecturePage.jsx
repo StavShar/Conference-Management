@@ -29,6 +29,7 @@ function LecturePage() {
                     <div className="lecture-label">Participants: {lecture.participants || 'N/A'}</div>
                     <div className="lecture-label">Description: {lecture.description || 'N/A'}</div>
                     <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
+                    <div className="lecture-label">Question form: {lecture.form.question}</div>
                 </div>
             </div>
         </div>

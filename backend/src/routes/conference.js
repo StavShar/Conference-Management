@@ -66,17 +66,19 @@ router.get("/getCreatedConferences", verifyToken, async (req, res) => {
     return res.status(200).json({ data: user.conferencesCreated });
 });
 
-router.get("/getLecures", async (req, res) => {
-    console.log('Fetching lectures for conference ID:', req.data);
-
-    const lectures = await LectureModel.find({ conferenceId: req.data.conferenceId });
+router.get("/getLectures", async (req, res) => {
+    console.log('Fetching lectures for conference ID:', req.query);
+    const { conferenceID  } = req.query;
+    console.log('conferenceID:', conferenceID);
+    
+    const lectures = await LectureModel.find({ conferenceID: conferenceID });
 
     if (!lectures || lectures.length === 0) {
         console.log('ERROR! No lectures found');
         return res.status(404).send({ error: 'No lectures found' });
     }
 
-    console.log('Found lectures:', lectures);
+    console.log('Lectures:', lectures);
     res.json(lectures);
 });
 

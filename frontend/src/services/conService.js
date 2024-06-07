@@ -86,21 +86,23 @@ async function joinConference(data) {
     }
 }
 
-async function getLecures(data) {
+async function getLectures(conferenceID) {
     try {
-        const res = await axios.get(backendURL + `/con/getLecures`, { data }, headers);
-        console.log("All lectures have been retrieved!");
-        return res.data;
-    } catch (err) {
-        if (err.response && err.response.status === 400) {
-            return err.response.data.message;
+        const res = await axios.get(backendURL + "/con/getLectures", {
+            params: { conferenceID  } 
+        })
+        if (res.status === 200) {
+            return res.data;
         } else {
-            console.error(err);
-            return err.message; // returning "network error" if server is down
+            throw new Error('Failed to fetch lectures');
         }
+    } catch (err) {
+        console.error('Error fetching lectures:', err);
+        return { error: err.message };
     }
 }
 
 
 
-export { createConference, getAllConferences,getJoinedConferences, joinConference, getLecures, getCreatedConferences };
+
+export { createConference, getAllConferences,getJoinedConferences, joinConference, getLectures, getCreatedConferences };
