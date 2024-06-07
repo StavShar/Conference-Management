@@ -2,10 +2,12 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const ConferenceModel = require("../models/Conferences.js");
 const UserModel = require("../models/Users.js")
+const LectureModel = require("../models/Lectures.js");
 const { verifyToken } = require('../middlewares/authMiddleware.js');
 
 require('dotenv').config();
 const router = express.Router();
+
 
 router.post("/createConference", verifyToken, async (req, res) => {
     console.log("creating conference with the following details: ", req.body.data);
@@ -63,6 +65,21 @@ router.get("/getCreatedConferences", verifyToken, async (req, res) => {
     console.log('sending all created conferences to client...');
     return res.status(200).json({ data: user.conferencesCreated });
 });
+
+router.get("/getLecures", async (req, res) => {
+    console.log('Fetching lectures for conference ID:', req.data);
+
+    const lectures = await LectureModel.find({ conferenceId: req.data.conferenceId });
+
+    if (!lectures || lectures.length === 0) {
+        console.log('ERROR! No lectures found');
+        return res.status(404).send({ error: 'No lectures found' });
+    }
+
+    console.log('Found lectures:', lectures);
+    res.json(lectures);
+});
+
 
 module.exports = { conferenceRouter: router };
 

@@ -86,4 +86,21 @@ async function joinConference(data) {
     }
 }
 
-export { createConference, getAllConferences, getCreatedConferences, getJoinedConferences, joinConference };
+async function getLecures(data) {
+    try {
+        const res = await axios.get(backendURL + `/con/getLecures`, { data }, headers);
+        console.log("All lectures have been retrieved!");
+        return res.data;
+    } catch (err) {
+        if (err.response && err.response.status === 400) {
+            return err.response.data.message;
+        } else {
+            console.error(err);
+            return err.message; // returning "network error" if server is down
+        }
+    }
+}
+
+
+
+export { createConference, getAllConferences,getJoinedConferences, joinConference, getLecures, getCreatedConferences };
