@@ -54,6 +54,72 @@ router.post("/createLecture", verifyToken, async (req, res) => {
     }
 });
 
+router.get("/getCreatedLectures", verifyToken, async (req, res) => {
+    console.log('Getting all created lecture from DB...');
+    const user = await UserModel.findOne({ _id: req.headers.userid });
+
+    if (!user) {
+        console.log('ERROR! user not found');
+        return res.status(404).send({ error: 'User not found' });
+    }
+    console.log('User ID: ', user._id);
+    console.log('All lecture that created by this user: ', user.lecturesCreated);
+
+    console.log('sending all created lecture to client...');
+    return res.status(200).json({ data: user.lecturesCreated });
+});
+
+router.get("/getJoinedLecture", verifyToken, async (req, res) => {
+    console.log('Getting all joined lecture from DB...');
+    const user = await UserModel.findOne({ _id: req.headers.userid });
+
+    if (!user) {
+        console.log('ERROR! user not found');
+        return res.status(404).send({ error: 'User not found' });
+    }
+    console.log('User ID: ', user._id);
+    console.log('All joined lecture of this user: ', user.joinedLectures);
+
+    console.log('sending all created Lecture to client...');
+    return res.status(200).json({ data: user.joinedLectures });
+});
+
+router.post("/joinLecture", verifyToken, async (req, res) => {
+    const userID = req.headers.userid;
+    const lectureID = req.body.data.lectureID;
+    console.log('Getting a "join a lecture" request...');
+    console.log("user: ", userID);
+    console.log('lecture: ', lectureID);
+
+    const user = await UserModel.findOne({ _id: userID });
+    if (!user) {
+        console.log('ERROR! user not found');
+        return res.status(404).json({ data: 'User not found' });
+    }
+
+    const lecture = await LectureModel.findOne({ _id: lectureID });
+    if (!lecture) {
+        console.log('ERROR! lecture not found');
+        return res.status(404).json({ data: 'lecture not found' });
+    }
+
+    if (lecture.lectureCreator.equals(user._id)) {
+        console.log("ERROR! This lecture created by you");
+        return res.status(404).json({ data: 'This lecture created by you' });
+    }
+
+    if (user.joinedLectures.includes(lectureID) || lecture.participants.includes(userID)) {
+        console.log("ERROR! This user already joined to this lecture")
+        return res.status(404).json({ data: 'This user already joined to this lecture' });
+    }
+
+    await UserModel.updateOne({ _id: userID }, { $push: { joinedLectures: lectureID } });
+    await LectureModel.updateOne({ _id: lectureID }, { $push: { participants: userID } });
+
+    console.log('sending all joined lecture to client...');
+    return res.status(200).json({ data: user.joinedLectures });
+});
+
 
 
 module.exports = { lectureRouter: router };

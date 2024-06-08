@@ -37,4 +37,37 @@ async function getJoinedLecture() {
     }
 }
 
-export { createLecture , getJoinedLecture };
+async function getCreatedLectures() {
+
+    try {
+        const res = await axios.get(backendURL + "/lec/getCreatedLectures", headers);
+        console.log("All created conferences has been retrieved !");
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+async function joinLecture(data) {
+
+    try {
+        console.log('joinLecture data: ', data)
+        const res = await axios.post(backendURL + "/lec/joinLecture", { data }, headers);
+        console.log("Join a Lecture has been succeed !");
+        return (res);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data);
+        else if (err.response && err.response.status === 404)
+            return (err.response.data);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+export { createLecture , getJoinedLecture , getCreatedLectures , joinLecture };

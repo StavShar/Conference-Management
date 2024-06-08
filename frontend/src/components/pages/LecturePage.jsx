@@ -1,13 +1,15 @@
 import React, { useEffect , useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getAllConferences, getCreatedConferences, getJoinedConferences, joinConference } from '../../services/conService';
+import { getCreatedLectures, getJoinedLecture, joinLecture } from '../../services/lecService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+
+
 
 function LecturePage() {
     const { lecture } = useLocation().state || {};
-    const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the conferences that specific user joined to
-  const [createdLecture, setCreatedLecture] = useState([]); // refers to the conferences that created by the specific user
-    const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific conference being joined
+    const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the lecture that specific user joined to
+  const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
+    const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
  
     function extractDate(datetime) {
         if (!datetime) return 'N/A';
@@ -23,32 +25,34 @@ function LecturePage() {
     useEffect(() => {
         const fetchJoinedLecture = async () => {
             try {
-                const res = await getJoinedConferences();
+                const res = await getJoinedLecture();
                 setJoinedeLecture(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
 
-        const fetchCreatedConferences = async () => {
+        const fetchCreatedLectures = async () => {
             try {
-              const res = await getCreatedConferences();
+              const res = await getCreatedLectures();
               setCreatedLecture(res.data);
             } catch (err) {
               console.log(err);
             }
           };
 
-          fetchJoinedConferences();
-          fetchCreatedConferences();
-    } , []);
-
-    const joinCon = async (id) => {
-        try {
+          fetchJoinedLecture();
+          fetchCreatedLectures();
          
+    },[lecture]);
+
+    const joinLec = async (id) => {
+        try {
+            console.log('joined: ', joinedLecture);
+            console.log('created: ', createdLecture);
           let isValid = true;
       
-          // Check each question's answer for the selected conference
+          // Check each question's answer for the selected lecture
           if (lecture.form) {
            lecture.form.forEach((question, qIndex) => {
               const selectedAnswer = selectedLectureAnswers[id]?.[qIndex];
@@ -61,15 +65,15 @@ function LecturePage() {
           }
       
           if (!isValid) {
-            alert("Please select an answer for all questions before joining the conference.");
+            alert("Please select an answer for all questions before joining the lecture.");
             return;
           }
       
           // If needed, you can now use selectedAnswers object containing answers selected by the user
       
           const data = { lectureID: id, selectedAnswers: selectedLectureAnswers[id] };
-          console.log('hi from join conference: ', data);
-          const res = await joinConference(data);
+          console.log('hi from join lecture: ', data);
+          const res = await joinLecture(data);
       
           if (res.status && res.status === 200)
             setJoinedeLecture([...joinedLecture, id]);
@@ -81,15 +85,15 @@ function LecturePage() {
         }
       };
 
-      const isJoinedConference = (id) => joinedLecture ? joinedLecture.includes(id) : false;
-      const isCreatedConference = (id) => createdLecture ? createdLecture.includes(id) : false;
+      const isJoinedLecture = (id) => joinedLecture ? joinedLecture.includes(id) : false;
+      const isCreatedLecture = (id) => createdLecture ? createdLecture.includes(id) : false;
 
-      const handleAnswerSelect = (event, qIndex, conferenceID) => {
+      const handleAnswerSelect = (event, qIndex, lectureID) => {
         const selectedAnswer = event.target.value;
         setselectedLectureAnswers(prevState => ({
           ...prevState,
-          [conferenceID]: {
-            ...prevState[conferenceID],
+          [lectureID]: {
+            ...prevState[lectureID],
             [qIndex]: selectedAnswer
           }
         }));
@@ -121,29 +125,31 @@ function LecturePage() {
                       </div>
                     ))}
                   </div>
-                  {!isCreatedConference(lecture._id) && (
-                <>
-                  <button
-                    onClick={() => joinCon(lecture._id)}
-                    disabled={isJoinedConference(lecture._id)}
-                  >
-                    {isJoinedConference(lecture._id) ? "Joined" : "Join"}
-                  </button>
-                  {isJoinedConference(lecture._id) && (
-                    <AddToCalendarButton
-                    name={lecture.title}
-                    options={['Apple','Google']}
-                    location={lecture.location}
-                    startDate={extractDate(lecture.date)}
-                    endDate= {extractDate(lecture.date)}
-                    startTime={extractTime(lecture.date)}
-                    description={lecture.description}
-                    endTime="23:30"
-                    timeZone="Israel"
-                  ></AddToCalendarButton>
-                  )}
-                </>
-              )}
+                  {!isCreatedLecture(lecture._id) && (
+  <>
+    <button
+      onClick={() => joinLec(lecture._id)}
+      disabled={isJoinedLecture(lecture._id)}
+    >
+      {isJoinedLecture(lecture._id) ? "Joined" : "Join"}
+    </button>
+  </>
+)}
+
+{isCreatedLecture(lecture._id) || isJoinedLecture(lecture._id)  && (
+  <AddToCalendarButton
+    name={lecture.title}
+    options={['Apple', 'Google']}
+    location={lecture.location}
+    startDate={extractDate(lecture.date)}
+    endDate={extractDate(lecture.date)}
+    startTime={extractTime(lecture.date)}
+    description={lecture.description}
+    endTime="23:30"
+    timeZone="Israel"
+  />
+)}
+
                 </div>
             </div>
         </div>
