@@ -54,5 +54,7 @@ router.post("/createLecture", verifyToken, async (req, res) => {
     }
 });
 
+
+
 module.exports = { lectureRouter: router };
 
