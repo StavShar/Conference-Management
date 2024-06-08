@@ -1,7 +1,6 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const assert = require('assert');
 const chrome = require('selenium-webdriver/chrome');
-const axios = require('axios');
 const { deleteUser } = require('../src/services/authService');
 
 describe("register test", function() {

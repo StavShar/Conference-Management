@@ -64,7 +64,7 @@ function CreateConferences() {
       console.log(data);
 
       const res = await createConference(data);
-      if (res && res.status == 200)
+      if (res && res.status === 200)
         navigate('/myConferences');
       else
         printErrorMsg(res);
