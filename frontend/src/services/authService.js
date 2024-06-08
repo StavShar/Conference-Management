@@ -29,4 +29,18 @@ async function login(data) {
     }
 }
 
-export { registration, login };
+async function deleteUser(data) {
+    try {
+        const res = await axios.delete(backendURL + "/auth/deleteUser", { data });
+        alert("User has been deleted!");
+        return (res);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+export { registration, login , deleteUser};

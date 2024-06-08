@@ -136,18 +136,18 @@ function LecturePage() {
   </>
 )}
 
-{isCreatedLecture(lecture._id) || isJoinedLecture(lecture._id)  && (
-  <AddToCalendarButton
-    name={lecture.title}
-    options={['Apple', 'Google']}
-    location={lecture.location}
-    startDate={extractDate(lecture.date)}
-    endDate={extractDate(lecture.date)}
-    startTime={extractTime(lecture.date)}
-    description={lecture.description}
-    endTime="23:30"
-    timeZone="Israel"
-  />
+{(isCreatedLecture(lecture._id) || isJoinedLecture(lecture._id)) && (
+    <AddToCalendarButton
+        name={lecture.title}
+        options={['Apple', 'Google']}
+        location={lecture.location}
+        startDate={extractDate(lecture.date)}
+        endDate={extractDate(lecture.date)}
+        startTime={extractTime(lecture.date)}
+        description={lecture.description}
+        endTime="23:30"
+        timeZone="Israel"
+    />
 )}
 
                 </div>

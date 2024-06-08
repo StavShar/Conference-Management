@@ -58,5 +58,17 @@ router.post("/login", async (req, res) => {
     console.log('\nLogging as: ' + user);
 });
 
+router.delete("/deleteUser", async (req, res) => {
+    console.log('Trying to delete user with email: ', req.body.email);
+    const user = await UserModel.findOne({ email: req.body.email });     
+    if (!user) {
+        console.log('Failed: User not found');
+        return res.status(400).json({ message: "User not found" });
+    }
+    await user.delete();
+    console.log('User deleted successfully');
+    res.json({ message: "User deleted successfully" });
+}); 
+
 module.exports = { userRouter: router };
 
