@@ -120,6 +120,62 @@ router.post("/joinLecture", verifyToken, async (req, res) => {
     return res.status(200).json({ data: user.joinedLectures });
 });
 
+router.post("/editLecture", verifyToken, async (req, res) => {
+    console.log('Getting a "edit a lecture" request...' + req.body.data._id);
+    const lectureID = req.body.data._id;
+    const lecture = await LectureModel.findOne({ _id: lectureID });
+
+    if (!lecture) {
+        console.log('Failed: lecture not found');
+        return res.status(400).json({ message: "lecture not found" });
+    }
+
+    console.log('Editing lecture with the following details: ', req.body.data);
+    await LectureModel.updateOne(
+        { _id: lectureID },
+        {
+            title: req.body.data.title,
+            maxParticipants: req.body.data.maxParticipants,
+            location: req.body.data.location,
+            description: req.body.data.description,
+            durationTime: req.body.data.durationTime,
+            date: req.body.data.date,
+            form: req.body.data.form,
+            lecturerName: req.body.data.lecturerName,
+            lecturerInfo: req.body.data.lecturerInfo,
+            lecturerPic: req.body.data.lecturerPic,
+        });
+
+    console.log('lecture has been updated');
+    return res.status(200).json({ message: "lecture has been updated" });
+});
+
+router.post("/cancelLecture", verifyToken, async (req, res) => {
+    const lectureID = req.body.data.lectureID;
+    const userID = req.body.data.userid;
+    console.log('Getting a "cencell a lecture" request...');
+    console.log('lecture: ', lectureID + ' user: ' + userID);
+
+    const lecture = await LectureModel.findOne({ _id: lectureID });
+    if (!lecture) {
+        console.log('ERROR! lecture not found');
+        return res.status(404).json({ data: 'lecture not found' });
+    }
+
+    await LectureModel.updateOne(
+        { _id: lectureID },
+    {$pull: {participants: userID}});
+
+    await UserModel.updateOne({ _id: userID },
+         { $pull: { joinedLectures: lectureID } });
+   
+
+
+    return res.status(200).json({ data: 'lecture has been canceled' });
+
+
+});
+
 
 
 module.exports = { lectureRouter: router };

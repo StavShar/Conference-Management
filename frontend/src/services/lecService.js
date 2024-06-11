@@ -70,4 +70,38 @@ async function joinLecture(data) {
     }
 }
 
-export { createLecture , getJoinedLecture , getCreatedLectures , joinLecture };
+async function cancelLecture(data) {
+
+    try {
+        const res = await axios.post(backendURL + "/lec/cancelLecture", { data }, headers);
+        console.log("Lecture has been cenceled !");
+        return (res);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data);
+        else if (err.response && err.response.status === 404)
+            return (err.response.data);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+async function editLecture(data) {
+
+    try {
+        const res = await axios.post(backendURL + "/lec/editLecture", { data }, headers);
+        console.log("Lecture has been edited !");
+        return (res);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data);
+        else if (err.response && err.response.status === 404)
+            return (err.response.data);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+export { createLecture , getJoinedLecture , getCreatedLectures , joinLecture, cancelLecture , editLecture };
