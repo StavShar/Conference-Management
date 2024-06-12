@@ -1,7 +1,9 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const assert = require('assert');
 const chrome = require('selenium-webdriver/chrome');
-const { deleteUser } = require('../src/services/authService');
+const axios = require('axios');
+const backendURL = 'http://localhost:3001';
+
 
 describe("register test", function() {
     this.timeout(20000); // Increase timeout to allow for the delete request
@@ -13,7 +15,7 @@ describe("register test", function() {
         options.addArguments('--headless'); // Run in headless mode
         options.addArguments('--no-sandbox'); // Needed if running as root
         options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
-
+        
         driver = await new Builder()
             .forBrowser('chrome')
             .setChromeOptions(options)
@@ -29,17 +31,11 @@ describe("register test", function() {
 
     it("register test", function() { // No need for async function declaration
         return new Promise(async (resolve, reject) => { // Return a Promise
-            let driver;
             try {
                 // First, send a request to delete the user if they exist
                 const userEmail = 'test123@test.test';
-                const res =  await deleteUser({ email: userEmail });
+                const res = await axios.delete(backendURL + "/auth/deleteUser", { data: { email: userEmail } });
                 console.log(res);
-
-                driver = await new Builder()
-                    .forBrowser('chrome')
-                    .setChromeOptions(new chrome.Options().addArguments('--headless', '--no-sandbox', '--disable-dev-shm-usage'))
-                    .build();
 
                 await driver.get('http://localhost:3000/');
 
