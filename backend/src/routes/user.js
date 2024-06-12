@@ -59,16 +59,24 @@ router.post("/login", async (req, res) => {
 });
 
 router.delete("/deleteUser", async (req, res) => {
-    console.log('Trying to delete user with email: ', req.body.email);
-    const user = await UserModel.findOne({ email: req.body.email });
-    if (!user) {
-        console.log('Failed: User not found');
-        return res.status(400).json({ message: "User not found" });
+    try {
+        const user = await UserModel.findOne({ email: req.body.email });
+        if (!user) {
+            console.log('Failed: User not found');
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        // Delete the user
+        await UserModel.deleteOne({ email: req.body.email });
+
+        console.log('Success: User deleted');
+        return res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ message: "Internal server error" });
     }
-    await user.delete();
-    console.log('User deleted successfully');
-    res.json({ message: "User deleted successfully" });
 });
+
 
 module.exports = { userRouter: router };
 

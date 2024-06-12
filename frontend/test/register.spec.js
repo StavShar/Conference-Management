@@ -22,12 +22,7 @@ describe("register test", function() {
             .build();
     });
 
-    // Hook to close WebDriver instance after tests
-    afterEach(async function() {
-        if (driver) {
-            await driver.quit();
-        }
-    });
+  
 
     it("register test", function() { // No need for async function declaration
         return new Promise(async (resolve, reject) => { // Return a Promise
@@ -35,7 +30,7 @@ describe("register test", function() {
                 // First, send a request to delete the user if they exist
                 const userEmail = 'test123@test.test';
                 const res = await axios.delete(backendURL + "/auth/deleteUser", { data: { email: userEmail } });
-                console.log(res);
+                console.log(res.data.message);
 
                 await driver.get('http://localhost:3000/');
 
