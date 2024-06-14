@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const { userRouter } = require('./routes/user.js');
 const { lectureRouter } = require('./routes/lecture.js');
 const { conferenceRouter } = require('./routes/conference.js');
+const { pictureRouter } = require('./routes/picture.js');
+const path = require('path');
 
 require('dotenv').config();
 const port = process.env.PORT;
@@ -16,6 +18,8 @@ app.use(cors());
 app.use('/auth', userRouter);
 app.use('/con', conferenceRouter)
 app.use('/lec', lectureRouter)
+app.use('/pic', pictureRouter)
+app.use('/uploads', express.static('uploads'));
 
 async function connecttoDB() {
     try {

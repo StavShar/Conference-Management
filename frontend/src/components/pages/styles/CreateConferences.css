@@ -12,4 +12,14 @@
   .answer-input {
     margin-bottom: 10px;
   }
+
+
+.con-picture img {
+  width: 200px;  /* Adjust to desired width */
+  height: auto;  /* Keeps aspect ratio */
+  max-width: 100%; /* Ensures it fits within the parent container */
+  border-radius: 10px; /* Optional: rounds the corners of the image */
+  object-fit: cover; /* Ensures the image covers the area without stretching */
+}
+
   

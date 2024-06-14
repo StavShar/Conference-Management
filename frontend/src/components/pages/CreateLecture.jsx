@@ -3,6 +3,7 @@ import { createLecture } from '../../services/lecService';
 import { useNavigate, useLocation } from 'react-router-dom';
 import QaFormat from '../QaFormat';
 import './styles/CreateLecture.css'
+import { uploadPic } from '../../services/authService';
 
 function CreateLecture() {
     const [inputDateType, setInputDateType] = useState('text');
@@ -10,6 +11,7 @@ function CreateLecture() {
     const [personalForm, setPersonalForm] = useState(false);
     const [qaFormData, setQaFormData] = useState([]);
     const conference = useLocation().state.conference;
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const navigate = useNavigate();
 
@@ -20,6 +22,28 @@ function CreateLecture() {
     const printErrorMsg = (msg) => {
         document.getElementById('message').textContent = msg;
     }
+
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+      };
+    
+      const handlUpload = async () => {
+        try {
+          if(!selectedFile) {
+            alert('Please select a file');
+            return;
+          }
+          const formData = new FormData();
+          formData.append('file', selectedFile);
+          const res = await uploadPic(formData);
+          console.log('file uploaded', res );
+          
+          return res;
+    
+        } catch (error) {
+          console.log('error uploading file', error);
+        }
+      };
 
     async function createLec() {
 
@@ -32,7 +56,7 @@ function CreateLecture() {
         const form = qaFormData
         const lecturerName = document.getElementById('lecturer-name').value;
         const lecturerInfo = document.getElementById('lecturer-info').value;
-        const lecturerPic = document.getElementById('lecturer-picture').value;
+        const lecturerPic = await handlUpload();
 
         const maxParticipantsValidation = (maxParticipants) => {
             if (maxParticipants >= 10 && maxParticipants <= 200)
@@ -176,7 +200,7 @@ function CreateLecture() {
                     <input className='create-field' type="text" id="lecturer-info" placeholder="Lecturer's info" required />
                 </div>
                 <div className='create-div'>
-                    <input className='create-field' type="text" id="lecturer-picture" placeholder="Lecturer's picture URL" />
+                    <input className='create-field' type="file" onChange={handleFileChange} id="lecturer-picture" placeholder="Lecturer's picture URL" />
                 </div>
                 <div>
                     {!personalForm && (

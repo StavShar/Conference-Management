@@ -1,0 +1,125 @@
+/* LecturePage.css */
+
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .lecture-page {
+    padding: 20px;
+  }
+  
+  .lecture-page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Lecture card styles */
+  .lecture {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .lecture-template {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Label styles */
+  .lecture-label {
+    font-size: 1rem;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .lecture-label strong {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Image styles */
+  .lecture-image {
+    max-width: 50%;
+    max-height: 1000; /* Adjust the max-height to suit your design */
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: block; /* Ensures proper alignment in its container */
+  }
+  
+  
+  /* Question styles */
+  .question-container {
+    margin-top: 20px;
+  }
+  
+  .question-container p {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .question-container select {
+    margin-top: 10px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+  
+  button:disabled {
+    background-color: #6c757d;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  button.cancel-button {
+    background-color: #dc3545;
+  }
+  
+  button.cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  button.edit-button {
+    background-color: #ffc107;
+  }
+  
+  button.edit-button:hover {
+    background-color: #e0a800;
+  }
+  
+  /* Add to calendar button styles */
+  .add-to-calendar-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  

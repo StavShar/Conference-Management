@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { getCreatedLectures, getJoinedLecture, joinLecture, cancelLecture } from '../../services/lecService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import './styles/LecturePage.css';
 
 function LecturePage() {
   const { lecture } = useLocation().state || {};
   const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
   const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
-  console.log('lecture: issssssssssss :', lecture + "   "+ lecture._id);
-  console.log('lecture: issssssssssss :' + lecture.date + "object" + typeof(lecture.date));
 
   const data = {
     lectureID: lecture._id,
@@ -134,7 +133,7 @@ function LecturePage() {
           <div className="lecture-label">Location: {lecture.location}</div>
           <div className="lecture-label">Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
           <div className="lecture-label">Description: {lecture.description}</div>
-          <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
+          <div className="lecture-label">Picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" /></div>
           <div>
             {lecture.form && lecture.form.map((question, qIndex) => (
               <div key={qIndex}>

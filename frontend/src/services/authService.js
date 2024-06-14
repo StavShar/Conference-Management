@@ -43,4 +43,26 @@ async function deleteUser(data) {
     }
 }
 
-export { registration, login , deleteUser};
+async function uploadPic(data) {
+    console.log(data);
+    try {
+        const res = await axios.post(backendURL + "/pic/upload",  data, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+        alert("Picture uploaded successfully!");
+
+        console.log('file uploaded', res.data.fileURL + " adar " + res);
+        
+        return (res.data.fileURL);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+export { registration, login , deleteUser,uploadPic};
