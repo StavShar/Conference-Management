@@ -152,7 +152,7 @@ router.post("/editLecture", verifyToken, async (req, res) => {
 
 router.post("/cancelLecture", verifyToken, async (req, res) => {
     const lectureID = req.body.data.lectureID;
-    const userID = req.body.data.userid;
+    const userID = req.body.data.userID;
     console.log('Getting a "cencell a lecture" request...');
     console.log('lecture: ', lectureID + ' user: ' + userID);
 

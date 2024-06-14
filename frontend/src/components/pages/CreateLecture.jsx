@@ -82,6 +82,9 @@ function CreateLecture() {
         else if (!dateValidation(date))
             printErrorMsg("Error! the lecture should start at least 24 hours from now")
 
+        else if (!form)
+            printErrorMsg("Error! you must  for the lecture")
+
 
         else {
             printErrorMsg('');
