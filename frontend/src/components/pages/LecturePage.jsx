@@ -81,7 +81,10 @@ function LecturePage() {
       const res = await joinLecture(data);
 
       if (res.status && res.status === 200)
+        {
         setJoinedeLecture([...joinedLecture, id]);
+        lecture.participants.push(localStorage.getItem("userID"));
+        }
       else
         alert("FAIL! " + res.data);
 
@@ -94,7 +97,10 @@ function LecturePage() {
     try {
       const res = await cancelLecture(data);
       if (res.status && res.status === 200)
+        {
         setJoinedeLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
+        lecture.participants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
+        }
       else
         alert("FAIL! " + res.data);
     } catch (err) {

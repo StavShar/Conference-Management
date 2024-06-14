@@ -61,6 +61,17 @@ function CreateLecture() {
             return false;
         }
 
+        const dateConfereceValidation = (date) => {
+            
+            const conferenceStartDate = new Date(conference.startDate);
+            const conferenceEndDate = new Date(conference.endDate);
+                if(date >= conferenceStartDate && date <= conferenceEndDate)
+                    return true;
+                return false;
+            }
+
+    
+
 
         // checking if there are empty fields
         if (!(title && maxParticipants && location && description && durationTime && date && lecturerName && lecturerInfo))
@@ -84,6 +95,9 @@ function CreateLecture() {
 
         else if (!form)
             printErrorMsg("Error! you must  for the lecture")
+
+        else if (!dateConfereceValidation(date))
+            printErrorMsg("Error! the lecture should be in the conference date")
 
 
         else {
