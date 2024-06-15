@@ -1,0 +1,47 @@
+.my-conferences{
+    border: 1px solid black;
+    position:relative;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    justify-items: stretch;
+    gap:200px;
+    padding: 10px;
+    flex-direction: row;
+}
+
+.conferences{
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.lectures{
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.con-lec-list {
+    display: inline-grid;
+    grid-template-columns:auto auto;
+    gap:30px;
+    padding:10;
+    
+}
+
+.con-lec-item {
+    background-color: #ffffff;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.con-lec-details {
+    font-size: 18px;
+}
+
+.title{
+
+}

@@ -69,19 +69,19 @@ router.get("/getCreatedLectures", verifyToken, async (req, res) => {
     return res.status(200).json({ data: user.lecturesCreated });
 });
 
-router.get("/getJoinedLecture", verifyToken, async (req, res) => {
+router.get("/getJoinedLectures", verifyToken, async (req, res) => {
     console.log('Getting all joined lecture from DB...');
-    const user = await UserModel.findOne({ _id: req.headers.userid });
+    const joinedLectures = await LectureModel.find({ participants: { $in: [req.headers.userid] } });
 
-    if (!user) {
-        console.log('ERROR! user not found');
-        return res.status(404).send({ error: 'User not found' });
+    if (!joinedLectures) {
+        console.log('ERROR! joined lectures not found');
+        return res.status(404).send({ error: 'Joined lectures not found' });
     }
-    console.log('User ID: ', user._id);
-    console.log('All joined lecture of this user: ', user.joinedLectures);
+    console.log('User ID: ', req.headers.userid);
+    console.log('All joined lecture of this user: ', joinedLectures);
 
-    console.log('sending all created Lecture to client...');
-    return res.status(200).json({ data: user.joinedLectures });
+    console.log('sending all joined Lecture to client...');
+    return res.status(200).json({ data: joinedLectures });
 });
 
 router.post("/joinLecture", verifyToken, async (req, res) => {
@@ -164,11 +164,11 @@ router.post("/cancelLecture", verifyToken, async (req, res) => {
 
     await LectureModel.updateOne(
         { _id: lectureID },
-    {$pull: {participants: userID}});
+        { $pull: { participants: userID } });
 
     await UserModel.updateOne({ _id: userID },
-         { $pull: { joinedLectures: lectureID } });
-   
+        { $pull: { joinedLectures: lectureID } });
+
 
 
     return res.status(200).json({ data: 'lecture has been canceled' });

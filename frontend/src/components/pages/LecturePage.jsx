@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { getCreatedLectures, getJoinedLecture, joinLecture, cancelLecture } from '../../services/lecService';
+import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture } from '../../services/lecService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 
 function LecturePage() {
@@ -8,8 +8,6 @@ function LecturePage() {
   const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
   const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
-  console.log('lecture: issssssssssss :', lecture + "   "+ lecture._id);
-  console.log('lecture: issssssssssss :' + lecture.date + "object" + typeof(lecture.date));
 
   const data = {
     lectureID: lecture._id,
@@ -30,7 +28,7 @@ function LecturePage() {
   useEffect(() => {
     const fetchJoinedLecture = async () => {
       try {
-        const res = await getJoinedLecture();
+        const res = await getJoinedLectures();
         setJoinedeLecture(res.data);
       } catch (err) {
         console.log(err);
@@ -80,11 +78,10 @@ function LecturePage() {
       console.log('hi from join lecture: ', data);
       const res = await joinLecture(data);
 
-      if (res.status && res.status === 200)
-        {
+      if (res.status && res.status === 200) {
         setJoinedeLecture([...joinedLecture, id]);
         lecture.participants.push(localStorage.getItem("userID"));
-        }
+      }
       else
         alert("FAIL! " + res.data);
 
@@ -96,11 +93,10 @@ function LecturePage() {
   const cancelLec = async () => {
     try {
       const res = await cancelLecture(data);
-      if (res.status && res.status === 200)
-        {
+      if (res.status && res.status === 200) {
         setJoinedeLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
         lecture.participants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
-        }
+      }
       else
         alert("FAIL! " + res.data);
     } catch (err) {
@@ -128,9 +124,9 @@ function LecturePage() {
       <div className="lecture">
         <div className="lecture-template">
           <div className="lecture-label">Title: {lecture.title}</div>
-        <div className="lecture-label">Date: {extractDate(lecture.date)}</div>
-        <div className="lecture-label">Starting Time: {extractTime(lecture.date)}</div>
-          <div className="lecture-label">Duration Time: {lecture.durationTime }</div>
+          <div className="lecture-label">Date: {extractDate(lecture.date)}</div>
+          <div className="lecture-label">Starting Time: {extractTime(lecture.date)}</div>
+          <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
           <div className="lecture-label">Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
           <div className="lecture-label">Description: {lecture.description}</div>
@@ -180,7 +176,7 @@ function LecturePage() {
           )}
 
           {isCreatedLecture(lecture._id) && (
-            <Link to={`/EditPage/${lecture.title}`} state={{lecture}}>
+            <Link to={`/EditPage/${lecture.title}`} state={{ lecture }}>
               <button>Edit</button>
             </Link>
 

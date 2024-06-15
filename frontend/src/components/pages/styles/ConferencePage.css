@@ -29,6 +29,7 @@
 
 .con-details{
     display: flex;
+    text-align: center;
     flex-direction: row;
     gap:30px;
 }

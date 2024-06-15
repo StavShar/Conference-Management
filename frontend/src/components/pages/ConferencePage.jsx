@@ -24,7 +24,7 @@ function ConferencePage() {
         const fetchLectures = async () => {
             try {
                 const res = await getLectures(conference._id);
-                console.log('Lectures:', res);
+                console.log('Relevant lectures has been retrieved');
                 setLectures(res);
             } catch (err) {
                 console.error('Error fetching lectures:', err);

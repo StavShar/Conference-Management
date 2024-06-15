@@ -22,10 +22,10 @@ async function createLecture(data) {
 }
 
 //getting the list of the Lecture that a specific user has been joined
-async function getJoinedLecture() {
+async function getJoinedLectures() {
 
     try {
-        const res = await axios.get(backendURL + "/lec/getJoinedLecture", headers);
+        const res = await axios.get(backendURL + "/lec/getJoinedLectures", headers);
         console.log("All joined Lecture has been retrieved !");
         return (res.data);
     } catch (err) {
@@ -104,4 +104,4 @@ async function editLecture(data) {
     }
 }
 
-export { createLecture , getJoinedLecture , getCreatedLectures , joinLecture, cancelLecture , editLecture };
+export { createLecture, getJoinedLectures, getCreatedLectures, joinLecture, cancelLecture, editLecture };

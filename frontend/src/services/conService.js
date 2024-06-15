@@ -52,22 +52,6 @@ async function getCreatedConferences() {
 }
 
 //getting the list of the conferences that a specific user has been joined
-async function getJoinedConferences() {
-
-    try {
-        const res = await axios.get(backendURL + "/con/getJoinedConferences", headers);
-        console.log("All joined conferences has been retrieved !");
-        return (res.data);
-    } catch (err) {
-        if (err.response && err.response.status === 400)
-            return (err.response.data.message);
-        else
-            console.error(err);
-        return (err.message); // returning "network error" if server is down
-    }
-}
-
-//getting the list of the conferences that a specific user has been joined
 async function joinConference(data) {
 
     try {
@@ -89,7 +73,7 @@ async function joinConference(data) {
 async function getLectures(conferenceID) {
     try {
         const res = await axios.get(backendURL + "/con/getLectures", {
-            params: { conferenceID  } 
+            params: { conferenceID }
         })
         if (res.status === 200) {
             return res.data;
@@ -105,4 +89,4 @@ async function getLectures(conferenceID) {
 
 
 
-export { createConference, getAllConferences,getJoinedConferences, joinConference, getLectures, getCreatedConferences };
+export { createConference, getAllConferences, joinConference, getLectures, getCreatedConferences };
