@@ -143,7 +143,7 @@ function LecturePage() {
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
           <div className="lecture-label">Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
-          <Popup trigger=
+          {isCreatedLecture(lecture._id) && <Popup trigger=
             {<button> Show participants </button>}
             position="right center">
 
@@ -159,7 +159,7 @@ function LecturePage() {
               <p>No participants yet</p>
             )}
 
-          </Popup>
+          </Popup>}
           <div className="lecture-label">Description: {lecture.description}</div>
           <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
           <div>
