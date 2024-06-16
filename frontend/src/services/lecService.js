@@ -104,4 +104,20 @@ async function editLecture(data) {
     }
 }
 
-export { createLecture, getJoinedLectures, getCreatedLectures, joinLecture, cancelLecture, editLecture };
+//getting the list of the participants that joined the lecture represented as: (fullname, phone number)
+async function getParticipants(data) {
+
+    try {
+        const res = await axios.post(backendURL + "/lec/getParticipants", { data }, headers);
+        console.log("Participants list has been retrieved !");
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data.message);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+export { createLecture, getJoinedLectures, getCreatedLectures, joinLecture, cancelLecture, editLecture, getParticipants };

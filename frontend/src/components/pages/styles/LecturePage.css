@@ -1,0 +1,22 @@
+.participants-ol {
+    counter-reset: item;
+    list-style-type: none;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+.participant-item:before {
+    content: counter(item) ") "; 
+    counter-increment: item;
+}
+
+.popup-content {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding:10px;
+  }
+  
+  .popup-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  

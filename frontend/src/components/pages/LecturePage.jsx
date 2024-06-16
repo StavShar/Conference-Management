@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture } from '../../services/lecService';
+import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture, getParticipants } from '../../services/lecService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import Popup from 'reactjs-popup';
+import '../pages/styles/LecturePage.css';
 
 function LecturePage() {
   const { lecture } = useLocation().state || {};
   const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
   const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
+  const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture, represented as: full (name, phone number)
 
   const data = {
     lectureID: lecture._id,
@@ -44,8 +47,18 @@ function LecturePage() {
       }
     };
 
+    const fetchParticipants = async () => {
+      try {
+        const res = await getParticipants(lecture._id);
+        setParticipants(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     fetchJoinedLecture();
     fetchCreatedLectures();
+    fetchParticipants();
 
   }, [lecture]);
 
@@ -118,6 +131,7 @@ function LecturePage() {
     }));
   };
 
+  console.log('participants list: ', participants);
   return (
     <div className='lecture-page'>
       <p className='lecture-page-title'>Lecture Details</p>
@@ -129,6 +143,23 @@ function LecturePage() {
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
           <div className="lecture-label">Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
+          <Popup trigger=
+            {<button> Show participants </button>}
+            position="right center">
+
+            {participants.length > 0 ? (
+              <ol className='participants-ol'>
+                {participants.map(participant => (
+                  <li key={participant._id} className="participant-item">
+                    {participant.firstname} {participant.lastname}, {participant.phone}
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>No participants yet</p>
+            )}
+
+          </Popup>
           <div className="lecture-label">Description: {lecture.description}</div>
           <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
           <div>
@@ -183,7 +214,7 @@ function LecturePage() {
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -176,7 +176,20 @@ router.post("/cancelLecture", verifyToken, async (req, res) => {
 
 });
 
+router.post("/getParticipants", async (req, res) => {
+    console.log('Getting the relevant participants list from DB...');
+    const participants = await UserModel.find({ joinedLectures: { $in: [req.body.data] } });
 
+    if (!participants) {
+        console.log('ERROR! participants list is empty');
+        return res.status(404).send({ error: 'Participants list is empty' });
+    }
+    console.log('Lecture ID: ', req.body.data);
+    console.log('All joined participants of this lecture: ', participants);
+
+    console.log('sending all participants to client...');
+    return res.status(200).json({ data: participants });
+});
 
 module.exports = { lectureRouter: router };
 
