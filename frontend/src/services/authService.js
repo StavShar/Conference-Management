@@ -43,4 +43,4 @@ async function deleteUser(data) {
     }
 }
 
-export { registration, login , deleteUser};
+export { registration, login, deleteUser };

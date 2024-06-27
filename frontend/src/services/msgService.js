@@ -4,7 +4,7 @@ const backendURL = 'http://localhost:3001';
 async function sendBroadcastMessages(data) {
     try {
         const res = await axios.post(backendURL + "/msg/sendBroadcastMessages", { data });
-        alert("Login successfully!");
+        alert("broadcast messages sent successfully!");
         return (res);
     } catch (err) {
         if (err.response && err.response.status === 400)
