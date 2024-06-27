@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture, getParticipants } from '../../services/lecService';
+import { sendBroadcastMessages } from '../../services/msgService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import Popup from 'reactjs-popup';
 import '../pages/styles/LecturePage.css';
 
 function LecturePage() {
   const { lecture } = useLocation().state || {};
-  const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the lecture that specific user joined to
+  const [joinedLecture, setJoinedLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
-  const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
+  const [selectedLectureAnswers, setSelectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
   const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture, represented as: full (name, phone number)
+  const [message, setMessage] = useState(''); // state to store broadcast message
 
   const data = {
     lectureID: lecture._id,
@@ -32,7 +34,7 @@ function LecturePage() {
     const fetchJoinedLecture = async () => {
       try {
         const res = await getJoinedLectures();
-        setJoinedeLecture(res.data);
+        setJoinedLecture(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -92,7 +94,7 @@ function LecturePage() {
       const res = await joinLecture(data);
 
       if (res.status && res.status === 200) {
-        setJoinedeLecture([...joinedLecture, id]);
+        setJoinedLecture([...joinedLecture, id]);
         lecture.participants.push(localStorage.getItem("userID"));
       }
       else
@@ -107,7 +109,7 @@ function LecturePage() {
     try {
       const res = await cancelLecture(data);
       if (res.status && res.status === 200) {
-        setJoinedeLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
+        setJoinedLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
         lecture.participants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
       }
       else
@@ -122,7 +124,7 @@ function LecturePage() {
 
   const handleAnswerSelect = (event, qIndex, lectureID) => {
     const selectedAnswer = event.target.value;
-    setselectedLectureAnswers(prevState => ({
+    setSelectedLectureAnswers(prevState => ({
       ...prevState,
       [lectureID]: {
         ...prevState[lectureID],
@@ -131,7 +133,42 @@ function LecturePage() {
     }));
   };
 
-  console.log('participants list: ', participants);
+  const sendBroadcastMessage = async () => {
+    if (!message) {
+      alert("Error! The broadcast message is empty")
+      return;
+    }
+    console.log('broadcasr message: ', message);
+    const emails = participants.map(participant => participant.email);
+
+    const subject = 'Broadcast mesage'; // this is the title of the email
+    const lectureData = `\n\n\nLecture details:\n  title: ${lecture.title},\n  date: ${extractDate(lecture.date)},\n  location: ${lecture.location}`; // this is the data of the lecture
+    const messagesList = emails.map(email => ({
+      email: email,
+      subject: subject,
+      message: message,
+      lectureData: lectureData
+    }));
+
+
+    try {
+      const res = await sendBroadcastMessages(messagesList);
+      if (res.status && res.status === 200) {
+        //if broadcast success
+      }
+      else
+        alert("FAIL! " + res.data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    //alert('Broadcast message sent: ' + message);
+    // Reset the message state after sending
+    //setMessage('');
+    //window.location.reload()
+  }
+
+
   return (
     <div className='lecture-page'>
       <p className='lecture-page-title'>Lecture Details</p>
@@ -143,23 +180,24 @@ function LecturePage() {
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
           <div className="lecture-label">Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
-          {isCreatedLecture(lecture._id) && <Popup trigger=
-            {<button> Show participants </button>}
-            position="right center">
-
-            {participants.length > 0 ? (
-              <ol className='participants-ol'>
-                {participants.map(participant => (
-                  <li key={participant._id} className="participant-item">
-                    {participant.firstname} {participant.lastname}, {participant.phone}
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p>No participants yet</p>
-            )}
-
-          </Popup>}
+          {isCreatedLecture(lecture._id) && (
+            <Popup
+              trigger={<button>Show participants</button>}
+              position="right center"
+            >
+              {participants.length > 0 ? (
+                <ol className='participants-ol'>
+                  {participants.map(participant => (
+                    <li key={participant._id} className="participant-item">
+                      {participant.firstname} {participant.lastname}, {participant.phone}
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>No participants yet</p>
+              )}
+            </Popup>
+          )}
           <div className="lecture-label">Description: {lecture.description}</div>
           <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
           <div>
@@ -207,14 +245,30 @@ function LecturePage() {
           )}
 
           {isCreatedLecture(lecture._id) && (
-            <Link to={`/EditPage/${lecture.title}`} state={{ lecture }}>
-              <button>Edit</button>
-            </Link>
-
+            <>
+              <Link to={`/EditPage/${lecture.title}`} state={{ lecture }}>
+                <button>Edit</button>
+              </Link>
+              <Popup
+                className='broadcast-popup'
+                trigger={<button>Broadcast message</button>}
+                position="center"
+              >
+                <div>
+                  <textarea
+                    className='broadcast-msg'
+                    placeholder='Type the broadcast message here...'
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                  <button className='broadcast-btn' onClick={sendBroadcastMessage}>Send</button>
+                </div>
+              </Popup>
+            </>
           )}
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

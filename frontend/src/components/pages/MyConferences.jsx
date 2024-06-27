@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import '../pages/styles/MyConferences.css';
 import { getCreatedConferences } from '../../services/conService';
 import { getJoinedLectures } from '../../services/lecService';
-import { useLocation, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function MyConferences() {
   const [createdConferences, setCreatedConferences] = useState([]); // refers to the conferences that created by the specific user
   const [joinedLectures, setJoinedLectures] = useState([]); // refers to the lectures that a specific user has joined to
+
+  const navigate = useNavigate();
 
   function extractDate(datetime) {
     const [date] = datetime.split("T");
@@ -18,7 +20,14 @@ function MyConferences() {
     const fetchJoinedLectures = async () => {
       try {
         const res = await getJoinedLectures();
-        setJoinedLectures(res.data);
+        if (res.status == 403) {
+          window.localStorage.clear();
+          navigate('/login');
+          window.location.reload();
+        }
+        else {
+          setJoinedLectures(res.data);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -27,10 +36,18 @@ function MyConferences() {
     const fetchCreatedConferences = async () => {
       try {
         const res = await getCreatedConferences();
-        setCreatedConferences(res.data);
+        if (res.status == 403) {
+          window.localStorage.clear();
+          navigate('/login');
+          window.location.reload();
+        }
+        else {
+          setCreatedConferences(res.data);
+        }
       } catch (err) {
         console.log(err);
       }
+
     };
 
     fetchJoinedLectures();

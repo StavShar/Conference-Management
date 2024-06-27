@@ -29,6 +29,9 @@ async function getJoinedLectures() {
         console.log("All joined Lecture has been retrieved !");
         return (res.data);
     } catch (err) {
+        if (err.response.status === 403) {
+            return (err.response);
+        }
         if (err.response && err.response.status === 400)
             return (err.response.data.message);
         else
