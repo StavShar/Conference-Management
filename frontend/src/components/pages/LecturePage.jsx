@@ -11,7 +11,7 @@ function LecturePage() {
   const [joinedLecture, setJoinedLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
   const [selectedLectureAnswers, setSelectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
-  const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture, represented as: full (name, phone number)
+  const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture
   const [message, setMessage] = useState(''); // state to store broadcast message
 
   const data = {
@@ -138,7 +138,7 @@ function LecturePage() {
       alert("Error! The broadcast message is empty")
       return;
     }
-    console.log('broadcasr message: ', message);
+    console.log('broadcast message: ', message);
     const emails = participants.map(participant => participant.email);
 
     const subject = 'Broadcast mesage'; // this is the title of the email
@@ -154,18 +154,15 @@ function LecturePage() {
     try {
       const res = await sendBroadcastMessages(messagesList);
       if (res.status && res.status === 200) {
-        //if broadcast success
+        alert("broadcast messages sent successfully!");
+        setMessage('');
+        window.location.reload()
       }
       else
         alert("FAIL! " + res.data);
     } catch (err) {
       console.log(err);
     }
-
-    //alert('Broadcast message sent: ' + message);
-    // Reset the message state after sending
-    //setMessage('');
-    //window.location.reload()
   }
 
 
@@ -200,6 +197,9 @@ function LecturePage() {
           )}
           <div className="lecture-label">Description: {lecture.description}</div>
           <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
+          <div className="lecture-label">Lecturer name: {lecture.lecturerName}</div>
+          <div className="lecture-label">Lecturer info: {lecture.lecturerInfo}</div>
+          <div className="lecture-label">Lecturer picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecturer-image" /></div>
           <div>
             {lecture.form && lecture.form.map((question, qIndex) => (
               <div key={qIndex}>
