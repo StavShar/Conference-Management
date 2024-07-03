@@ -49,12 +49,9 @@ function ConferencePage() {
                         <div>End date: {extractDate(conference.endDate)}</div>
                     </div>
                     <div className="con-description">Description: {conference.description}</div>
-<<<<<<< HEAD
                     <div> <img src={conference.picURL} alt="" /></div>
 
-=======
                     
->>>>>>> dev-picture
                     <div style={{ marginBottom: '20px' }}>
                         {isCreator && <Link className="create-lecture-button" to={`/createlecture`} state={{ conference }}>+ Lecture</Link>}
                     </div>

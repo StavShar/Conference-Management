@@ -259,7 +259,8 @@ function LecturePage() {
           <div className="lecture-label">Lecturer picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecturer-image" /></div>
           <div className="lecture-label">Picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" /></div>
           <div>
-            {lecture.form && lecture.form.map((question, qIndex) => (
+          
+            {!isCreatedLecture(lecture._id) && lecture.form && lecture.form.map((question, qIndex) => (
               <div key={qIndex}>
                 <p>Question {qIndex + 1}: {question.question}</p>
                 <select onChange={(event) => handleAnswerSelect(event, qIndex, lecture._id)}>
