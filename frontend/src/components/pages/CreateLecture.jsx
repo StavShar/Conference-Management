@@ -7,11 +7,14 @@ import { uploadPic } from '../../services/authService';
 
 function CreateLecture() {
     const [inputDateType, setInputDateType] = useState('text');
-    const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
+    const [inputType, setInputType] = useState('text');
     const [personalForm, setPersonalForm] = useState(false);
     const [qaFormData, setQaFormData] = useState([]);
     const conference = useLocation().state.conference;
     const [selectedFile, setSelectedFile] = useState(null);
+    const [duration, setDuration] = useState({ hours: '', minutes: '' });
+    const [totalMinutes, setTotalMinutes] = useState('');
+
 
     const navigate = useNavigate();
 
@@ -26,7 +29,7 @@ function CreateLecture() {
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
       };
-    
+
       const handlUpload = async () => {
         try {
           if(!selectedFile) {
@@ -44,6 +47,26 @@ function CreateLecture() {
           console.log('error uploading file', error);
         }
       };
+    
+      const handleHoursChange = (event) => {
+        setDuration({ ...duration, hours: event.target.value });
+      };
+    
+      const handleMinutesChange = (event) => {
+        setDuration({ ...duration, minutes: event.target.value });
+      };
+    
+      const handleFocus = () => {
+        setInputType('select');
+      };
+    
+      const handleBlur = () => {
+        const hoursInMinutes = parseInt(duration.hours || 0) * 60;
+        const minutes = parseInt(duration.minutes || 0);
+        const total = hoursInMinutes + minutes;
+        setTotalMinutes(total ? `${total} min` : '');
+        setInputType('text');
+      };
 
     async function createLec() {
 
@@ -51,7 +74,7 @@ function CreateLecture() {
         const maxParticipants = document.getElementById('max-participants').value;
         const location = document.getElementById('location').value;
         const description = document.getElementById('description').value;
-        const durationTime = document.getElementById('time').value;
+        const durationTime = totalMinutes;
         const date = new Date(document.getElementById('date').value);
         const form = qaFormData
         const lecturerName = document.getElementById('lecturer-name').value;
@@ -187,8 +210,53 @@ function CreateLecture() {
                 </div>
 
                 <div className='create-div'>
-                    <input className='create-field' type={inputDurationTimeType} placeholder='Duration time' id="time" min="00:00" max="5:00" onFocus={() => { setInputDurationTimeType('time') }} onBlur={() => { document.getElementById('time').value ? setInputDurationTimeType('time') : setInputDurationTimeType('text') }} required />
-                </div>
+      {inputType === 'text' ? (
+        <input
+          className='create-field'
+          type='text'
+          placeholder='Duration'
+          value={totalMinutes}
+          onFocus={handleFocus}
+          readOnly
+          required
+        />
+      ) : (
+        <div onBlur={handleBlur}>
+          <select
+            className='create-field'
+            value={duration.hours}
+            onChange={handleHoursChange}
+            required
+          >
+            <option value='' disabled>
+              Hours
+            </option>
+            {[...Array(6).keys()].map((hour) => (
+              <option key={hour} value={hour}>
+                {hour}
+              </option>
+            ))}
+          </select>
+          <select
+            className='create-field'
+            value={duration.minutes}
+            onChange={handleMinutesChange}
+            required
+          >
+            <option value='' disabled>
+              Minutes
+            </option>
+            {[...Array(60).keys()].map((minute) => (
+              <option key={minute} value={minute}>
+                {minute}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+
+               
 
                 <div className='create-div'>
                     <input className='create-field' type="text" id="description" placeholder="Description" required />

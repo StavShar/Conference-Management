@@ -73,6 +73,7 @@ async function joinLecture(data) {
 async function cancelLecture(data) {
 
     try {
+        console.log("inside" , headers.token , headers.userID , headers.headers.token , headers.headers.userID);
         const res = await axios.post(backendURL + "/lec/cancelLecture", { data }, headers);
         console.log("Lecture has been cenceled !");
         return (res);
@@ -104,4 +105,44 @@ async function editLecture(data) {
     }
 }
 
-export { createLecture , getJoinedLecture , getCreatedLectures , joinLecture, cancelLecture , editLecture };
+async function getParticipantsDate(data) {
+    try {
+        
+        const res = await axios.get(backendURL + "/lec/getParticipantsDate", {
+            params: { data  }, 
+            headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
+        })
+        console.log("get all dates of birth !");
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data);
+        else if (err.response && err.response.status === 404)
+            return (err.response.data);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+}
+
+async function getForm(data) 
+{
+    try {
+        const res = await axios.get(backendURL + "/lec/getForm", {
+            params: { data  }, 
+            headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
+        }) 
+        return (res.data);
+    } catch (err) {
+        if (err.response && err.response.status === 400)
+            return (err.response.data);
+        else if (err.response && err.response.status === 404)
+            return (err.response.data);
+        else
+            console.error(err);
+        return (err.message); // returning "network error" if server is down
+    }
+
+}
+
+export { createLecture , getJoinedLecture , getCreatedLectures , joinLecture, cancelLecture , editLecture , getParticipantsDate , getForm};

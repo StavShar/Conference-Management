@@ -12,4 +12,17 @@
   .answer-input {
     margin-bottom: 10px;
   }
+
+  .create-div {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .create-field {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
   

@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { getCreatedLectures, getJoinedLecture, joinLecture, cancelLecture } from '../../services/lecService';
+import { getCreatedLectures, getJoinedLecture, joinLecture, cancelLecture,getParticipantsDate } from '../../services/lecService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import  AgeDistributionChart  from '../AgeDistributionChart';
+import { getForm } from '../../services/lecService';
+import FormDistributionChart from '../FormDistributionChart';
 import './styles/LecturePage.css';
+
 
 function LecturePage() {
   const { lecture } = useLocation().state || {};
   const [joinedLecture, setJoinedeLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
   const [selectedLectureAnswers, setselectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
+  const [showGraph, setShowGraph] = useState(false);
+  const [ages, setAges] = useState([]); // stores birthdates of participants for the specific lecture being joined
+  const [showForm, setShowForm] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [titles, setTitles] = useState('');
+
+  console.log('lecture: ', lecture.answers);
 
   const data = {
     lectureID: lecture._id,
@@ -78,6 +89,7 @@ function LecturePage() {
       const data = { lectureID: id, selectedAnswers: selectedLectureAnswers[id] };
       console.log('hi from join lecture: ', data);
       const res = await joinLecture(data);
+      console.log('res: ', res + "data" + res.data1);
 
       if (res.status && res.status === 200)
         {
@@ -119,6 +131,49 @@ function LecturePage() {
         [qIndex]: selectedAnswer
       }
     }));
+  };
+
+  function calculateAgesFromBirthdates(birthdates) {
+    const today = new Date();
+    const ages = birthdates.map(birthdate => {
+        const birthDateObj = new Date(birthdate);
+        let age = today.getFullYear() - birthDateObj.getFullYear();
+        const monthDiff = today.getMonth() - birthDateObj.getMonth();
+        
+        // Adjust age based on month difference
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+            age--;
+        }
+        
+        return age;
+    });
+    
+    return ages;
+}
+
+  const AgeGraph = async () => {
+    const res = await getParticipantsDate(lecture._id);
+    setAges(calculateAgesFromBirthdates(res.data));
+    setShowGraph(!showGraph);
+    
+  };
+
+  const FormGraph = async (lectureID, userID, index) => {
+    try {
+      const data = {
+        lectureID: lectureID,
+        userID: userID,
+        questionIndex: index
+      };
+  
+      const res = await getForm(data);
+      console.log('res:', res);
+      setAnswers(res); // Update state with fetched form data
+      setShowForm(!showForm);
+      setTitles(lecture.form[index].question);
+    } catch (error) {
+      console.error('Error fetching form data:', error);
+    }
   };
 
   return (
@@ -182,8 +237,29 @@ function LecturePage() {
             <Link to={`/EditPage/${lecture.title}`} state={{lecture}}>
               <button>Edit</button>
             </Link>
-
           )}
+          {isCreatedLecture(lecture._id) && lecture.participants.length > 0 ? (
+            <div>
+            <button onClick={AgeGraph}>Age Graph</button>
+            
+            {lecture.form.length > 0 && (
+  lecture.form.map((formItem, index) => (
+    <button key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
+      Form Chart {index + 1}
+    </button>
+  ))
+)}
+            
+            </div>
+          ) : (
+            isCreatedLecture(lecture._id) && (
+              <div>No Graph available</div>
+            )
+          )}
+          
+         {showGraph && <AgeDistributionChart ages={ages} />}
+         {showForm && <FormDistributionChart titles={titles} answersData={answers} />}
+          
         </div>
       </div>
     </div>
