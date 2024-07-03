@@ -62,15 +62,15 @@ function CreateLecture() {
         }
 
         const dateConfereceValidation = (date) => {
-            
+
             const conferenceStartDate = new Date(conference.startDate);
             const conferenceEndDate = new Date(conference.endDate);
-                if(date >= conferenceStartDate && date <= conferenceEndDate)
-                    return true;
-                return false;
-            }
+            if (date >= conferenceStartDate && date <= conferenceEndDate)
+                return true;
+            return false;
+        }
 
-    
+
 
 
         // checking if there are empty fields

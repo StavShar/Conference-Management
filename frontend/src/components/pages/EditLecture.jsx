@@ -6,6 +6,7 @@ import { sendUpdateMessages } from '../../services/msgService';
 
 function EditPage() {
   const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture
+  const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
 
   const { lecture } = useLocation().state || {};
   const navigate = useNavigate();
@@ -21,8 +22,10 @@ function EditPage() {
 
   function extractTime(datetime) {
     if (!datetime) return 'N/A';
-    const time = new Date(datetime).toISOString().split('T')[1].split(':');
-    return `${time[0]}:${time[1]}`;
+    const date = new Date(datetime);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   useEffect(() => {
@@ -50,9 +53,10 @@ function EditPage() {
     const lecturerName = document.getElementById('lecturer-name').value;
     const lecturerInfo = document.getElementById('lecturer-info').value;
     const lecturerPic = document.getElementById('lecturer-picture').value;
+    const MAX_PARTICIPANTS = 10;
 
     const maxParticipantsValidation = (maxParticipants) => {
-      if (maxParticipants >= 10 && maxParticipants <= 200) return true;
+      if ((maxParticipants >= MAX_PARTICIPANTS && maxParticipants <= 200) && (maxParticipants >= lecture.participants.length)) return true;
       return false;
     };
 
@@ -79,7 +83,8 @@ function EditPage() {
       printErrorMsg("Error! Fields can't be empty");
       return;
     } else if (!maxParticipantsValidation(maxParticipants)) {
-      printErrorMsg("Error! Max participants must be between 10 to 200");
+      let x = Math.max(MAX_PARTICIPANTS, lecture.participants.length);
+      printErrorMsg(`Error! Max participants must be between ${x} to 200`);
       return;
     } else if (!locationValidation(location)) {
       printErrorMsg("Error! Location is invalid");
@@ -152,6 +157,12 @@ function EditPage() {
 
   if (!lecture) return <div>Loading...</div>;
 
+  const formatDateTimeLocal = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}T${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  };
+
   return (
     <div className='edit-page'>
       <h2>Edit Lecture: {lecture.title}</h2>
@@ -166,12 +177,11 @@ function EditPage() {
         </div>
         <div>
           <label>Date: </label>
-          <input type="datetime-local" id="date" defaultValue={new Date(lecture.date).toISOString().slice(0, 16)} />
+          <input type="datetime-local" id="date" defaultValue={formatDateTimeLocal(lecture.date)} />
         </div>
-
         <div>
           <label>Duration Time: </label>
-          <input type="text" id="time" defaultValue={lecture.durationTime} />
+          <input className='create-field' defaultValue={lecture.durationTime} type={inputDurationTimeType} placeholder='Duration time' id="time" min="00:00" max="5:00" onFocus={() => { setInputDurationTimeType('time') }} onBlur={() => { document.getElementById('time').value ? setInputDurationTimeType('time') : setInputDurationTimeType('text') }} required />
         </div>
         <div>
           <label>Location: </label>
@@ -183,7 +193,7 @@ function EditPage() {
         </div>
         <div>
           <label>Picture URL: </label>
-          <input type="text" id="lecturer-picture" defaultValue={lecture.picture} />
+          <input type="text" id="lecturer-picture" defaultValue={lecture.lecturerPic} />
         </div>
         <div>
           <label>Lecturer Name: </label>
@@ -193,7 +203,6 @@ function EditPage() {
           <label>Lecturer Info: </label>
           <input type="text" id="lecturer-info" defaultValue={lecture.lecturerInfo} />
         </div>
-
 
         <button type="button" onClick={editLec}>Save</button>
         <button type="button" onClick={() => window.history.back()}>Cancel</button>

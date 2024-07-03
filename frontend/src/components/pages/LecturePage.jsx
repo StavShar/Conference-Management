@@ -26,8 +26,10 @@ function LecturePage() {
 
   function extractTime(datetime) {
     if (!datetime) return 'N/A';
-    const time = new Date(datetime).toISOString().split('T')[1].split(':');
-    return `${time[0]}:${time[1]}`;
+    const date = new Date(datetime);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   useEffect(() => {
