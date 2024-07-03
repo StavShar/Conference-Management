@@ -2,18 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { createConference } from '../../services/conService';
 import { useNavigate } from 'react-router-dom';
 import './styles/CreateConferences.css'
+import { uploadPic } from '../../services/authService';
 
 function CreateConferences() {
   const [startDate, setStartDate] = useState('text');
   const [endDate, setEndDate] = useState('text');
-
   const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const printErrorMsg = (msg) => {
     document.getElementById('message').textContent = msg;
   }
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handlUpload = async () => {
+    try {
+      if(!selectedFile) {
+        alert('Please select a file');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      const res = await uploadPic(formData);
+      console.log('file uploaded', res );
+      
+      return res;
+
+    } catch (error) {
+      console.log('error uploading file', error);
+    }
+  };
+      
+
   async function createCon() {
+
 
     const title = document.getElementById('title').value;
     const country = document.getElementById('country').value;
@@ -21,8 +46,10 @@ function CreateConferences() {
     const startDate = new Date(document.getElementById('start-date').value);
     const endDate = new Date(document.getElementById('end-date').value);
     const description = document.getElementById('description').value;
-    const picURL = document.getElementById('conference-picture').value;
+    const picURL = await handlUpload();
     const location = city + ', ' + country;
+
+    console.log('picURL', picURL);
 
     const locationValidation = (location) => {
       // we dont know how to implement it yet
@@ -106,7 +133,7 @@ function CreateConferences() {
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="text" id="conference-picture" placeholder="Conference picture URL" />
+          <input className='create-field' type="file" id="conference-picture" onChange={handleFileChange} placeholder="Conference picture URL" />
         </div>
 
         <p id="message"></p>

@@ -48,6 +48,7 @@ router.get("/getAllConferences", async (req, res) => {
     console.log('All conferences: ', conferences);
 
     console.log('sending all conferences to client...');
+   
     return res.status(200).json({ data: conferences });
 });
 

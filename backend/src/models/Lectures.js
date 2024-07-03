@@ -11,6 +11,11 @@ const LectureSchema = new mongoose.Schema({
     lecturerInfo: { type: String, required: true },
     lecturerPic: { type: String, required: false },
     form: { type: Array, required: false },
+    answers: [{
+        questionIndex: { type: Number, required: false },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: false },
+        answer: { type: String, required: false }
+    }],
 
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
     lectureCreator: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },

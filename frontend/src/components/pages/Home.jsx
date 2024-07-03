@@ -30,7 +30,8 @@ const Home = () => {
     <div className="homepage">
       <p className="home-p">HomePage</p>
 
-      {conferences.map((conference) => (
+      {conferences && conferences.length > 0 ? (
+       conferences.map((conference) => (
         <div className="conference">
           <lu key={conference._id}>
             <div className="con-tomplate">
@@ -46,7 +47,10 @@ const Home = () => {
             </div>
           </lu>
         </div>
-      ))}
+      ))
+    ) : (
+      <div className="no-conferences">There are no conferences available</div>
+    )}
     </div>
   );
 };

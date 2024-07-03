@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture, getParticipants } from '../../services/lecService';
+import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture, getParticipants, getParticipantsDate } from '../../services/lecService';
 import { sendBroadcastMessages } from '../../services/msgService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import Popup from 'reactjs-popup';
 import '../pages/styles/LecturePage.css';
+import  AgeDistributionChart  from '../AgeDistributionChart';
+import { getForm } from '../../services/lecService';
+import FormDistributionChart from '../FormDistributionChart';
+
+
 
 function LecturePage() {
   const { lecture } = useLocation().state || {};
@@ -13,6 +18,13 @@ function LecturePage() {
   const [selectedLectureAnswers, setSelectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
   const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture
   const [message, setMessage] = useState(''); // state to store broadcast message
+  const [showGraph, setShowGraph] = useState(false);
+  const [ages, setAges] = useState([]); // stores birthdates of participants for the specific lecture being joined
+  const [showForm, setShowForm] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [titles, setTitles] = useState('');
+
+  console.log('lecture: ', lecture.answers);
 
   const data = {
     lectureID: lecture._id,
@@ -94,6 +106,7 @@ function LecturePage() {
       const data = { lectureID: id, selectedAnswers: selectedLectureAnswers[id] };
       console.log('hi from join lecture: ', data);
       const res = await joinLecture(data);
+      console.log('res: ', res + "data" + res.data1);
 
       if (res.status && res.status === 200) {
         setJoinedLecture([...joinedLecture, id]);
@@ -167,6 +180,48 @@ function LecturePage() {
     }
   }
 
+  function calculateAgesFromBirthdates(birthdates) {
+    const today = new Date();
+    const ages = birthdates.map(birthdate => {
+        const birthDateObj = new Date(birthdate);
+        let age = today.getFullYear() - birthDateObj.getFullYear();
+        const monthDiff = today.getMonth() - birthDateObj.getMonth();
+        
+        // Adjust age based on month difference
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+            age--;
+        }
+        
+        return age;
+    });
+    
+    return ages;
+}
+
+  const AgeGraph = async () => {
+    const res = await getParticipantsDate(lecture._id);
+    setAges(calculateAgesFromBirthdates(res.data));
+    setShowGraph(!showGraph);
+    
+  };
+
+  const FormGraph = async (lectureID, userID, index) => {
+    try {
+      const data = {
+        lectureID: lectureID,
+        userID: userID,
+        questionIndex: index
+      };
+  
+      const res = await getForm(data);
+      console.log('res:', res);
+      setAnswers(res); // Update state with fetched form data
+      setShowForm(!showForm);
+      setTitles(lecture.form[index].question);
+    } catch (error) {
+      console.error('Error fetching form data:', error);
+    }
+  };
 
   return (
     <div className='lecture-page'>
@@ -202,6 +257,7 @@ function LecturePage() {
           <div className="lecture-label">Lecturer name: {lecture.lecturerName}</div>
           <div className="lecture-label">Lecturer info: {lecture.lecturerInfo}</div>
           <div className="lecture-label">Lecturer picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecturer-image" /></div>
+          <div className="lecture-label">Picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" /></div>
           <div>
             {lecture.form && lecture.form.map((question, qIndex) => (
               <div key={qIndex}>
@@ -268,6 +324,28 @@ function LecturePage() {
               </Popup>
             </>
           )}
+          {isCreatedLecture(lecture._id) && lecture.participants.length > 0 ? (
+            <div>
+            <button onClick={AgeGraph}>Age Graph</button>
+            
+            {lecture.form.length > 0 && (
+  lecture.form.map((formItem, index) => (
+    <button key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
+      Form Chart {index + 1}
+    </button>
+  ))
+)}
+            
+            </div>
+          ) : (
+            isCreatedLecture(lecture._id) && (
+              <div>No Graph available</div>
+            )
+          )}
+          
+         {showGraph && <AgeDistributionChart ages={ages} />}
+         {showForm && <FormDistributionChart titles={titles} answersData={answers} />}
+          
         </div>
       </div>
     </div>

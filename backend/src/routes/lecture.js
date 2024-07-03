@@ -31,6 +31,7 @@ router.post("/createLecture", verifyToken, async (req, res) => {
         lectureCreator: req.headers.userid,
         conferenceID: req.body.data.conferenceID,
         participants: [],
+        answers: [],
     });
     console.log('newLecture data: ', newLecture)
     await newLecture.save();
@@ -87,10 +88,12 @@ router.get("/getJoinedLectures", verifyToken, async (req, res) => {
 router.post("/joinLecture", verifyToken, async (req, res) => {
     const userID = req.headers.userid;
     const lectureID = req.body.data.lectureID;
+   
+
     console.log('Getting a "join a lecture" request...');
     console.log("user: ", userID);
     console.log('lecture: ', lectureID);
-
+   
     const user = await UserModel.findOne({ _id: userID });
     if (!user) {
         console.log('ERROR! user not found');
@@ -98,6 +101,7 @@ router.post("/joinLecture", verifyToken, async (req, res) => {
     }
 
     const lecture = await LectureModel.findOne({ _id: lectureID });
+    
     if (!lecture) {
         console.log('ERROR! lecture not found');
         return res.status(404).json({ data: 'lecture not found' });
@@ -112,12 +116,24 @@ router.post("/joinLecture", verifyToken, async (req, res) => {
         console.log("ERROR! This user already joined to this lecture")
         return res.status(404).json({ data: 'This user already joined to this lecture' });
     }
-
+    
     await UserModel.updateOne({ _id: userID }, { $push: { joinedLectures: lectureID } });
     await LectureModel.updateOne({ _id: lectureID }, { $push: { participants: userID } });
+    if(lecture.form.length > 0){
+    const selectedAnswers = Object.values(req.body.data.selectedAnswers);
+    selectedAnswers.forEach((answer, index) => {
+        const answerObject = {
+            questionIndex: index,
+            userId: userID,
+            answer: answer
+        };
+        lecture.answers.push(answerObject);
+    });
+}
 
+    await lecture.save(); // Save the lecture document with the updated answers
     console.log('sending all joined lecture to client...');
-    return res.status(200).json({ data: user.joinedLectures });
+    return res.status(200).json({ data: user.joinedLectures,data1: lecture.answers });
 });
 
 router.post("/editLecture", verifyToken, async (req, res) => {
@@ -166,6 +182,10 @@ router.post("/cancelLecture", verifyToken, async (req, res) => {
         { _id: lectureID },
         { $pull: { participants: userID } });
 
+    await LectureModel.updateOne(
+        { _id: lectureID },
+    {$pull : {answers: {userId: userID}}});
+
     await UserModel.updateOne({ _id: userID },
         { $pull: { joinedLectures: lectureID } });
 
@@ -179,7 +199,6 @@ router.post("/cancelLecture", verifyToken, async (req, res) => {
 router.post("/getParticipants", async (req, res) => {
     console.log('Getting the relevant participants list from DB...');
     const participants = await UserModel.find({ joinedLectures: { $in: [req.body.data] } });
-
     if (!participants) {
         console.log('ERROR! participants list is empty');
         return res.status(404).send({ error: 'Participants list is empty' });
@@ -190,6 +209,55 @@ router.post("/getParticipants", async (req, res) => {
     console.log('sending all participants to client...');
     return res.status(200).json({ data: participants });
 });
+    
+router.get("/getParticipantsDate", verifyToken, async (req, res) => {
+    console.log('Getting all participants date from DB...');
+
+    const lecutreID  = req.query.data;
+
+    const lecture = await LectureModel.findOne({ _id: lecutreID });
+
+    if (!lecture) {
+        console.log('ERROR! lecture not found');
+        return res.status(404).send({ error: 'lecture not found' });
+    }
+    const users = await UserModel.find({ _id: { $in: lecture.participants } });
+    if (!users) {
+        console.log('ERROR! users not found');
+        return res.status(404).send({ error: 'users not found' });
+    }
+    
+    const participantsDate = users.map(user => user.dateOfBirth);
+    console.log('All participants date of this lecture: ', participantsDate);
+    return res.status(200).json({ data: participantsDate });
+
+});
+
+router.get("/getForm", verifyToken, async (req, res) => {
+
+    console.log('Getting form from DB...');
+
+    const lecutreID = req.query.data.lectureID;
+    const index = req.query.data.questionIndex; 
+    
+    
+    const lecture = await LectureModel.findOne({ _id: lecutreID });
+
+    if (!lecture) {
+        console.log('ERROR! lecture not found');
+        return res.status(404).send({ error: 'lecture not found' });
+    }
+    console.log('All form of this lecture: ', lecture.answers);
+    const filterAnswers = lecture.answers.filter(answer => answer.questionIndex == index);
+    const answers = filterAnswers.map(answer => answer.answer);
+
+    console.log('All answers of this lecture: ', answers);
+    return res.status(200).send(answers);
+    
+});
+
+
+  
 
 module.exports = { lectureRouter: router };
 
