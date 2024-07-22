@@ -16,26 +16,41 @@ router.post('/delete', async (req, res) => {
     // Delete Conferences with name "TestConference"
     await ConferenceModel.deleteMany({ title: 'TestConference' });
 
-    const user = await UserModel.findOne({ email: 'test1@test.test'});
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-    user.conferencesCreated = [];
-    user.conferencesJoined = [];
-    user.lectureCreated = [];
-    user.lectureJoined = [];
-    await user.save();
+    try {
+        await UserModel.updateOne(
+            { email: 'test1@test.test' },
+            { 
+                $set: {
+                    conferencesCreated: [],
+                    lecturesCreated: [],
+                    joinedConferences: [],
+                    joinedLectures: []
+                }
+            }
 
-    const user2 = await User.findOne({ email: 'test2@test.test'});
-    if (!user2) {
-      return res.status(404).send('User not found');
+        );
+        console.log(`User data has been reset for user`);
+    } catch (error) {
+        console.error('Error resetting user data:', error);
     }
-    user2.conferencesCreated = [];
-    user2.conferencesJoined = [];
-    user2.lectureCreated = [];
-    user2.lectureJoined = [];
-    await user2.save();
+    try {
+        await UserModel.updateOne(
+            { email: 'test2@test.test' },
+            { 
+                $set: {
+                    conferencesCreated: [],
+                    lecturesCreated: [],
+                    joinedConferences: [],
+                    joinedLectures: []
+                }
+            }
 
+        );
+        console.log(`User data has been reset for user`);
+    } catch (error) {
+        console.error('Error resetting user data:', error);
+    }
+    
     res.status(200).send('Objects deleted successfully');
   } catch (error) {
     console.error('Error deleting objects:', error);

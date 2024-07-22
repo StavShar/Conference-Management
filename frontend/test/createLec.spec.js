@@ -69,9 +69,10 @@ describe("Create Lecture test", function() {
               await alert1.accept();
               console.log('Handled unexpected alert: "Create successfully!"');
               
+            await driver.sleep(1000);
             await driver.findElement(By.linkText('TestConference')).click();
             await driver.sleep(1000);
-            await driver.findElement(By.linkText('TestLecture')).click();
+            await driver.findElement(By.id('lecture')).click();
 
             const currentUrl = await driver.getCurrentUrl();
             assert.equal(currentUrl, 'http://localhost:3000/LecturePage/TestLecture', 'Expected URL does not match actual URL');
