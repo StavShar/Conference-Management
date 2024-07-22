@@ -12,9 +12,13 @@ router.post('/delete', async (req, res) => {
     console.log('Deleting objects...');
     // Delete Lectures with title "TestLecture"
     await LectureModel.deleteMany({ title: 'TestLecture' });
+    await LectureModel.deleteMany({ title: 'NewTestLecture' });
 
     // Delete Conferences with name "TestConference"
     await ConferenceModel.deleteMany({ title: 'TestConference' });
+
+    
+
 
     try {
         await UserModel.updateOne(
