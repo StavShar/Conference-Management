@@ -6,7 +6,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha test/*.spec.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "delete": "node src/services/deleteService.js"
+    
   },
   "eslintConfig": {
     "extends": [

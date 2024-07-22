@@ -33,7 +33,6 @@ function CreateLecture() {
       const handlUpload = async () => {
         try {
           if(!selectedFile) {
-            alert('Please select a file');
             return;
           }
           const formData = new FormData();
@@ -81,6 +80,8 @@ function CreateLecture() {
         const lecturerInfo = document.getElementById('lecturer-info').value;
         const lecturerPic = await handlUpload();
 
+
+
         const maxParticipantsValidation = (maxParticipants) => {
             if (maxParticipants >= 10 && maxParticipants <= 200)
                 return true;
@@ -93,10 +94,26 @@ function CreateLecture() {
         }
 
         const durationTimeValidation = (durationTime) => {
-            if (durationTime >= "00:30" && durationTime <= "5:00")
-                return true;
-            return false;
-        }
+          console.log(`Original durationTime: ${durationTime}`); // Debugging statement
+      
+          // Extract numeric value from the formatted string
+          const match = durationTime.match(/^(\d+) min$/);
+          if (!match) {
+              console.error('Invalid format, durationTime should be in the format "xx min"'); // Debugging statement
+              return false;
+          }
+      
+          const duration = Number(match[1]);
+          console.log(`Extracted numeric duration: ${duration}`); // Debugging statement
+      
+          if (duration >= 30 && duration <= 300) {
+              return true;
+          }
+          return false;
+      }
+      
+      
+      
 
         const dateValidation = (date) => {
             const now = new Date();
@@ -118,7 +135,8 @@ function CreateLecture() {
         }
 
 
-
+        
+        
 
         // checking if there are empty fields
         if (!(title && maxParticipants && location && description && durationTime && date && lecturerName && lecturerInfo))
@@ -134,7 +152,7 @@ function CreateLecture() {
 
         //checking validation of duration time
         else if (!durationTimeValidation(durationTime))
-            printErrorMsg("Error! duration time must be between 00:30 to 5:00")
+            printErrorMsg("Error! duration time must be between 30 min to 300 min")
 
         //checking validation of the date
         else if (!dateValidation(date))
@@ -210,50 +228,54 @@ function CreateLecture() {
                 </div>
 
                 <div className='create-div'>
-      {inputType === 'text' ? (
-        <input
-          className='create-field'
-          type='text'
-          placeholder='Duration'
-          value={totalMinutes}
-          onFocus={handleFocus}
-          readOnly
-          required
-        />
-      ) : (
-        <div onBlur={handleBlur}>
-          <select
-            className='create-field'
-            value={duration.hours}
-            onChange={handleHoursChange}
-            required
-          >
-            <option value='' disabled>
-              Hours
-            </option>
-            {[...Array(6).keys()].map((hour) => (
-              <option key={hour} value={hour}>
-                {hour}
-              </option>
-            ))}
-          </select>
-          <select
-            className='create-field'
-            value={duration.minutes}
-            onChange={handleMinutesChange}
-            required
-          >
-            <option value='' disabled>
-              Minutes
-            </option>
-            {[...Array(60).keys()].map((minute) => (
-              <option key={minute} value={minute}>
-                {minute}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+                {inputType === 'text' ? (
+  <input
+    className='create-field'
+    id='duration'  // Ensure this is correct
+    type='text'
+    placeholder='Duration'
+    value={totalMinutes}
+    onFocus={handleFocus}
+    readOnly
+    required
+  />
+) : (
+  <div onBlur={handleBlur}>
+    <select
+      className='create-field'
+      id='hours-duration'  // Ensure this is correct
+      value={duration.hours}
+      onChange={handleHoursChange}
+      required
+    >
+      <option value='' disabled>
+        Hours
+      </option>
+      {[...Array(6).keys()].map((hour) => (
+        <option key={hour} value={hour}>
+          {hour}
+        </option>
+      ))}
+    </select>
+    <select
+      className='create-field'
+      id='minutes-duration'  // Ensure this is correct
+      value={duration.minutes}
+      onChange={handleMinutesChange}
+      required
+    >
+      <option value='' disabled>
+        Minutes
+      </option>
+      {[...Array(60).keys()].map((minute) => (
+        <option key={minute} value={minute}>
+          {minute}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
+
     </div>
 
                
@@ -272,7 +294,7 @@ function CreateLecture() {
                 </div>
                 <div>
                     {!personalForm && (
-                        <button type="button" onClick={handleForm}>Do you want make personal Form</button>
+                        <button type="button" id='form' onClick={handleForm}>Do you want make personal Form</button>
                     )}
                     {personalForm && (
                         <QaFormat data={receiveQaFormData} />
@@ -280,7 +302,7 @@ function CreateLecture() {
                 </div>
                 <p id="message"></p>
 
-                <input type="button" onClick={createLec} value='Create'></input>
+                <input type="button"  id='button' onClick={createLec} value='Create'></input>
             </form>
         </div>
 

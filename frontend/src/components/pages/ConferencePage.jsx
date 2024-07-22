@@ -60,7 +60,7 @@ function ConferencePage() {
                         {lectures.length > 0 ? (
                             lectures.map(lecture => (
                                 <div key={lecture._id} className="lecture-item">
-                                    <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }}>
+                                    <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }} id='lecture'>
                                         <div className='lec-details'>
                                             <p className='title'>{lecture.title}</p>
                                             <p className='date'>{extractDate(lecture.date)}</p>

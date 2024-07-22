@@ -152,6 +152,7 @@ function QaFormat({data}) {
             Enter your question:
             <input
               type="text"
+              id='question'
               value={currentQuestion.question}
               onChange={(event) => setCurrentQuestion({ ...currentQuestion, question: event.target.value })}
               disabled={isEditMode}
@@ -162,6 +163,7 @@ function QaFormat({data}) {
               <label>
                 Answer {index + 1}:
                 <input
+                  id={`answer-${index}`}
                   type="text"
                   value={answer}
                   onChange={(event) => handleAnswerChange(index, event.target.value)}
@@ -183,9 +185,10 @@ function QaFormat({data}) {
       )}
       {isNewQuestion && (
         <form>
-          <label>
+          <label id='question'>
             Enter your question:
-            <input
+            <input 
+             id='question'
               type="text"
               value={currentQuestion.question}
               onChange={(event) => setCurrentQuestion({ ...currentQuestion, question: event.target.value })}
@@ -197,6 +200,7 @@ function QaFormat({data}) {
               <label>
                 Answer {index + 1}:
                 <input
+                id={`answer-${index}`}
                   type="text"
                   value={answer}
                   onChange={(event) => handleAnswerChange(index, event.target.value)}

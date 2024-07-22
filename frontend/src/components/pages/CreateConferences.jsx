@@ -21,7 +21,6 @@ function CreateConferences() {
   const handlUpload = async () => {
     try {
       if(!selectedFile) {
-        alert('Please select a file');
         return;
       }
       const formData = new FormData();
@@ -57,10 +56,22 @@ function CreateConferences() {
     }
 
     const datesValidation = (startDate, endDate) => {
-      if ((endDate - startDate) > 0)
-        return true;
+      const now = new Date();
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      
+      // Check if start date is at least 24 hours from the current time
+      if ((start - now) < 24 * 60 * 60 * 1000) {
+          return false;
+      }
+      
+      // Check if end date is after start date
+      if ((end - start) > 0) {
+          return true;
+      }
+      
       return false;
-    }
+  };
 
 
     // checking if there are empty fields
@@ -133,12 +144,12 @@ function CreateConferences() {
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="file" id="conference-picture" onChange={handleFileChange} placeholder="Conference picture URL" />
+          <input className='create-field' type="file" id="conference-picture"  placeholder="Conference picture URL" />
         </div>
 
         <p id="message"></p>
 
-        <input type="button" onClick={createCon} value='Create'></input>
+        <input type="button" id='button' onClick={createCon} value='Create'></input>
       </form>
     </div>
 

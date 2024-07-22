@@ -7,6 +7,10 @@ import { sendUpdateMessages } from '../../services/msgService';
 function EditPage() {
   const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture
   const [inputDurationTimeType, setInputDurationTimeType] = useState('text');
+  const [duration, setDuration] = useState({ hours: '', minutes: '' });
+  const [totalMinutes, setTotalMinutes] = useState('');
+  const [inputDateType, setInputDateType] = useState('text');
+    const [inputType, setInputType] = useState('text');
 
   const { lecture } = useLocation().state || {};
   const navigate = useNavigate();
@@ -28,6 +32,26 @@ function EditPage() {
     return `${hours}:${minutes}`;
   }
 
+  const handleHoursChange = (event) => {
+    setDuration({ ...duration, hours: event.target.value });
+  };
+
+  const handleMinutesChange = (event) => {
+    setDuration({ ...duration, minutes: event.target.value });
+  };
+
+  const handleFocus = () => {
+    setInputType('select');
+  };
+
+  const handleBlur = () => {
+    const hoursInMinutes = parseInt(duration.hours || 0) * 60;
+    const minutes = parseInt(duration.minutes || 0);
+    const total = hoursInMinutes + minutes;
+    setTotalMinutes(total ? `${total} min` : '');
+    setInputType('text');
+  };
+
   useEffect(() => {
     const fetchParticipants = async () => {
       try {
@@ -48,7 +72,7 @@ function EditPage() {
     const maxParticipants = document.getElementById('max-participants').value;
     const location = document.getElementById('location').value;
     const description = document.getElementById('description').value;
-    const durationTime = document.getElementById('time').value;
+    const durationTime = totalMinutes;
     const date = new Date(document.getElementById('date').value);
     const lecturerName = document.getElementById('lecturer-name').value;
     const lecturerInfo = document.getElementById('lecturer-info').value;
@@ -66,9 +90,13 @@ function EditPage() {
     };
 
     const durationTimeValidation = (durationTime) => {
-      if (durationTime >= "00:30" && durationTime <= "5:00") return true;
-      return false;
-    };
+      
+      if (durationTime => '30' && durationTime <= '300') 
+      {
+            return true;
+      }
+        return false;
+    }
 
     const dateValidation = (date) => {
       const now = new Date();
@@ -179,10 +207,56 @@ function EditPage() {
           <label>Date: </label>
           <input type="datetime-local" id="date" defaultValue={formatDateTimeLocal(lecture.date)} />
         </div>
-        <div>
-          <label>Duration Time: </label>
-          <input className='create-field' defaultValue={lecture.durationTime} type={inputDurationTimeType} placeholder='Duration time' id="time" min="00:00" max="5:00" onFocus={() => { setInputDurationTimeType('time') }} onBlur={() => { document.getElementById('time').value ? setInputDurationTimeType('time') : setInputDurationTimeType('text') }} required />
-        </div>
+        <div className='create-div'>
+                {inputType === 'text' ? (
+  <input
+    className='create-field'
+    id='duration'  // Ensure this is correct
+    type='text'
+    placeholder='Duration'
+    value={totalMinutes}
+    onFocus={handleFocus}
+    readOnly
+    required
+  />
+) : (
+  <div onBlur={handleBlur}>
+    <select
+      className='create-field'
+      id='hours-duration'  // Ensure this is correct
+      value={duration.hours}
+      onChange={handleHoursChange}
+      required
+    >
+      <option value='' disabled>
+        Hours
+      </option>
+      {[...Array(6).keys()].map((hour) => (
+        <option key={hour} value={hour}>
+          {hour}
+        </option>
+      ))}
+    </select>
+    <select
+      className='create-field'
+      id='minutes-duration'  // Ensure this is correct
+      value={duration.minutes}
+      onChange={handleMinutesChange}
+      required
+    >
+      <option value='' disabled>
+        Minutes
+      </option>
+      {[...Array(60).keys()].map((minute) => (
+        <option key={minute} value={minute}>
+          {minute}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
+
+    </div>
         <div>
           <label>Location: </label>
           <input type="text" id="location" defaultValue={lecture.location} />
@@ -204,7 +278,7 @@ function EditPage() {
           <input type="text" id="lecturer-info" defaultValue={lecture.lecturerInfo} />
         </div>
 
-        <button type="button" onClick={editLec}>Save</button>
+        <button type="button" id='button' onClick={editLec}>Save</button>
         <button type="button" onClick={() => window.history.back()}>Cancel</button>
         <p id="message"></p>
       </form>

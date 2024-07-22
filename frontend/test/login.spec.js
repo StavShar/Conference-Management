@@ -20,7 +20,6 @@ describe("Login test", function() {
 
             await driver.findElement(By.id('email')).sendKeys('asd@asd.asd');
             await driver.findElement(By.id('password')).sendKeys('asd');
-            await driver.sleep(3000);
             await driver.findElement(By.id('button')).click();
             await driver.sleep(1000);
 

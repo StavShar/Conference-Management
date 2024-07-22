@@ -41,7 +41,7 @@ const Home = () => {
               <div className="con-date">End date: {extractDate(conference.endDate)}</div>
               <div className="con-description">Description: {conference.description}</div>
               <div> <img src={conference.picURL} alt="" /></div>
-              <div><Link to={`/ConferencePage/${conference.title}`}
+              <div><Link to={`/ConferencePage/${conference.title}`} id={`${conference.title}`}
                 state={{ conference }}
               >More info...</Link></div>
             </div>

@@ -24,7 +24,7 @@ function LecturePage() {
   const [answers, setAnswers] = useState([]);
   const [titles, setTitles] = useState('');
 
-  console.log('lecture: ', lecture.answers);
+  console.log('lecture: ', joinedLecture);
 
   const data = {
     lectureID: lecture._id,
@@ -134,7 +134,9 @@ function LecturePage() {
     }
   };
 
-  const isJoinedLecture = (id) => joinedLecture ? joinedLecture.includes(id) : false;
+  const isJoinedLecture = (id) => {
+    return joinedLecture ? joinedLecture.some(lecture => lecture._id === id) : false;
+};
   const isCreatedLecture = (id) => createdLecture ? createdLecture.includes(id) : false;
 
   const handleAnswerSelect = (event, qIndex, lectureID) => {
@@ -233,7 +235,7 @@ function LecturePage() {
           <div className="lecture-label">Starting Time: {extractTime(lecture.date)}</div>
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
-          <div className="lecture-label">Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
+          <div className="lecture-label" id='participants'>Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
           {isCreatedLecture(lecture._id) && (
             <Popup
               trigger={<button>Show participants</button>}
@@ -275,6 +277,7 @@ function LecturePage() {
           {!isCreatedLecture(lecture._id) && (
             <>
               <button
+                id='join'
                 onClick={() => joinLec(lecture._id)}
                 disabled={isJoinedLecture(lecture._id)}
               >
@@ -284,7 +287,7 @@ function LecturePage() {
           )}
 
           {isJoinedLecture(lecture._id) && (
-            <button onClick={cancelLec}>
+            <button onClick={cancelLec} id='cancel'>
               Cancel
             </button>
           )}
