@@ -84,4 +84,5 @@ describe("Join and cancel Lecture test", function() {
            
             assert.equal(updatedParticipants, initialParticipants - 1, 'Expected number of participants does not match actual number of participants');
 
-} );
+});
+});
