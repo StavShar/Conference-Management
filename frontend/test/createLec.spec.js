@@ -69,8 +69,8 @@ describe("Create Lecture test", function() {
               await alert1.accept();
               console.log('Handled unexpected alert: "Create successfully!"');
               
-            await driver.sleep(1000);
             await driver.findElement(By.linkText('TestConference')).click();
+            await driver.sleep(1000);
             await driver.findElement(By.linkText('TestLecture')).click();
 
             const currentUrl = await driver.getCurrentUrl();
