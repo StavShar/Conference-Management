@@ -16,7 +16,7 @@ describe("Join and cancel Lecture test", function() {
 
         // Login
         await driver.findElement(By.linkText('Login')).click();
-        await driver.findElement(By.id('email')).sendKeys('test1@test.test');
+        await driver.findElement(By.id('email')).sendKeys('test2@test.test');
         await driver.findElement(By.id('password')).sendKeys('test123');
         await driver.findElement(By.id('button')).click();
         await driver.sleep(1000);
