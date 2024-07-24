@@ -33,7 +33,7 @@ describe("register eror test", function() {
   
       await driver.findElement(By.id('firstname')).sendKeys('test');
       await driver.findElement(By.id('lastname')).sendKeys('test');
-      await driver.findElement(By.id('phone-number')).sendKeys('1234567890')
+      await driver.findElement(By.id('phone-number')).sendKeys('0521111111')
       await driver.findElement(By.id('email')).sendKeys('asd@asd.asd');
       await driver.findElement(By.id('password')).sendKeys('test123');
       await driver.findElement(By.id('cnfrm-password')).sendKeys('test123'); 
@@ -76,7 +76,7 @@ describe("register eror test", function() {
   
        await driver.findElement(By.id('firstname')).sendKeys('test');
        await driver.findElement(By.id('lastname')).sendKeys('test');
-       await driver.findElement(By.id('phone-number')).sendKeys('1234567890')
+       await driver.findElement(By.id('phone-number')).sendKeys('0521111111')
        await driver.findElement(By.id('email')).sendKeys('test12@test.test');
        await driver.findElement(By.id('password')).sendKeys('test123');
        await driver.findElement(By.id('cnfrm-password')).sendKeys('test1234'); 
@@ -101,7 +101,7 @@ describe("register eror test", function() {
   
        await driver.findElement(By.id('firstname')).sendKeys('test');
        await driver.findElement(By.id('lastname')).sendKeys('test');
-       await driver.findElement(By.id('phone-number')).sendKeys('1234567890')
+       await driver.findElement(By.id('phone-number')).sendKeys('0521111111')
        await driver.findElement(By.id('email')).sendKeys('test@test');
        await driver.findElement(By.id('password')).sendKeys('test123');
        await driver.findElement(By.id('cnfrm-password')).sendKeys('test123'); 

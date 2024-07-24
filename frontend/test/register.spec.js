@@ -16,6 +16,7 @@ describe("register test", function() {
         options.addArguments('--no-sandbox'); // Needed if running as root
         options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
         
+     
         driver = await new Builder()
             .forBrowser('chrome')
             .setChromeOptions(options)
@@ -39,7 +40,7 @@ describe("register test", function() {
 
                 await driver.findElement(By.id('firstname')).sendKeys('test');
                 await driver.findElement(By.id('lastname')).sendKeys('test');
-                await driver.findElement(By.id('phone-number')).sendKeys('1234567891');
+                await driver.findElement(By.id('phone-number')).sendKeys('0521111111');
                 await driver.findElement(By.id('email')).sendKeys(userEmail);
                 await driver.findElement(By.id('password')).sendKeys('test123');
                 await driver.findElement(By.id('cnfrm-password')).sendKeys('test123');
