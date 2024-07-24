@@ -18,18 +18,12 @@ function register() {
 
     const mailValidation = (mail) => {
         const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/;
-
-        if (regex.test(mail))
-            return true;
-        return false;
+        return regex.test(mail);
     }
 
     const phoneValidation = (phone) => {
-        const regex = /^-?\d+$/;
-
-        if (regex.test(phone))
-            return true;
-        return false;
+        const regex = /^(?:\+972|0)5[0123458]\d{7}$/;
+        return regex.test(phone);
     }
 
     const ageValidation = (dateOfBirth) => {
