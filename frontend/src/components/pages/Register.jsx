@@ -16,6 +16,35 @@ function register() {
         document.getElementById('message').textContent = msg;
     }
 
+    const mailValidation = (mail) => {
+        const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/;
+
+        if (regex.test(mail))
+            return true;
+        return false;
+    }
+
+    const phoneValidation = (phone) => {
+        const regex = /^-?\d+$/;
+
+        if (regex.test(phone))
+            return true;
+        return false;
+    }
+
+    const ageValidation = (dateOfBirth) => {
+        const today = new Date();
+        const birthDate = new Date(dateOfBirth);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age >= 18;
+    }
+
     const handleSubmit = async () => {
 
         const firstname = document.getElementById('firstname').value;
@@ -25,22 +54,6 @@ function register() {
         const password = document.getElementById('password').value;
         const cnfrmPassword = document.getElementById('cnfrm-password').value;
         const dateOfBirth = new Date(document.getElementById('date').value);
-
-        const mailValidation = (mail) => {
-            const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/;
-
-            if (regex.test(mail))
-                return true;
-            return false;
-        }
-
-        const phoneValidation = (phone) => {
-            const regex = /^-?\d+$/;
-
-            if (regex.test(phone))
-                return true;
-            return false;
-        }
 
         // checking if there are empty fields
         if (!(firstname && lastname && phone && email && password && cnfrmPassword && dateOfBirth))
@@ -57,6 +70,10 @@ function register() {
         //checking validation of email
         else if (!mailValidation(email))
             printErrorMsg("Error! email is invalid")
+
+        //checking validation of the date of birth
+        else if (!ageValidation(dateOfBirth))
+            printErrorMsg("Error! you must be over 18 years old")
 
         else {
             printErrorMsg('');
