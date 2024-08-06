@@ -39,7 +39,8 @@ describe("Create conference error test", function() {
         await driver.findElement(By.linkText('Create conference')).click();
         await driver.findElement(By.id('button')).click();
         
-        const errorMessage = await driver.wait(until.elementLocated(By.id('message')).getText(), 2000);
+        const element = await driver.wait(until.elementLocated(By.id('message')), 2000);
+        const errorMessage = await element.getText();
       
         await driver.wait(until.alertIsPresent(), 2000);
         
