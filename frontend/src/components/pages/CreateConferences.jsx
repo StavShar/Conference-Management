@@ -20,21 +20,21 @@ function CreateConferences() {
 
   const handlUpload = async () => {
     try {
-      if(!selectedFile) {
+      if (!selectedFile) {
         return;
       }
       const formData = new FormData();
       formData.append('file', selectedFile);
       const res = await uploadPic(formData);
-      console.log('file uploaded', res );
-      
+      console.log('file uploaded', res);
+
       return res;
 
     } catch (error) {
       console.log('error uploading file', error);
     }
   };
-      
+
 
   async function createCon() {
 
@@ -59,19 +59,19 @@ function CreateConferences() {
       const now = new Date();
       const start = new Date(startDate);
       const end = new Date(endDate);
-      
+
       // Check if start date is at least 24 hours from the current time
       if ((start - now) < 24 * 60 * 60 * 1000) {
-          return false;
+        return false;
       }
-      
+
       // Check if end date is after start date
       if ((end - start) > 0) {
-          return true;
+        return true;
       }
-      
+
       return false;
-  };
+    };
 
 
     // checking if there are empty fields
@@ -144,7 +144,7 @@ function CreateConferences() {
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="file" id="conference-picture"  placeholder="Conference picture URL" />
+          <input className='create-field' type="file" id="conference-picture" placeholder="Conference picture URL" />
         </div>
 
         <p id="message"></p>
