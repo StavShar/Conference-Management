@@ -274,7 +274,7 @@ function LecturePage() {
               </div>
             ))}
           </div>
-          {!isCreatedLecture(lecture._id) && (
+          {!isCreatedLecture(lecture._id) && lecture.maxParticipants > participants.length() && (
             <>
               <button
                 id='join'
