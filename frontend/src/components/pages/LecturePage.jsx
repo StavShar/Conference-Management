@@ -23,7 +23,8 @@ function LecturePage() {
   const [showForm, setShowForm] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [titles, setTitles] = useState('');
-
+  const currentDate = new Date();
+  const lectureDate = new Date(lecture.date);
   console.log('lecture: ', joinedLecture);
 
   const data = {
@@ -274,18 +275,21 @@ function LecturePage() {
               </div>
             ))}
           </div>
-          {!isCreatedLecture(lecture._id) && (
-            <>
-              <button
-                id='join'
-                onClick={() => joinLec(lecture._id)}
-                disabled={isJoinedLecture(lecture._id)}
-              >
-                {isJoinedLecture(lecture._id) ? "Joined" : "Join"}
-              </button>
-            </>
+          {!isCreatedLecture(lecture._id) && lecture.maxParticipants > participants.length && (
+        <>
+          {lectureDate > currentDate ? (
+            <button
+              id='join'
+              onClick={() => joinLec(lecture._id)}
+              disabled={isJoinedLecture(lecture._id)}
+            >
+              {isJoinedLecture(lecture._id) ? "Joined" : "Join"}
+            </button>
+          ) : (
+            <span>Expired</span>
           )}
-
+        </>
+      )}
           {isJoinedLecture(lecture._id) && (
             <button onClick={cancelLec} id='cancel'>
               Cancel
