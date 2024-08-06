@@ -2,7 +2,7 @@ const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-describe("Create conference test", function() {
+describe("Create conference error test", function() {
     this.timeout(30000);
 
     let driver;
