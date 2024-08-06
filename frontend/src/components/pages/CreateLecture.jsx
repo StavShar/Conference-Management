@@ -14,6 +14,8 @@ function CreateLecture() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [duration, setDuration] = useState({ hours: '', minutes: '' });
     const [totalMinutes, setTotalMinutes] = useState('');
+   
+
 
 
     const navigate = useNavigate();
@@ -114,7 +116,7 @@ function CreateLecture() {
       
       
       
-
+/*
         const dateValidation = (date) => {
             const now = new Date();
             const diff = (date - now) / 36e5;
@@ -133,6 +135,7 @@ function CreateLecture() {
                 return true;
             return false;
         }
+*/
 
 
         
@@ -154,16 +157,17 @@ function CreateLecture() {
         else if (!durationTimeValidation(durationTime))
             printErrorMsg("Error! duration time must be between 30 min to 300 min")
 
+        /*
         //checking validation of the date
         else if (!dateValidation(date))
             printErrorMsg("Error! the lecture should start at least 24 hours from now")
-
+*/
         else if (!form)
             printErrorMsg("Error! you must  for the lecture")
-
+/*
         else if (!dateConfereceValidation(date))
             printErrorMsg("Error! the lecture should be in the conference date")
-
+*/
 
         else {
             printErrorMsg('');
