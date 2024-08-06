@@ -44,6 +44,3 @@ workflows:
   build_and_test:
     jobs:
       - cicd-tests-and-lint
-      - delete-objects:
-          requires:
-            - cicd-tests-and-lint
