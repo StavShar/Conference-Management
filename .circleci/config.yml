@@ -34,19 +34,10 @@ jobs:
           command: |
             npm --prefix ./frontend/ run test
 
-  delete-objects:
-    docker:
-      - image: circleci/node:16.10-browsers
-        environment:
-          DOCKER_BUILDKIT: 1
-    steps:
-      - checkout
-      - run:
-          name: Install frontend dependencies
-          command: npm --prefix ./frontend/ install
-      - run:
-          name: Delete objects from database
-          command: npm --prefix ./frontend/ run delete
+      - run: 
+          name: delete objects
+          command: |
+            npm --prefix ./frontend/ run delete
 
 workflows:
   version: 2
