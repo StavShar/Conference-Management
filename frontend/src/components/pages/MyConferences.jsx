@@ -15,6 +15,21 @@ function MyConferences() {
     return date;
   }
 
+  function isExpiredCon(con) {
+    const today = new Date();
+
+    return today > new Date(con.endDate);
+  }
+
+  function isExpiredLec(lec) {
+    const today = new Date();
+    const [minutes, _] = lec.durationTime.split(' ').map(Number);
+    const lecEndDate = new Date(lec.date);
+    lecEndDate.setMinutes(lecEndDate.getMinutes() + minutes);
+
+    return today > lecEndDate;
+  }
+
   useEffect(() => {
 
     const fetchJoinedLectures = async () => {
@@ -68,13 +83,14 @@ function MyConferences() {
           <div className="con-lec-list">
             {joinedLectures.length > 0 ? (
               joinedLectures.map(lecture => (
-                <div key={lecture._id} className="con-lec-item">
+                <div key={lecture._id} className={isExpiredLec(lecture) ? "con-lec-expired-item" : "con-lec-item"}>
                   <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }}>
                     <div className='con-lec-details'>
                       <p className='title'>{lecture.title}</p>
                       <p className='date'>{extractDate(lecture.date)}</p>
                     </div>
                   </Link>
+                  {isExpiredLec(lecture) && <p>Expired</p>}
                 </div>
               ))
             ) : (
@@ -88,14 +104,16 @@ function MyConferences() {
           <div className="con-lec-list">
             {createdConferences.length > 0 ? (
               createdConferences.map(conference => (
-                <div key={conference._id} className="con-lec-item">
+                <div key={conference._id} className={isExpiredCon(conference) ? "con-lec-expired-item" : "con-lec-item"}>
                   <Link to={`/ConferencePage/${conference.title}`} state={{ conference }}>
                     <div className='con-lec-details' >
                       <p className='title'>{conference.title}</p>
                     </div>
                   </Link>
 
-                  <Link className="create-lecture-button" to={`/createlecture`} state={{ conference }}>+ Lecture</Link>
+                  {isExpiredCon(conference) && <p>Expired at {extractDate(conference.endDate)}</p>}
+                  {!isExpiredCon(conference) &&
+                    <Link className="create-lecture-button" to={`/createlecture`} state={{ conference }}>+ Lecture</Link>}
                 </div>
               ))
             ) : (
