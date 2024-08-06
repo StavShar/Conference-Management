@@ -39,7 +39,10 @@ describe("Create conference error test", function() {
         await driver.findElement(By.linkText('Create conference')).click();
         await driver.findElement(By.id('button')).click();
         
-        const errorMessage = await driver.findElement(By.id('message')).getText();
+        const errorMessage = await driver.wait(until.elementLocated(By.id('message')).getText(), 2000);
+      
+        await driver.wait(until.alertIsPresent(), 2000);
+        
         assert.equal(errorMessage, "Error! fields can't be empty", 'Expected error message does not match actual message');
     });
 
