@@ -5,7 +5,7 @@ import { sendBroadcastMessages } from '../../services/msgService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import Popup from 'reactjs-popup';
 import '../pages/styles/LecturePage.css';
-import  AgeDistributionChart  from '../AgeDistributionChart';
+import AgeDistributionChart from '../AgeDistributionChart';
 import { getForm } from '../../services/lecService';
 import FormDistributionChart from '../FormDistributionChart';
 
@@ -43,6 +43,11 @@ function LecturePage() {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
+  }
+
+  function isExpiredLec(lec) {
+    const today = new Date();
+    return today > new Date(extractDate(lec.date));
   }
 
   useEffect(() => {
@@ -137,7 +142,7 @@ function LecturePage() {
 
   const isJoinedLecture = (id) => {
     return joinedLecture ? joinedLecture.some(lecture => lecture._id === id) : false;
-};
+  };
   const isCreatedLecture = (id) => createdLecture ? createdLecture.includes(id) : false;
 
   const handleAnswerSelect = (event, qIndex, lectureID) => {
@@ -186,26 +191,26 @@ function LecturePage() {
   function calculateAgesFromBirthdates(birthdates) {
     const today = new Date();
     const ages = birthdates.map(birthdate => {
-        const birthDateObj = new Date(birthdate);
-        let age = today.getFullYear() - birthDateObj.getFullYear();
-        const monthDiff = today.getMonth() - birthDateObj.getMonth();
-        
-        // Adjust age based on month difference
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
-            age--;
-        }
-        
-        return age;
+      const birthDateObj = new Date(birthdate);
+      let age = today.getFullYear() - birthDateObj.getFullYear();
+      const monthDiff = today.getMonth() - birthDateObj.getMonth();
+
+      // Adjust age based on month difference
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+        age--;
+      }
+
+      return age;
     });
-    
+
     return ages;
-}
+  }
 
   const AgeGraph = async () => {
     const res = await getParticipantsDate(lecture._id);
     setAges(calculateAgesFromBirthdates(res.data));
     setShowGraph(!showGraph);
-    
+
   };
 
   const FormGraph = async (lectureID, userID, index) => {
@@ -215,7 +220,7 @@ function LecturePage() {
         userID: userID,
         questionIndex: index
       };
-  
+
       const res = await getForm(data);
       console.log('res:', res);
       setAnswers(res); // Update state with fetched form data
@@ -228,8 +233,9 @@ function LecturePage() {
 
   return (
     <div className='lecture-page'>
-      <p className='lecture-page-title'>Lecture Details</p>
-      <div className="lecture">
+      <h2>Lecture page</h2>
+      {/* <div className="lecture"> */}
+      <div className={isExpiredLec(lecture) ? "expired-lecture" : "lecture"}>
         <div className="lecture-template">
           <div className="lecture-label">Title: {lecture.title}</div>
           <div className="lecture-label">Date: {extractDate(lecture.date)}</div>
@@ -239,20 +245,25 @@ function LecturePage() {
           <div className="lecture-label" id='participants'>Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
           {isCreatedLecture(lecture._id) && (
             <Popup
-              trigger={<button>Show participants</button>}
+              trigger={<button id='show-participants'>Show participants</button>}
               position="right center"
+              className='participants-popup'
             >
-              {participants.length > 0 ? (
-                <ol className='participants-ol'>
-                  {participants.map(participant => (
-                    <li key={participant._id} className="participant-item">
-                      {participant.firstname} {participant.lastname}, {participant.phone}
-                    </li>
-                  ))}
-                </ol>
-              ) : (
-                <p>No participants yet</p>
-              )}
+              <div className='participants-window'>
+                <div className='participants-list'>
+                  {participants.length > 0 ? (
+                    <ol className='participants-ol'>
+                      {participants.map(participant => (
+                        <li key={participant._id} className="participant-item">
+                          {participant.firstname} {participant.lastname}, {participant.phone}
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p>No participants yet</p>
+                  )}
+                </div>
+              </div>
             </Popup>
           )}
           <div className="lecture-label">Description: {lecture.description}</div>
@@ -262,7 +273,7 @@ function LecturePage() {
           <div className="lecture-label">Lecturer picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecturer-image" /></div>
           <div className="lecture-label">Picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" /></div>
           <div>
-          
+
             {!isCreatedLecture(lecture._id) && lecture.form && lecture.form.map((question, qIndex) => (
               <div key={qIndex}>
                 <p>Question {qIndex + 1}: {question.question}</p>
@@ -276,28 +287,28 @@ function LecturePage() {
             ))}
           </div>
           {!isCreatedLecture(lecture._id) && lecture.maxParticipants > participants.length && (
-        <>
-          {lectureDate > currentDate ? (
-            <button
-              id='join'
-              onClick={() => joinLec(lecture._id)}
-              disabled={isJoinedLecture(lecture._id)}
-            >
-              {isJoinedLecture(lecture._id) ? "Joined" : "Join"}
-            </button>
-          ) : (
-            <span>Expired</span>
+            <>
+              {lectureDate > currentDate ? (
+                <button
+                  id='join'
+                  onClick={() => joinLec(lecture._id)}
+                  disabled={isJoinedLecture(lecture._id)}
+                >
+                  {isJoinedLecture(lecture._id) ? "Joined" : "Join"}
+                </button>
+              ) : (
+                <span>Expired</span>
+              )}
+            </>
           )}
-        </>
-      )}
           {isJoinedLecture(lecture._id) && (
-            <button onClick={cancelLec} id='cancel'>
+            <button className='cancel-btn' onClick={cancelLec} id='cancel'>
               Cancel
             </button>
           )}
 
           {(isCreatedLecture(lecture._id) || isJoinedLecture(lecture._id)) && (
-            <AddToCalendarButton
+            <div className='add-to-calander-btn'>  <AddToCalendarButton
               name={lecture.title}
               options={['Apple', 'Google']}
               location={lecture.location}
@@ -308,19 +319,20 @@ function LecturePage() {
               endTime="23:30"
               timeZone="Israel"
             />
+            </div>
           )}
 
           {isCreatedLecture(lecture._id) && (
             <>
-              <Link to={`/EditPage/${lecture.title}`} state={{ lecture }}>
-                <button>Edit</button>
-              </Link>
+              {!isExpiredLec(lecture) && <Link to={`/EditPage/${lecture.title}`} state={{ lecture }}>
+                <button id='edit-btn'>Edit</button>
+              </Link>}
               <Popup
                 className='broadcast-popup'
-                trigger={<button>Broadcast message</button>}
+                trigger={<button id='broadcast-msg-btn'>Broadcast message</button>}
                 position="center"
               >
-                <div>
+                <div className='broadcast-window'>
                   <textarea
                     className='broadcast-msg'
                     placeholder='Type the broadcast message here...'
@@ -334,26 +346,26 @@ function LecturePage() {
           )}
           {isCreatedLecture(lecture._id) && lecture.participants.length > 0 ? (
             <div>
-            <button onClick={AgeGraph}>Age Graph</button>
-            
-            {lecture.form.length > 0 && (
-  lecture.form.map((formItem, index) => (
-    <button key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
-      Form Chart {index + 1}
-    </button>
-  ))
-)}
-            
+              <button onClick={AgeGraph}>Age Graph</button>
+
+              {lecture.form.length > 0 && (
+                lecture.form.map((formItem, index) => (
+                  <button key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
+                    Form Chart {index + 1}
+                  </button>
+                ))
+              )}
+
             </div>
           ) : (
             isCreatedLecture(lecture._id) && (
               <div>No Graph available</div>
             )
           )}
-          
-         {showGraph && <AgeDistributionChart ages={ages} />}
-         {showForm && <FormDistributionChart titles={titles} answersData={answers} />}
-          
+
+          {showGraph && <AgeDistributionChart ages={ages} />}
+          {showForm && <FormDistributionChart titles={titles} answersData={answers} />}
+
         </div>
       </div>
     </div>

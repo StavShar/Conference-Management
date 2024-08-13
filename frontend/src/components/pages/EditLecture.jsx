@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { editLecture } from '../../services/lecService';
 import { getParticipants } from '../../services/lecService';
 import { sendUpdateMessages } from '../../services/msgService';
+import './styles/EditLecture.css';
 
 function EditPage() {
   const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture
@@ -10,7 +11,7 @@ function EditPage() {
   const [duration, setDuration] = useState({ hours: '', minutes: '' });
   const [totalMinutes, setTotalMinutes] = useState('');
   const [inputDateType, setInputDateType] = useState('text');
-    const [inputType, setInputType] = useState('text');
+  const [inputType, setInputType] = useState('text');
 
   const { lecture } = useLocation().state || {};
   const navigate = useNavigate();
@@ -90,12 +91,11 @@ function EditPage() {
     };
 
     const durationTimeValidation = (durationTime) => {
-      
-      if (durationTime => '30' && durationTime <= '300') 
-      {
-            return true;
+
+      if (durationTime => '30' && durationTime <= '300') {
+        return true;
       }
-        return false;
+      return false;
     }
 
     const dateValidation = (date) => {
@@ -193,73 +193,74 @@ function EditPage() {
 
   return (
     <div className='edit-page'>
-      <h2>Edit Lecture: {lecture.title}</h2>
-      <form>
+      <h2>Edit Lecture</h2>
+      <form className='edit-form'>
         <div>
           <label>Title: </label>
-          <input type="text" id="title" defaultValue={lecture.title} />
+          <input className='edit-field' type="text" id="title" defaultValue={lecture.title} />
         </div>
         <div>
           <label>Participants: </label>
-          <input type="text" id="max-participants" defaultValue={lecture.maxParticipants} />
+          <input className='edit-field' type="text" id="max-participants" defaultValue={lecture.maxParticipants} />
         </div>
         <div>
           <label>Date: </label>
-          <input type="datetime-local" id="date" defaultValue={formatDateTimeLocal(lecture.date)} />
+          <input className='edit-field' type="datetime-local" id="date" defaultValue={formatDateTimeLocal(lecture.date)} />
         </div>
         <div className='create-div'>
-                {inputType === 'text' ? (
-  <input
-    className='create-field'
-    id='duration'  // Ensure this is correct
-    type='text'
-    placeholder='Duration'
-    value={totalMinutes}
-    onFocus={handleFocus}
-    readOnly
-    required
-  />
-) : (
-  <div onBlur={handleBlur}>
-    <select
-      className='create-field'
-      id='hours-duration'  // Ensure this is correct
-      value={duration.hours}
-      onChange={handleHoursChange}
-      required
-    >
-      <option value='' disabled>
-        Hours
-      </option>
-      {[...Array(6).keys()].map((hour) => (
-        <option key={hour} value={hour}>
-          {hour}
-        </option>
-      ))}
-    </select>
-    <select
-      className='create-field'
-      id='minutes-duration'  // Ensure this is correct
-      value={duration.minutes}
-      onChange={handleMinutesChange}
-      required
-    >
-      <option value='' disabled>
-        Minutes
-      </option>
-      {[...Array(60).keys()].map((minute) => (
-        <option key={minute} value={minute}>
-          {minute}
-        </option>
-      ))}
-    </select>
-  </div>
-)}
+          <label>Duration: </label>
+          {inputType === 'text' ? (
+            <input
+              className='edit-field'
+              id='duration'  // Ensure this is correct
+              type='text'
+              placeholder='Duration'
+              value={totalMinutes}
+              onFocus={handleFocus}
+              readOnly
+              required
+            />
+          ) : (
+            <div onBlur={handleBlur} className='dur-div'>
+              <select
+                className='create-field'
+                id='hours-duration'  // Ensure this is correct
+                value={duration.hours}
+                onChange={handleHoursChange}
+                required
+              >
+                <option value='' disabled>
+                  Hours
+                </option>
+                {[...Array(6).keys()].map((hour) => (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                ))}
+              </select>
+              <select
+                className='create-field'
+                id='minutes-duration'  // Ensure this is correct
+                value={duration.minutes}
+                onChange={handleMinutesChange}
+                required
+              >
+                <option value='' disabled>
+                  Minutes
+                </option>
+                {[...Array(60).keys()].map((minute) => (
+                  <option key={minute} value={minute}>
+                    {minute}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-    </div>
+        </div>
         <div>
           <label>Location: </label>
-          <input type="text" id="location" defaultValue={lecture.location} />
+          <input className='edit-field' type="text" id="location" defaultValue={lecture.location} />
         </div>
         <div>
           <label>Description: </label>
@@ -267,19 +268,20 @@ function EditPage() {
         </div>
         <div>
           <label>Picture URL: </label>
-          <input type="text" id="lecturer-picture" defaultValue={lecture.lecturerPic} />
+          <input className='edit-field' type="text" id="lecturer-picture" defaultValue={lecture.lecturerPic} />
         </div>
         <div>
           <label>Lecturer Name: </label>
-          <input type="text" id="lecturer-name" defaultValue={lecture.lecturerName} />
+          <input className='edit-field' type="text" id="lecturer-name" defaultValue={lecture.lecturerName} />
         </div>
         <div>
           <label>Lecturer Info: </label>
-          <input type="text" id="lecturer-info" defaultValue={lecture.lecturerInfo} />
+          <input className='edit-field' type="text" id="lecturer-info" defaultValue={lecture.lecturerInfo} />
         </div>
-
-        <button type="button" id='button' onClick={editLec}>Save</button>
-        <button type="button" onClick={() => window.history.back()}>Cancel</button>
+        <div className='edit-btns'>
+          <button className='edit-btn' type="button" onClick={editLec}>Save</button>
+          <button className='edit-btn' type="button" onClick={() => window.history.back()}>Cancel</button>
+        </div>
         <p id="message"></p>
       </form>
     </div>

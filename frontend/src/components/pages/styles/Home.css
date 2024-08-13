@@ -3,7 +3,7 @@
     display: flex;
     text-align: center;
     padding-bottom: 10px;
-
+    justify-content: center;
     border: 2px solid #000000;
     box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
     border-radius: 6px;
@@ -11,7 +11,7 @@
 
 .homepage {
     position:relative;
-    padding-top: 50px;
+    padding-top: 60px;
     text-align: center;
     display: flex;
     justify-content: space-around;

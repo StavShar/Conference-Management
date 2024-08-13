@@ -64,7 +64,7 @@ function Login() {
 
   return (
     <div>
-      <h2>Login Form</h2>
+      <h2>Login</h2>
       <link href="https://font.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"></link>
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
       <form>

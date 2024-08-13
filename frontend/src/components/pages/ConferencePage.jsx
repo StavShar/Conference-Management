@@ -9,11 +9,21 @@ function ConferencePage() {
     const [lectures, setLectures] = useState([]);
     const data = {
         conferenceID: conference._id
-    }
+    };
 
     function extractDate(datetime) {
         const [date] = datetime.split("T");
         return date;
+    }
+
+    function isExpiredCon(con) {
+        const today = new Date();
+        return today > new Date(con.endDate);
+    }
+
+    function isExpiredLec(lec) {
+        const today = new Date();
+        return today > new Date(extractDate(lec.date));
     }
 
     useEffect(() => {
@@ -24,7 +34,7 @@ function ConferencePage() {
         const fetchLectures = async () => {
             try {
                 const res = await getLectures(conference._id);
-                console.log('Relevant lectures has been retrieved');
+                console.log('Relevant lectures have been retrieved');
                 setLectures(res);
             } catch (err) {
                 console.error('Error fetching lectures:', err);
@@ -39,8 +49,8 @@ function ConferencePage() {
     console.log('Conference:', conference.picURL);
     return (
         <div className='conference-page'>
-            <p className='con-page-p'>Conference page</p>
-            <div className="conference">
+            <h2>Conference page</h2>
+            <div className={isExpiredCon(conference) ? "expired-conference" : "conference"}>
                 <div className="con-template">
                     <div className="con-title">Title: {conference.title}</div>
                     <div className='con-details'>
@@ -49,34 +59,45 @@ function ConferencePage() {
                         <div>End date: {extractDate(conference.endDate)}</div>
                     </div>
                     <div className="con-description">Description: {conference.description}</div>
-                    <div> <img src={conference.picURL} alt="" /></div>
+                    <div><img src={conference.picURL} alt="" /></div>
 
-                    
                     <div style={{ marginBottom: '20px' }}>
-                        {isCreator && <Link className="create-lecture-button" to={`/createlecture`} state={{ conference }}>+ Lecture</Link>}
+                        {isCreator && !isExpiredCon(conference) && (
+                            <Link className="create-lecture-button" to={`/createlecture`} state={{ conference }}>+ Lecture</Link>
+                        )}
                     </div>
-
+                    <div className='lec-list-title'>Lectures: </div>
                     <div className="lectures-list">
                         {lectures.length > 0 ? (
-                            lectures.map(lecture => (
-                                <div key={lecture._id} className="lecture-item">
-                                    <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }} id='lecture'>
+                            lectures.map(lecture => {
+                                const lectureItem = (
+                                    <div key={lecture._id} className={isExpiredLec(lecture) ? "expired-lecture-item" : "lecture-item"}>
                                         <div className='lec-details'>
                                             <p className='title'>{lecture.title}</p>
                                             <p className='date'>{extractDate(lecture.date)}</p>
                                         </div>
+                                    </div>
+                                );
+
+                                return isCreator || !isExpiredLec(lecture) ? (
+                                    <Link to={`/LecturePage/${lecture.title}`} state={{ lecture }} id='lecture'>
+                                        {lectureItem}
                                     </Link>
-                                </div>
-                            ))
+                                ) : (
+                                    lectureItem // Render without a link if the lecture is expired
+                                );
+                            })
                         ) : (
                             <p>No lectures yet</p>
                         )}
                     </div>
-                    {conference.picURL && (
-                        <div className='con-picture'>
-                            <img src={conference.picURL} alt="Conference" />
-                        </div>
-                    )}
+                    {
+                        conference.picURL && (
+                            <div className='con-picture'>
+                                <img src={conference.picURL} alt="Conference" />
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ html, body {
 }
 
 .navbar {
-  background-color: #f8f9fa; /* Light background color */
+  background: linear-gradient(to right, #a985f1,#3a71cf);
   padding: 10px; /* Adjust padding as needed */
   display: flex;
   justify-content: space-between;
@@ -34,12 +34,14 @@ html, body {
 }
 
 .nav-link {
-  color: #333; /* Dark text color */
+  color:white;
   text-decoration: none;
   font-size: 1.5rem; /* Adjust font size as needed */
   transition: color 0.3s ease; /* Smooth color transition */
 }
 
 .nav-link:hover {
-  color: #007bff; /* Blue color on hover */
+  color: #404040; 
+  box-shadow: rgba(255, 255, 255, 0.739) 0px 0px 35px 10px;
+  background-color: rgba(255, 255, 255, 0.471);
 }

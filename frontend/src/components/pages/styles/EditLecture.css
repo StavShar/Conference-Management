@@ -1,0 +1,103 @@
+.edit-page {
+    max-width: 600px;
+    margin-top: 60px;
+    padding-top: 20px;
+}
+  
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.edit-form {   
+    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+    transition: transform 0.3s;
+}
+  
+.edit-field,
+#create-field,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+textarea {
+    resize: none;
+    overflow-y: auto;
+    width: 100%; /* Optional: Make it full width */
+    padding: 10px; /* Optional: Add some padding */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.edit-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+  
+.edit-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size:16px;
+    margin-right: 10px;
+    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+    background-size: 200% 200%; 
+    transition: transform 0.3s; 
+}
+  
+.edit-btn:hover {
+    animation: gradient-animation 0.5s forwards;
+    transform: translateY(-2px);
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+#message {
+    color: red;
+    /* background-color: rgba(255, 255, 255, 0.493); */
+    text-shadow: 
+        -1px -1px 15px white,
+        1px -1px 15px white,
+        -1px 1px 15px white,
+        1px 1px 15px white; 
+    font-weight: 700;
+    font-size: 22px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* New .dur-div class */
+.dur-div {
+    display: flex;
+    gap: 10px; /* Adjusts the space between the two select inputs */
+    align-items: center; /* Centers the inputs vertically */
+}
+
+.create-field {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
