@@ -140,7 +140,7 @@ function CreateConferences() {
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="text" id="description" placeholder="Description" required />
+        <textarea className='create-field' id="description" placeholder="Description" required />
         </div>
 
         <div className='create-div'>

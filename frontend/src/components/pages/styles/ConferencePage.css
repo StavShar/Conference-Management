@@ -23,6 +23,10 @@
     padding-left: 30px;
     padding-right: 30px;
     box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
+    max-width: 800px; /* Set a maximum width for the box */
+    width: 100%; /* Ensure the box takes up full width up to max-width */
+    margin: 0 auto; /* Center the box within its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
 .expired-conference {
@@ -95,9 +99,11 @@
     transition: transform 0.2s, box-shadow 0.2s;
     padding-left: 15px;
     padding-right: 15px;   
+    max-width: 100%; /* Ensure the item does not exceed the width of its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
-.expired-lecture-item{
+.expired-lecture-item {
     background: linear-gradient(to right, rgba(58, 113, 207, 0.6), rgba(169, 133, 241, 0.6));
     border-radius: 20px;
     border: #ff0000a8 solid 2px;
@@ -106,9 +112,11 @@
     color: black;
     padding-left: 15px;
     padding-right: 15px;
+    max-width: 100%; /* Ensure the item does not exceed the width of its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
-.lec-list-title{
+.lec-list-title {
     text-align: left;
     padding-bottom: 10px;
 }
@@ -118,7 +126,7 @@
     box-shadow: rgba(0, 0, 0, 0.5) 0px 12px 20px;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
@@ -131,5 +139,17 @@ a{
 .lecture-item .lec-details .date {
     font-size: 1rem; /* Adjust size for the date */
     color: #000000;
+}
+
+.con-description {
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px; /* Rounded corners for better aesthetics */
+    max-height: 200px; /* Set maximum height for the container */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    text-align: left; /* Align text to the left */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    white-space: pre-wrap; /* Ensure long text wraps to the next line */
+    word-wrap: break-word; /* Break long words onto the next line if necessary */
 }
 

@@ -1,78 +1,60 @@
 .conference {
-    text-align: left;
-    display: flex;
     text-align: center;
-    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     border: 2px solid #000000;
     box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
     border-radius: 6px;
+    padding: 20px; 
+    max-width: 800px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    overflow: hidden;
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
 }
 
 .homepage {
-    position:relative;
+    position: relative;
     padding-top: 60px;
     text-align: center;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column; /* Arrange boxes vertically */
+    align-items: center; /* Center content horizontally */
     gap: 50px;
-    flex-direction: column;
 }
 
-.con-title{
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-weight: 400;
-    font-size: xx-large;
+.con-title,
+.con-date-time,
+.con-location-participants,
+.con-description,
+.con-questions {
+    padding: 20px; /* Adjust padding as needed */
+    overflow: hidden; /* Hide overflowed text and prevent scrollbars */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+    white-space: nowrap; /* Prevent text from wrapping to ensure ellipsis works */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    max-width: 100%; /* Ensure elements fit within the container's width */
 }
 
-.con-date-time{
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
+/* Optional: Adjust for specific cases if needed */
+.con-description {
+    max-height: 100px; /* Set a max-height if you want to limit the height */
+    line-height: 1; /* Adjust line height for better spacing */
+    overflow: hidden; /* Hide overflowed content vertically */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
 }
 
-.con-location-participants{
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+
+.con-questions {
+    margin-top: 10px;
 }
 
-.con-description{
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.con-questions{  
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.btn-join{
+.btn-join {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-
-
+    padding: 10px 20px;
     border: 1px solid rgba(255, 255, 255, 0.712);
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.712) 0px 2px 2px 0px;
@@ -83,14 +65,14 @@
     background: transparent;
 }
 
-.con-btn{
+.con-btn {
     height: 30px;
     display: flex;
     flex-direction: row;
     gap: 1px;
 }
 
-.btn-join:hover{
+.btn-join:hover {
     border: 1px solid black;
     color: white;
     background: #0064b1;
@@ -98,7 +80,7 @@
 
 .btn-join:active {
     transform: translateY(1px);
-    box-shadow: none; 
+    box-shadow: none;
 }
 
 .con-question {
@@ -107,10 +89,10 @@
 }
 
 .con-select {
-    width: 130px;;
+    width: 130px;
 }
 
-.home-p{
+.home-p {
     font-size: 30px;
     font-weight: bold;
 }

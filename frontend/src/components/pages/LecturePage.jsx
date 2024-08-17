@@ -116,7 +116,7 @@ function LecturePage() {
 
       if (res.status && res.status === 200) {
         setJoinedLecture([...joinedLecture, id]);
-        lecture.participants.push(localStorage.getItem("userID"));
+        setParticipants([...participants,{_id:localStorage.getItem("userID")}])
       }
       else
         alert("FAIL! " + res.data);
@@ -132,6 +132,7 @@ function LecturePage() {
       if (res.status && res.status === 200) {
         setJoinedLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
         lecture.participants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
+        setParticipants(lecture.participants)
       }
       else
         alert("FAIL! " + res.data);
@@ -267,15 +268,23 @@ function LecturePage() {
             </Popup>
           )}
           <div className="lecture-label">Description: {lecture.description}</div>
-          <div className="lecture-label">Picture: <img src={lecture.picture} alt="Lecture" className="lecture-image" /></div>
+          <div className="lecture-label">Picture:  {lecture.picture ? (
+    <img src={lecture.picture} alt="Lecture" className="lecture-image" />
+  ) : (
+    <span className="no-picture"> No picture</span>
+  )}</div>
           <div className="lecture-label">Lecturer name: {lecture.lecturerName}</div>
           <div className="lecture-label">Lecturer info: {lecture.lecturerInfo}</div>
-          <div className="lecture-label">Lecturer picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecturer-image" /></div>
-          <div className="lecture-label">Picture: <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" /></div>
+          <div className="lecture-label">Lecturer picture: 
+          {lecture.lecturerPic ? (
+    <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" />
+  ) : (
+    <span className="no-picture"> No picture</span>
+  )}</div>
           <div>
 
             {!isCreatedLecture(lecture._id) && lecture.form && lecture.form.map((question, qIndex) => (
-              <div key={qIndex}>
+              <div key={qIndex} className='question-container'>
                 <p>Question {qIndex + 1}: {question.question}</p>
                 <select onChange={(event) => handleAnswerSelect(event, qIndex, lecture._id)}>
                   <option value="">Select an answer</option>
@@ -363,13 +372,13 @@ function LecturePage() {
             )
           )}
 
-          {showGraph && <AgeDistributionChart ages={ages} />}
-          {showForm && <FormDistributionChart titles={titles} answersData={answers} />}
+          {showGraph && <AgeDistributionChart class="chart-btn" ages={ages} />}
+          {showForm && <FormDistributionChart class="chart-btn" titles={titles} answersData={answers} />}
 
         </div>
       </div>
     </div>
   );
-}
+} 
 
 export default LecturePage;

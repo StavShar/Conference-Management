@@ -188,7 +188,7 @@ function CreateLecture() {
         // participants: []
       }
 
-      console.log(data);
+      console.log("the create of leecture is : " + data);
 
       const res = await createLecture(data);
       if (res && res.status === 200)
@@ -284,7 +284,7 @@ function CreateLecture() {
 
 
         <div className='create-div'>
-          <input className='create-field' type="text" id="description" placeholder="Description" required />
+        <textarea className='create-field' id="description" placeholder="Description" required />
         </div>
         <div className='create-div'>
           <input className='create-field' type="text" id="lecturer-name" placeholder="Lecturer's name" required />
@@ -295,7 +295,7 @@ function CreateLecture() {
         <div className='create-div'>
           <input className='create-field' type="file" onChange={handleFileChange} id="lecturer-picture" placeholder="Lecturer's picture URL" />
         </div>
-        <div>
+        <div className='form'>
           {!personalForm && (
             <button type="button" id='form' onClick={handleForm}>Do you want make personal Form</button>
           )}

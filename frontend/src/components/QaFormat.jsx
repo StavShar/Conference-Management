@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './pages/styles/QaFormat.css'
 
 function QaFormat({data}) {
   const [questions, setQuestions] = useState([]);
@@ -132,25 +133,26 @@ function QaFormat({data}) {
                     disabled={!isEditMode || editedQuestionIndex !== index}
                   />
                   {(editedQuestionIndex === index || isNewQuestion) && q.answers.length > 2 && (
-                    <button type="button" onClick={() => handleDeleteAnswer(index, aIndex)}>Delete Answer</button>
+                    <button type="button" class="qa-form-button delete-btn" onClick={() => handleDeleteAnswer(index, aIndex)}>Delete Answer</button>
                   )}
                 </label>
               </li>
             ))}
           </ul>
           {!isEditMode && (
-            <button onClick={() => handleEditQuestion(index)}>Edit</button>
+            <button className="qa-form-button" onClick={() => handleEditQuestion(index)}>Edit</button>
           )}
           {!isEditMode && (
-            <button onClick={() => handleDeleteQuestion(index)}>Delete</button>
+            <button className="qa-form-button" onClick={() => handleDeleteQuestion(index)}>Delete</button>
           )}
         </div>
       ))}
       {!isNewQuestion && addQuestion && (
         <form>
-          <label>
+         <label htmlFor="question" className="question">
             Enter your question:
             <input
+            className='text'
               type="text"
               id='question'
               value={currentQuestion.question}
@@ -163,6 +165,7 @@ function QaFormat({data}) {
               <label>
                 Answer {index + 1}:
                 <input
+                 className='text'
                   id={`answer-${index}`}
                   type="text"
                   value={answer}
@@ -170,24 +173,25 @@ function QaFormat({data}) {
                   disabled={isEditMode}
                 />
                 {currentQuestion.answers.length > 2 && (
-                  <button type="button" onClick={() => handleDeleteAnswer(questions.length, index)}>Delete Answer</button>
+                  <button type="button" className="qa-form-button" onClick={() => handleDeleteAnswer(questions.length, index)}>Delete Answer</button>
                 )}
               </label>
             </div>
           ))}
           {!isEditMode && currentQuestion.answers.length < 5 && (
-            <button type="button" onClick={handleAddAnswer}>Add Another Answer</button>
+            <button type="button"  className="qa-form-button" onClick={handleAddAnswer}>Add Another Answer</button>
           )}
           {!isEditMode && addQuestion &&(
-            <button type="button" onClick={handleAddQuestion}>Add Question</button>
+            <button type="button" class="qa-form-button add-btn" onClick={handleAddQuestion}>Add Question</button>
           )}
         </form>
       )}
       {isNewQuestion && (
         <form>
-          <label id='question'>
+           <label htmlFor="question" className="question">
             Enter your question:
             <input 
+            className='text'
              id='question'
               type="text"
               value={currentQuestion.question}
@@ -198,8 +202,9 @@ function QaFormat({data}) {
           {currentQuestion.answers.map((answer, index) => (
             <div key={index} className="answer-input">
               <label>
-                Answer {index + 1}:
+                Answer {index + 1} :
                 <input
+                className='answer'
                 id={`answer-${index}`}
                   type="text"
                   value={answer}
@@ -207,27 +212,27 @@ function QaFormat({data}) {
                   disabled={isEditMode}
                 />
                 {currentQuestion.answers.length > 2 && (
-                  <button type="button" onClick={() => handleDeleteAnswer(questions.length, index)}>Delete Answer</button>
+                  <button type="button" className="qa-form-button" onClick={() => handleDeleteAnswer(questions.length, index)}>Delete Answer</button>
                 )}
               </label>
             </div>
           ))}
           {!isEditMode && currentQuestion.answers.length < 4 && (
-            <button type="button" onClick={handleAddAnswer}>Add Another Answer</button>
+            <button type="button" className="qa-form-button" onClick={handleAddAnswer}>Add Another Answer</button>
           )}
           {!isEditMode && (
-            <button type="button" onClick={handleAddQuestion}>Add Question</button>
+            <button type="button" className="qa-form-button"  onClick={handleAddQuestion}>Add Question</button>
           )}
         </form>
       )}
       {isEditMode && editedQuestionIndex !== null && (
         <div>
-          <button className="add-answer-button" onClick={handleAddAnswer}>Add Another Answer</button>
-          <button onClick={handleDoneEditing}>Done</button>
+          <button type="button" className="qa-form-button" onClick={handleAddAnswer}>Add Another Answer</button>
+          <button type="button" className="qa-form-button"  onClick={handleDoneEditing}>Done</button>
         </div>
       )}
       {!addQuestion && questions.length < 3 && (
-      <button type="button" onClick={handleAddNewQuestion}>Add New Question</button>
+      <button type="button" className="qa-form-button" onClick={handleAddNewQuestion}>Add New Question</button>
       )}
     </div>
   );

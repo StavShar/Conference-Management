@@ -32,6 +32,7 @@ form {
 form:hover {
   transform: translateY(-3px);
 } */
+ 
 
 .create-div {
   position: relative;
@@ -100,7 +101,7 @@ form:hover {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 6000px) {
   form {
       width: 90%;
   }
