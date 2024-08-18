@@ -1,17 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
-import Chart from 'chart.js/auto'; // Import Chart.js directly
+import Chart from 'chart.js/auto';
+import './pages/styles/FormDistributionChart.css';
 
-const FormDistributionChart = ({ titles ,answersData }) => {
-  const chartRef = useRef(null); // Reference to the chart canvas
+const FormDistributionChart = ({ title, titles, answersData }) => {
+  const chartRef = useRef(null);
 
   useEffect(() => {
     if (chartRef.current) {
-      if (chartRef.current.chart) {
-        chartRef.current.chart.destroy(); // Destroy the previous chart instance
-      }
       const ctx = chartRef.current.getContext('2d');
-      const newChartInstance = new Chart(ctx, {
+      if (chartRef.current.chart) {
+        chartRef.current.chart.destroy();
+      }
+
+      const answerCounts = countAnswerOccurrences(answersData);
+
+      chartRef.current.chart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: Object.keys(answerCounts),
@@ -26,46 +30,78 @@ const FormDistributionChart = ({ titles ,answersData }) => {
           ],
         },
         options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                stepSize: 1,
+          plugins: {
+            legend: {
+              labels: {
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
               },
             },
+          },
+          scales: {
             x: {
               title: {
                 display: true,
                 text: 'Answers',
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
+              },
+              ticks: {
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Count',
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
+              },
+              ticks: {
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
               },
             },
           },
         },
       });
-      chartRef.current.chart = newChartInstance; // Save the new chart instance to the ref
     }
-  }, [answersData]); // Re-render the chart when answersData changes
-
-  // Count occurrences of each answer
-  const countAnswerOccurrences = (answers) => {
-    const counts = {};
-    answers.forEach((answer) => {
-      if (counts[answer]) {
-        counts[answer]++;
-      } else {
-        counts[answer] = 1;
-      }
-    });
-    return counts;
-  };
-
-  const answerCounts = countAnswerOccurrences(answersData); // Calculate answer counts
+  }, [answersData]);
 
   return (
-    <div>
-      <canvas id="answersDistributionChart" ref={chartRef}></canvas>
+    <div className="chart-container">
+      {<h2 className="chart-title">{titles}</h2>} 
+      <canvas id="formDistributionChart" ref={chartRef}></canvas>
     </div>
   );
+};
+
+const countAnswerOccurrences = (answers) => {
+  return answers.reduce((acc, answer) => {
+    acc[answer] = (acc[answer] || 0) + 1;
+    return acc;
+  }, {});
 };
 
 export default FormDistributionChart;

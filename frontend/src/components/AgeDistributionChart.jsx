@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
+import './pages/styles/AgeDistributionChart.css';
 
 const AgeDistributionChart = ({ ages }) => {
   const chartRef = useRef(null); // Reference to the chart instance
@@ -33,17 +33,66 @@ const AgeDistributionChart = ({ ages }) => {
           ],
         },
         options: {
+          plugins: {
+            legend: {
+              labels: {
+                font: {
+                  family: 'Arial',
+                  size: 14,
+                  weight: 'bold',
+                },
+                color: '#333',
+              },
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return `${tooltipItem.label}: ${tooltipItem.raw}`;
+                },
+              },
+            },
+          },
           scales: {
             y: {
               beginAtZero: true,
               ticks: {
                 stepSize: 1,
+                font: {
+                  family: 'Arial',
+                  size: 14,
+                  weight: 'bold',
+                },
+                color: '#333',
+              },
+              title: {
+                display: true,
+                text: 'Count',
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
               },
             },
             x: {
               title: {
                 display: true,
                 text: 'Age',
+                font: {
+                  family: 'Arial',
+                  size: 16,
+                  weight: 'bold',
+                },
+                color: '#333',
+              },
+              ticks: {
+                font: {
+                  family: 'Arial',
+                  size: 14,
+                  weight: 'bold',
+                },
+                color: '#333',
               },
             },
           },
@@ -54,6 +103,7 @@ const AgeDistributionChart = ({ ages }) => {
 
   return (
     <div className="chart-container">
+      <h2 className="chart-title">Age Distribution Chart</h2>
       <canvas id="ageDistributionChart" ref={chartRef}></canvas>
     </div>
   );

@@ -12,7 +12,8 @@ import FormDistributionChart from '../FormDistributionChart';
 
 
 function LecturePage() {
-  const { lecture } = useLocation().state || {};
+  const location = useLocation();
+  const [lecture, setLecture] = useState(location.state?.lecture || {});
   const [joinedLecture, setJoinedLecture] = useState([]); // refers to the lecture that specific user joined to
   const [createdLecture, setCreatedLecture] = useState([]); // refers to the lecture that created by the specific user
   const [selectedLectureAnswers, setSelectedLectureAnswers] = useState({}); // stores selected answers for the specific lecture being joined
@@ -23,6 +24,7 @@ function LecturePage() {
   const [showForm, setShowForm] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [titles, setTitles] = useState('');
+  const [activeChartIndex, setActiveChartIndex] = useState(null); // or -1 if you prefer
   const currentDate = new Date();
   const lectureDate = new Date(lecture.date);
   const navigate = useNavigate();
@@ -88,7 +90,7 @@ function LecturePage() {
     fetchCreatedLectures();
     fetchParticipants();
 
-  }, [lecture,participants]);
+  }, [lecture]);
 
   const joinLec = async (id) => {
 
@@ -125,8 +127,12 @@ function LecturePage() {
 
       if (res.status && res.status === 200) {
         setJoinedLecture([...joinedLecture, id]);
-        lecture.participants.push(localStorage.getItem('userID'));
         setParticipants([...participants,{_id:localStorage.getItem("userID")}])
+        const updatedParticipants = [...lecture.participants, { _id: localStorage.getItem("userID") }];
+        setLecture(prevLecture => ({
+          ...prevLecture,
+          participants: updatedParticipants,
+        }));
       }
       else
         alert("FAIL! " + res.data);
@@ -141,8 +147,12 @@ function LecturePage() {
       const res = await cancelLecture(data);
       if (res.status && res.status === 200) {
         setJoinedLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
-        lecture.participants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
+       const updatedParticipants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
         setParticipants(lecture.participants)
+        setLecture(prevLecture => ({
+          ...prevLecture,
+          participants: updatedParticipants,
+        }));
       }
       else
         alert("FAIL! " + res.data);
@@ -237,6 +247,7 @@ function LecturePage() {
       setAnswers(res); // Update state with fetched form data
       setShowForm(!showForm);
       setTitles(lecture.form[index].question);
+      setActiveChartIndex(index)
     } catch (error) {
       console.error('Error fetching form data:', error);
     }
@@ -365,11 +376,11 @@ function LecturePage() {
           )}
           {isCreatedLecture(lecture._id) && lecture.participants.length > 0 ? (
             <div>
-              <button onClick={AgeGraph}>Age Graph</button>
+              <button className='chart-btn' onClick={AgeGraph}>Age Graph</button>
 
               {lecture.form.length > 0 && (
                 lecture.form.map((formItem, index) => (
-                  <button key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
+                  <button className='chart-btn' key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
                     Form Chart {index + 1}
                   </button>
                 ))
@@ -383,7 +394,13 @@ function LecturePage() {
           )}
 
           {showGraph && <AgeDistributionChart class="chart-btn" ages={ages} />}
-          {showForm && <FormDistributionChart class="chart-btn" titles={titles} answersData={answers} />}
+          {activeChartIndex !== null && (
+           <FormDistributionChart
+          class="chart-btn"
+          titles={titles}
+          answersData={answers}
+  />
+)}
 
         </div>
       </div>

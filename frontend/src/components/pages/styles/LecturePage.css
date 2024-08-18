@@ -78,6 +78,17 @@
   margin-top: 10px;
 }
 
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin: 5px;
+}
+
+/* Specific Buttons */
 #show-participants,
 #join,
 #edit-btn,
@@ -86,11 +97,6 @@
 .chart-btn {
   background-color: #2455e9;
   color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  cursor: pointer;
   text-shadow:
       -1px -1px 15px rgba(255, 255, 255, 0),
       1px -1px 15px rgba(255, 255, 255, 0),
@@ -98,19 +104,29 @@
       1px 1px 15px rgba(255, 255, 255, 0);
   background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
   background-size: 200% 200%;
-  transition: transform 0.3s;
-  font-size: 16px;
 }
 
 #join:hover,
 #cancel:hover,
 #show-participants:hover,
-.broadcast-btn:hover,
 #broadcast-msg-btn:hover,
 #edit-btn:hover,
 .chart-btn:hover {
   animation: gradient-animation 0.5s forwards;
   transform: translateY(-2px);
+}
+
+
+
+/* Disabled State for Join Button */
+#join:disabled {
+  background: #aeadad;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 .question-container {
@@ -162,104 +178,6 @@
   background-color: #45a049;
 }
 
-/* Age Graph Styles */
-.age-graph-container {
-  margin-top: 30px;
-  width: 100%;
-  max-width: 700px;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: #f7f7f7;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.age-graph-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-/* Form Distribution Chart Styles */
-.form-chart-container {
-  margin-top: 30px;
-  width: 100%;
-  max-width: 700px;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: #f7f7f7;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.form-chart-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-button {
-  background-color: #f8f8f8;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  margin: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-#join:disabled {
-  background: #aeadad;
-  cursor: not-allowed;
-}
-
-/* Age Graph and Form Chart Buttons */
-#age-graph-btn,
-.form-chart-btn {
-  background-color: #28a745;
-}
-
-#age-graph-btn:hover,
-.form-chart-btn:hover {
-  background-color: #218838;
-}
-
-.broadcast-popup button.broadcast-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-}
-
-.broadcast-popup button.broadcast-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Specific Buttons */
-#age-graph-btn {
-  background-color: #ffc107;
-}
-
-#age-graph-btn:hover {
-  background-color: #e0a800;
-}
-
-.form-chart-btn {
-  background-color: #17a2b8;
-}
-
-.form-chart-btn:hover {
-  background-color: #138496;
-}
 
 /* Add any other custom styles below */
 @keyframes gradient-animation {
