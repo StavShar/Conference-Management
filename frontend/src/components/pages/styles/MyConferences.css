@@ -54,6 +54,10 @@
     background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
 }
 
+div h2 {
+    margin-top: 50px; 
+  }
+
 .con-lec-expired-item{
     background-color: #e15e5e;
     padding-left: 5px;
@@ -69,6 +73,7 @@
 .con-lec-details {
     font-size: 18px;
 }
+
 
 .title{
 

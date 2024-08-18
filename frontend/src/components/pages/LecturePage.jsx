@@ -25,7 +25,7 @@ function LecturePage() {
   const [titles, setTitles] = useState('');
   const currentDate = new Date();
   const lectureDate = new Date(lecture.date);
-  console.log('lecture: ', joinedLecture);
+  
 
   const data = {
     lectureID: lecture._id,
@@ -82,7 +82,7 @@ function LecturePage() {
     fetchCreatedLectures();
     fetchParticipants();
 
-  }, [lecture]);
+  }, [lecture,participants]);
 
   const joinLec = async (id) => {
     try {
@@ -116,6 +116,7 @@ function LecturePage() {
 
       if (res.status && res.status === 200) {
         setJoinedLecture([...joinedLecture, id]);
+        lecture.participants.push(localStorage.getItem('userID'));
         setParticipants([...participants,{_id:localStorage.getItem("userID")}])
       }
       else
@@ -243,7 +244,7 @@ function LecturePage() {
           <div className="lecture-label">Starting Time: {extractTime(lecture.date)}</div>
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
-          <div className="lecture-label" id='participants'>Participants: {lecture.participants.length + '/' + lecture.maxParticipants}</div>
+          <div className="lecture-label" id='participants'>Participants: {participants.length + '/' + lecture.maxParticipants}</div>
           {isCreatedLecture(lecture._id) && (
             <Popup
               trigger={<button id='show-participants'>Show participants</button>}
