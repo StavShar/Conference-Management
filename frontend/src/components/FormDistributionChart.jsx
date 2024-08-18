@@ -63,10 +63,10 @@ const FormDistributionChart = ({ title, titles, answersData }) => {
                 color: '#333',
               },
             },
-            y: {
+            y:  {
               title: {
                 display: true,
-                text: 'Count',
+                text: 'Answers',
                 font: {
                   family: 'Arial',
                   size: 16,
@@ -75,6 +75,7 @@ const FormDistributionChart = ({ title, titles, answersData }) => {
                 color: '#333',
               },
               ticks: {
+                stepSize: 1,
                 font: {
                   family: 'Arial',
                   size: 16,
