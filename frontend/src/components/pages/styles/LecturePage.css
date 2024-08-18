@@ -197,7 +197,7 @@
 }
 
 button {
-  background-color: #007bff;
+  background-color: #f8f8f8;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -212,8 +212,8 @@ button:hover {
   background-color: #0056b3;
 }
 
-button:disabled {
-  background-color: #cccccc;
+#join:disabled {
+  background: #aeadad;
   cursor: not-allowed;
 }
 
