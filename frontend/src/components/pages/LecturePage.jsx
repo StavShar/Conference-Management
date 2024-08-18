@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { getCreatedLectures, getJoinedLectures, joinLecture, cancelLecture, getParticipants, getParticipantsDate } from '../../services/lecService';
 import { sendBroadcastMessages } from '../../services/msgService';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
@@ -25,7 +25,7 @@ function LecturePage() {
   const [titles, setTitles] = useState('');
   const currentDate = new Date();
   const lectureDate = new Date(lecture.date);
-  
+  const navigate = useNavigate();
 
   const data = {
     lectureID: lecture._id,
@@ -49,6 +49,12 @@ function LecturePage() {
     const today = new Date();
     return today > new Date(extractDate(lec.date));
   }
+
+  const isLoggedIn = () => {
+    if ((localStorage.getItem("access_token")) && (localStorage.getItem("userID")))
+      return true;
+    return false;
+  };
 
   useEffect(() => {
     const fetchJoinedLecture = async () => {
@@ -85,9 +91,12 @@ function LecturePage() {
   }, [lecture,participants]);
 
   const joinLec = async (id) => {
+
+    // if guest user trying to join lecture - move to login page
+    if (!isLoggedIn())
+      navigate('/login');
+
     try {
-      console.log('joined: ', joinedLecture);
-      console.log('created: ', createdLecture);
       let isValid = true;
 
       // Check each question's answer for the selected lecture
@@ -270,18 +279,18 @@ function LecturePage() {
           )}
           <div className="lecture-label">Description: {lecture.description}</div>
           <div className="lecture-label">Picture:  {lecture.picture ? (
-    <img src={lecture.picture} alt="Lecture" className="lecture-image" />
-  ) : (
-    <span className="no-picture"> No picture</span>
-  )}</div>
+            <img src={lecture.picture} alt="Lecture" className="lecture-image" />
+          ) : (
+            <span className="no-picture"> No picture</span>
+          )}</div>
           <div className="lecture-label">Lecturer name: {lecture.lecturerName}</div>
           <div className="lecture-label">Lecturer info: {lecture.lecturerInfo}</div>
-          <div className="lecture-label">Lecturer picture: 
-          {lecture.lecturerPic ? (
-    <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" />
-  ) : (
-    <span className="no-picture"> No picture</span>
-  )}</div>
+          <div className="lecture-label">Lecturer picture:
+            {lecture.lecturerPic ? (
+              <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" />
+            ) : (
+              <span className="no-picture"> No picture</span>
+            )}</div>
           <div>
 
             {!isCreatedLecture(lecture._id) && lecture.form && lecture.form.map((question, qIndex) => (
@@ -380,6 +389,6 @@ function LecturePage() {
       </div>
     </div>
   );
-} 
+}
 
 export default LecturePage;
