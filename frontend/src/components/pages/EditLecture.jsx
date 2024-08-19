@@ -4,6 +4,7 @@ import { editLecture } from '../../services/lecService';
 import { getParticipants } from '../../services/lecService';
 import { sendUpdateMessages } from '../../services/msgService';
 import './styles/EditLecture.css';
+import { uploadPic } from '../../services/authService';
 
 function EditPage() {
   const [participants, setParticipants] = useState([]); // list of the participants that joined the lecture
@@ -12,6 +13,8 @@ function EditPage() {
   const [totalMinutes, setTotalMinutes] = useState('');
   const [inputDateType, setInputDateType] = useState('text');
   const [inputType, setInputType] = useState('text');
+  const [selectedFile, setSelectedFile] = useState(null);
+  
 
   const { lecture } = useLocation().state || {};
   const navigate = useNavigate();
@@ -52,6 +55,26 @@ function EditPage() {
     setTotalMinutes(total ? `${total} min` : '');
     setInputType('text');
   };
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handlUpload = async () => {
+    try {
+      if (!selectedFile) {
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      const res = await uploadPic(formData);
+      console.log('file uploaded', res);
+
+      return res;
+
+    } catch (error) {
+      console.log('error uploading file', error);
+    }
+  };
 
   useEffect(() => {
     const fetchParticipants = async () => {
@@ -77,7 +100,7 @@ function EditPage() {
     const date = new Date(document.getElementById('date').value);
     const lecturerName = document.getElementById('lecturer-name').value;
     const lecturerInfo = document.getElementById('lecturer-info').value;
-    const lecturerPic = document.getElementById('lecturer-picture').value;
+    const lecturerPic = await handlUpload();
     const MAX_PARTICIPANTS = 10;
 
     const maxParticipantsValidation = (maxParticipants) => {
@@ -266,9 +289,8 @@ function EditPage() {
           <label>Description: </label>
           <textarea id="description" defaultValue={lecture.description} />
         </div>
-        <div>
-          <label>Picture URL: </label>
-          <input className='edit-field' type="text" id="lecturer-picture" defaultValue={lecture.lecturerPic} />
+        <div className='create-div'>
+          <input className='create-field' type="file" onChange={handleFileChange} id="lecturer-picture" placeholder="Lecturer's picture URL" />
         </div>
         <div>
           <label>Lecturer Name: </label>
@@ -279,7 +301,7 @@ function EditPage() {
           <input className='edit-field' type="text" id="lecturer-info" defaultValue={lecture.lecturerInfo} />
         </div>
         <div className='edit-btns'>
-          <button className='edit-btn' type="button" onClick={editLec}>Save</button>
+          <button className='edit-btn' id='button'  type="button" onClick={editLec}>Save</button>
           <button className='edit-btn' type="button" onClick={() => window.history.back()}>Cancel</button>
         </div>
         <p id="message"></p>

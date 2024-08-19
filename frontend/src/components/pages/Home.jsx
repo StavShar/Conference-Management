@@ -36,7 +36,7 @@ const Home = () => {
 
   return (
     <div className="homepage">
-      <h2>Home Page</h2>
+      <h2>EZcon</h2>
 
       {conferences && conferences.length > 0 ? (
         conferences.map((conference) => (
