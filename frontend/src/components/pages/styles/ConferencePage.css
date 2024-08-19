@@ -1,6 +1,7 @@
 .conference-page {
     position: relative;
     padding-top: 50px;
+    padding-bottom: 50px;
     text-align: center;
     display: flex;
     justify-content: space-around;
@@ -10,7 +11,6 @@
 
 .conference, .expired-conference {
     padding: 20px;
-    border: 2px solid #000000;
     background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
     text-shadow: 
     -1px -1px 5px white,
@@ -19,10 +19,10 @@
     1px 1px 5px white;
     font-weight: 700;
     font-size: 19px;
-    border-radius: 6px;
+    border-radius: 15px;
     padding-left: 30px;
     padding-right: 30px;
-    box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 4px 10px 5px;
     max-width: 800px; /* Set a maximum width for the box */
     width: 100%; /* Ensure the box takes up full width up to max-width */
     margin: 0 auto; /* Center the box within its container */
@@ -53,7 +53,7 @@
 }
 
 .create-lecture-button {
-    background-color: #2455e9;
+    /* background-color: #2455e9; */
     color: white;
     padding: 10px 20px;
     border: none;
@@ -84,13 +84,14 @@
 }
 
 .lectures-list {
-    display: flex;
-    flex-direction: row; /* Changed to column for better alignment */
-    gap: 20px; /* Increased gap between lecture items */
+    display: inline-grid;
+    grid-template-columns:auto auto;
+    gap:30px;
+    padding:10;
 }
 
 .lecture-item {
-    background: linear-gradient(to right, rgba(58, 113, 207, 0.6), rgba(169, 133, 241, 0.6));
+    background: rgba(223, 223, 223);
     border-radius: 20px;
     border: #ffffffa8 solid 3px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
@@ -104,7 +105,7 @@
 }
 
 .expired-lecture-item {
-    background: linear-gradient(to right, rgba(58, 113, 207, 0.6), rgba(169, 133, 241, 0.6));
+    background: rgba(223, 223, 223);
     border-radius: 20px;
     border: #ff0000a8 solid 2px;
     box-shadow: rgba(255, 0, 0, 0.712) 0px 0px 30px 5px;

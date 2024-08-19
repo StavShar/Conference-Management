@@ -79,7 +79,7 @@ function MyConferences() {
       <div className='my-conferences'>
 
         <div className='lectures'>
-          <h1>lectures I joined:</h1>
+          <h3>Lectures I joined:</h3>
           <div className="con-lec-list">
             {joinedLectures.length > 0 ? (
               joinedLectures.map(lecture => (
@@ -100,7 +100,7 @@ function MyConferences() {
         </div>
 
         <div className='conferences'>
-          <h1>conferences created by me:</h1>
+          <h3>Conferences created by me:</h3>
           <div className="con-lec-list">
             {createdConferences.length > 0 ? (
               createdConferences.map(conference => (

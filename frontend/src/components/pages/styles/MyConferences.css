@@ -1,35 +1,29 @@
 .my-conferences{
-    border: 3px solid #000000;
-    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
-    text-shadow: 
-    -1px -1px 5px white,
-    1px -1px 5px white,
-    -1px 1px 5px white,
-    1px 1px 5px white;
+    background: transparent;
     font-weight: 700;
     font-size: 19px;
     border-radius: 6px;
     padding-left: 30px;
     padding-right: 30px;
-    flex-direction:row;
-    display: flex;
     gap:50px;
     padding: 30px;
-    box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
+    margin-bottom: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.556);
+    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 5px;
+    border-radius: 20px;
 }
 
 .conferences{
-    border: 3px solid rgba(255, 255, 255, 0.556);
     border-radius: 20px;
-    background: linear-gradient(to right, rgba(58, 113, 207, 0.6), rgba(169, 133, 241, 0.6));
-    padding: 50px;
+    background: transparent;
+    padding: 20px;
 }
 
 .lectures{
-  border: 3px solid rgba(255, 255, 255, 0.556);
     border-radius: 20px;
-    background: linear-gradient(to right, rgba(58, 113, 207, 0.6), rgba(169, 133, 241, 0.6));
-    padding: 50px;
+    background: transparent;
+    padding: 20px;
 }
 
 .con-lec-list {
@@ -37,21 +31,19 @@
     grid-template-columns:auto auto auto;
     gap:30px;
     padding:10;
-    
 }
 
 .con-lec-item {
-    background-color: #ffffff;
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
     text-align: center;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px 5px rgba(0, 0, 0, 0.1);
     border: #ffffffae 4px solid;
     border-radius: 20px;
-    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+    /* background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6)); */
 }
 
 div h2 {
@@ -59,22 +51,73 @@ div h2 {
   }
 
 .con-lec-expired-item{
-    background-color: #e15e5e;
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
     text-align: center;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: #ffffffae 4px solid;
+    box-shadow: 0 2px 20px 3px rgb(210, 55, 55);
+    border: #e62e2ea2 4px solid;
     border-radius: 20px;
+    
 }
 .con-lec-details {
     font-size: 18px;
 }
 
 
-.title{
+h3 {
+    position: relative;
+    color: #000;
+    background: #fff;
+    mix-blend-mode: multiply;
+    overflow: hidden;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 2px 4px 6px;
+    margin: -2px -4px -6px;
+    text-align: left;
+    margin-bottom: 30px;
+    font-weight: 800;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
 
+h3::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: -100%;
+    background: white repeating-linear-gradient(90deg, 
+        rgb(33, 33, 33) 0%, 
+        rgba(33, 33, 33, 1) 16.66666%, 
+        rgba(33, 33, 33, 0.6) 33.33333%, 
+        rgb(33, 33, 33) 50.0%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    animation: move 1.5s linear infinite;
+}
+
+
+@keyframes move {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(50%);
+    }
+}
+
+@supports not (mix-blend-mode: multiply) {
+    h3 {
+        -webkit-text-fill-color: transparent;
+        background-clip: text !important;
+        background: white repeating-linear-gradient(90deg, #a985f1,#a985f199, #3a71cf,#3a71cf99);
+        text-shadow: none;
+    }
+    h3::before {
+        content: none;
+    }
 }
