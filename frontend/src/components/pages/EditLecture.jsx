@@ -14,6 +14,16 @@ function EditPage() {
   const [inputDateType, setInputDateType] = useState('text');
   const [inputType, setInputType] = useState('text');
   const [selectedFile, setSelectedFile] = useState(null);
+  console.log(participants); // Output the object to the console
+  console.log(JSON.stringify(participants, null, 2)); // Format with indentation
+  console.log(Array.isArray(participants)); // Should log `true` if `lectures` is an array
+  console.log(Object.keys(participants)); // List the keys of the object
+  console.log(participants.id); // Replace `someProperty` with actual property names
+
+
+
+
+  
 
 
   const { lecture } = useLocation().state || {};
@@ -161,13 +171,14 @@ function EditPage() {
       lecturerName: lecturerName,
       lecturerInfo: lecturerInfo,
       lecturerPic: lecturerPic,
+      form: lecture.form,
     };
 
     try {
       const res = await editLecture(data);
       if (res && res.status === 200) {
         console.log('lecture title: ' + document.getElementById('title').value);
-        navigate(`/LecturePage/${document.getElementById('title').value}`, { state: { lecture: lecture } });
+        navigate(`/LecturePage/${document.getElementById('title').value}`, { state: { lecture: data } });
       } else {
         printErrorMsg(res);
       }
@@ -304,6 +315,7 @@ function EditPage() {
           <button className='edit-btn' id='button' type="button" onClick={editLec}>Save</button>
           <button className='edit-btn' type="button" onClick={() => window.history.back()}>Cancel</button>
         </div>
+        
         <p id="message"></p>
       </form>
     </div>

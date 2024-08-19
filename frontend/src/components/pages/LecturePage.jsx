@@ -90,6 +90,7 @@ function LecturePage() {
     fetchCreatedLectures();
     fetchParticipants();
 
+
   }, [lecture]);
 
   const joinLec = async (id) => {
@@ -264,7 +265,7 @@ function LecturePage() {
           <div className="lecture-label">Starting Time: {extractTime(lecture.date)}</div>
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
-          <div className="lecture-label" id='participants'>Participants: {participants.length + '/' + lecture.maxParticipants}</div>
+        { <div className="lecture-label" id='participants'>Participants: {participants.length + '/' + lecture.maxParticipants}</div>  }
           {isCreatedLecture(lecture._id) && (
             <Popup
               trigger={<button id='show-participants'>Show participants</button>}
@@ -378,13 +379,17 @@ function LecturePage() {
             <div>
               <button className='chart-btn' onClick={AgeGraph}>Age Graph</button>
 
-              {lecture.form.length > 0 && (
-                lecture.form.map((formItem, index) => (
-                  <button className='chart-btn' key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
-                    Form Chart {index + 1}
-                  </button>
-                ))
-              )}
+              {lecture.form && lecture.form.length > 0 && (
+              lecture.form.map((formItem, index) => (
+             <button
+                className='chart-btn'
+                key={index}
+                 onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}
+    >
+      Form Chart {index + 1}
+    </button>
+  ))
+)}
 
             </div>
           ) : (
