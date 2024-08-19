@@ -1,17 +1,21 @@
-.conference {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* border: 2px solid #000000; */
-    box-shadow: rgba(0, 0, 0, 0.712) 0px 8px 10px 0px;
-    border-radius: 6px;
-    padding: 20px; 
-    max-width: 800px; 
-    width: 100%; 
-    box-sizing: border-box; 
-    overflow: hidden;
-    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+.homepage-con {
+    padding: 20px;
+    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+    text-shadow: 
+    -1px -1px 5px white,
+    1px -1px 5px white,
+    -1px 1px 5px white,
+    1px 1px 5px white;
+    font-weight: 700;
+    font-size: 19px;
+    border-radius: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 4px 10px 5px;
+    max-width: 80%;
+    width: 50%; 
+    margin: 0 auto; /* Center the box within its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
 .homepage {
@@ -22,6 +26,7 @@
     flex-direction: column; /* Arrange boxes vertically */
     align-items: center; /* Center content horizontally */
     gap: 50px;
+    padding-bottom: 50px;
 }
 
 .con-title,

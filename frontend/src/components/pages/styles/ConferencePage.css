@@ -23,8 +23,6 @@
     padding-left: 30px;
     padding-right: 30px;
     box-shadow: rgba(0, 0, 0, 0.712) 0px 4px 10px 5px;
-    max-width: 800px; /* Set a maximum width for the box */
-    width: 100%; /* Ensure the box takes up full width up to max-width */
     margin: 0 auto; /* Center the box within its container */
     box-sizing: border-box; /* Include padding and border in the element's total width */
 }
@@ -84,10 +82,11 @@
 }
 
 .lectures-list {
-    display: inline-grid;
-    grid-template-columns:auto auto;
-    gap:30px;
-    padding:10;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 15px;
+    grid-auto-rows: minmax(150px, auto);
 }
 
 .lecture-item {
@@ -100,7 +99,7 @@
     transition: transform 0.2s, box-shadow 0.2s;
     padding-left: 15px;
     padding-right: 15px;   
-    max-width: 100%; /* Ensure the item does not exceed the width of its container */
+    max-width: 400px;
     box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
@@ -113,7 +112,7 @@
     color: black;
     padding-left: 15px;
     padding-right: 15px;
-    max-width: 100%; /* Ensure the item does not exceed the width of its container */
+    max-width: 400px; /* Ensure the item does not exceed the width of its container */
     box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 

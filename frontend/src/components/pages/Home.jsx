@@ -40,7 +40,7 @@ const Home = () => {
 
       {conferences && conferences.length > 0 ? (
         conferences.map((conference) => (
-          <div className="conference">
+          <div className="homepage-con">
             <lu key={conference._id}>
               <div className="con-tomplate">
                 <div className="con-title">Title: {conference.title}</div>
