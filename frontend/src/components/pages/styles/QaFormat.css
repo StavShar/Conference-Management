@@ -54,7 +54,7 @@
   padding: 15px 15px 15px 40px; /* Added left padding for icons */
   border-radius: 6px;
   font-size: 16px;
-  background: #f8f9fa;
+  background: #f8f9fa00;
   transition: border-color 0.3s, background-color 0.3s;
   box-sizing: border-box; /* Ensures padding and border are included in total width */
   resize: both;
