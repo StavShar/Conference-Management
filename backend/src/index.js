@@ -1,6 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { userRouter } = require('./routes/user.js');
+const { lectureRouter } = require('./routes/lecture.js');
+const { conferenceRouter } = require('./routes/conference.js');
+const { messageRouter } = require('./routes/message.js');
+const { pictureRouter } = require('./routes/picture.js');
+const { testRouter } = require('./routes/test.js');
+const path = require('path');
 
 require('dotenv').config();
 const port = process.env.PORT;
@@ -10,7 +17,13 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
+app.use('/auth', userRouter);
+app.use('/con', conferenceRouter)
+app.use('/lec', lectureRouter)
+app.use('/msg', messageRouter)
+app.use('/pic', pictureRouter)
+app.use('/test' , testRouter )
+app.use('/uploads', express.static('uploads'));
 
 async function connecttoDB() {
     try {

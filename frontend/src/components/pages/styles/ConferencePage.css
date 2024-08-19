@@ -1,0 +1,155 @@
+.conference-page {
+    position: relative;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    gap: 50px;
+    flex-direction: column;
+}
+
+.conference, .expired-conference {
+    padding: 20px;
+    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+    text-shadow: 
+    -1px -1px 5px white,
+    1px -1px 5px white,
+    -1px 1px 5px white,
+    1px 1px 5px white;
+    font-weight: 700;
+    font-size: 19px;
+    border-radius: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 4px 10px 5px;
+    margin: 0 auto; /* Center the box within its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.expired-conference {
+    box-shadow: rgba(255, 0, 0, 0.712) 0px 0px 30px 15px;
+}
+
+.con-title {
+    font-size: 40px;
+    font-weight: 700;
+    padding-bottom: 20px;
+}
+
+.con-page-p {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -400px;
+}
+
+.con-details {
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.create-lecture-button {
+    /* background-color: #2455e9; */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-shadow: 
+    -1px -1px 15px rgba(255, 255, 255, 0),
+    1px -1px 15px rgba(255, 255, 255, 0),
+    -1px 1px 15px rgba(255, 255, 255, 0),
+    1px 1px 15px rgba(255, 255, 255, 0);
+    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+    background-size: 200% 200%; 
+    transition: transform 0.3s; 
+}
+
+.create-lecture-button:hover {
+    animation: gradient-animation 0.5s forwards;
+    transform: translateY(-2px);
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.lectures-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 15px;
+    grid-auto-rows: minmax(150px, auto);
+}
+
+.lecture-item {
+    background: rgba(223, 223, 223);
+    border-radius: 20px;
+    border: #ffffffa8 solid 3px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+    text-align: center;
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding-left: 15px;
+    padding-right: 15px;   
+    max-width: 400px;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.expired-lecture-item {
+    background: rgba(223, 223, 223);
+    border-radius: 20px;
+    border: #ff0000a8 solid 2px;
+    box-shadow: rgba(255, 0, 0, 0.712) 0px 0px 30px 5px;
+    text-align: center;
+    color: black;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 400px; /* Ensure the item does not exceed the width of its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.lec-list-title {
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.lecture-item:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 12px 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.lecture-item .lec-details .title {
+    font-size: 1.5rem; /* Larger font for the title */
+    font-weight: bold;
+    color: #000000;
+}
+
+.lecture-item .lec-details .date {
+    font-size: 1rem; /* Adjust size for the date */
+    color: #000000;
+}
+
+.con-description {
+    border-radius: 5px;
+    max-width: 1300px;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden; 
+    text-align: left;
+    box-sizing: border-box;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+}
+

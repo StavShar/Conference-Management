@@ -1,0 +1,102 @@
+.homepage-con {
+    padding: 20px;
+    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+    text-shadow: 
+    -1px -1px 5px white,
+    1px -1px 5px white,
+    -1px 1px 5px white,
+    1px 1px 5px white;
+    font-weight: 700;
+    font-size: 19px;
+    border-radius: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 4px 10px 5px;
+    width: 80%;
+    margin: 0 auto; /* Center the box within its container */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.homepage {
+    position: relative;
+    padding-top: 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Arrange boxes vertically */
+    align-items: center; /* Center content horizontally */
+    gap: 50px;
+    padding-bottom: 50px;
+}
+
+.con-title,
+.con-date-time,
+.con-location-participants,
+.con-description,
+.con-questions {
+    padding: 20px; /* Adjust padding as needed */
+    overflow: hidden; /* Hide overflowed text and prevent scrollbars */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+    white-space: nowrap; /* Prevent text from wrapping to ensure ellipsis works */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    max-width: 100%; /* Ensure elements fit within the container's width */
+}
+
+/* Optional: Adjust for specific cases if needed */
+.con-description {
+    max-height: 100px; /* Set a max-height if you want to limit the height */
+    line-height: 1; /* Adjust line height for better spacing */
+    overflow: hidden; /* Hide overflowed content vertically */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+}
+
+
+.con-questions {
+    margin-top: 10px;
+}
+
+.btn-join {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.712);
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.712) 0px 2px 2px 0px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    background: transparent;
+}
+
+.con-btn {
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+}
+
+.btn-join:hover {
+    border: 1px solid black;
+    color: white;
+    background: #0064b1;
+}
+
+.btn-join:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.con-question {
+    display: flex;
+    justify-content: space-between;
+}
+
+.con-select {
+    width: 130px;
+}
+
+.home-p {
+    font-size: 30px;
+    font-weight: bold;
+}

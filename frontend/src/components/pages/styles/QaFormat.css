@@ -1,0 +1,96 @@
+.qa-form-button {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow:
+      -1px -1px 15px rgba(255, 255, 255, 0),
+      1px -1px 15px rgba(255, 255, 255, 0),
+      -1px 1px 15px rgba(255, 255, 255, 0),
+      1px 1px 15px rgba(255, 255, 255, 0);
+    background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+    background-size: 200% 200%;
+    transition: transform 0.3s;
+    font-size: 16px;
+    margin: 10px 10px;
+  }
+  
+  
+  .qa-form-button:hover {
+    animation: gradient-animation 0.5s forwards;
+    transform: translateY(-2px);
+  }
+  .answer-input {
+    text-shadow: 
+    -1px -1px 5px white,
+    1px -1px 5px white,
+    -1px 1px 5px white,
+    1px 1px 5px white;
+    font-weight: 700;
+    font-size: 19px;
+    margin: 10px 10px;
+}
+  .question {
+    text-shadow: 
+    -1px -1px 5px white,
+    1px -1px 5px white,
+    -1px 1px 5px white,
+    1px 1px 5px white;
+    font-weight: 700;
+    font-size: 19px;
+}
+
+/* Adjusts the styling for the label and input field */
+.answer-label {
+    display: flex;
+    align-items: center;
+    font-size: 16px; /* Font size for consistency */
+    margin-bottom: 10px; /* Space between rows */
+  }
+  
+  .text {
+  width: 100%;
+  padding: 15px 15px 15px 40px; /* Added left padding for icons */
+  border-radius: 6px;
+  font-size: 16px;
+  background: #f8f9fa00;
+  transition: border-color 0.3s, background-color 0.3s;
+  box-sizing: border-box; /* Ensures padding and border are included in total width */
+  resize: both;
+  }
+  
+  /* Optional: Responsive adjustments */
+  @media (max-width: 600px) {
+    .answer-label {
+      flex-direction: column; /* Stack label and input vertically on small screens */
+    }
+  
+    .answer-input {
+      width: 100%; /* Full width on smaller screens */
+      min-width: auto; /* Remove minimum width constraint */
+    }
+  }
+  
+  
+  .answer:focus {
+    border-color: #6a11cb;    /* Change border color on focus */
+    background-color: #ffffff; /* Change background color on focus for better visibility */
+    outline: none;            /* Remove default outline */
+  }
+  
+  .answer::placeholder {
+    color: #a0a0a0;          /* Placeholder text color */
+    font-style: italic;      /* Italicize placeholder text */
+  }
+  
+  
+  @keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+  }
+  

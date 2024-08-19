@@ -1,0 +1,47 @@
+/* LuxuryNavbar.css */
+
+/* Reset margin and padding for the entire page */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.navbar {
+  background: linear-gradient(to right, #a985f1,#3a71cf);
+  padding: 10px; /* Adjust padding as needed */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: fixed; /* Position navbar fixed at the top */
+  top: 0; /* Align navbar to the top */
+  left: 0; /* Align navbar to the left */
+  width: 100%; /* Full width of the viewport */
+  z-index: 1000; /* Ensure the navbar appears on top of other content */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.navbar-nav {
+  margin: 0; /* Reset margin */
+  padding: 0; /* Reset padding */
+  list-style: none; /* Remove list styles */
+  display: flex; /* Display navbar items in a row */
+}
+
+.nav-item {
+  margin-right: 20px; /* Adjust spacing between navbar items */
+}
+
+.nav-link {
+  color:white;
+  text-decoration: none;
+  font-size: 1.5rem; /* Adjust font size as needed */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.nav-link:hover {
+  color: #404040; 
+  box-shadow: rgba(255, 255, 255, 0.739) 0px 0px 35px 10px;
+  background-color: rgba(255, 255, 255, 0.471);
+}

@@ -1,0 +1,187 @@
+/* General styles for the lecture page */
+.lecture-page {
+  position: relative;
+  padding-top: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.lecture {
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+  text-shadow:
+      -1px -1px 5px white,
+      1px -1px 5px white,
+      -1px 1px 5px white,
+      1px 1px 5px white;
+  font-weight: 700;
+  font-size: 19px;
+  padding-left: 30px;
+  padding-right: 30px;
+  box-shadow: #000000b6 0px 8px 10px 0px;
+  max-width: 600px;
+}
+
+.expired-lecture {
+  padding: 20px;
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+  text-shadow:
+      -1px -1px 5px white,
+      1px -1px 5px white,
+      -1px 1px 5px white,
+      1px 1px 5px white;
+  font-weight: 700;
+  font-size: 19px;
+  padding-left: 30px;
+  padding-right: 30px;
+  box-shadow: #ff0000 0px 0px 25px 5px;
+  max-width: 600px;
+}
+
+.lecture h2 {
+  font-size: 40px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+.lecture-label {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+#participants {
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.participants-ol {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.participant-item {
+  font-size: 16px;
+}
+
+.lecture-image,
+.lecturer-image {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin: 5px;
+}
+
+/* Specific Buttons */
+#show-participants,
+#join,
+#edit-btn,
+#cancel,
+#broadcast-msg-btn,
+.chart-btn {
+  background-color: #2455e9;
+  color: white;
+  text-shadow:
+      -1px -1px 15px rgba(255, 255, 255, 0),
+      1px -1px 15px rgba(255, 255, 255, 0),
+      -1px 1px 15px rgba(255, 255, 255, 0),
+      1px 1px 15px rgba(255, 255, 255, 0);
+  background: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+  background-size: 200% 200%;
+}
+
+#join:hover,
+#cancel:hover,
+#show-participants:hover,
+#broadcast-msg-btn:hover,
+#edit-btn:hover,
+.chart-btn:hover {
+  animation: gradient-animation 0.5s forwards;
+  transform: translateY(-2px);
+}
+
+
+
+/* Disabled State for Join Button */
+#join:disabled {
+  background: #aeadad;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.question-container {
+  margin-bottom: 20px; /* Space between each question block */
+  border-radius: 5px;
+  text-align: left;
+}
+
+/* Popup window styles */
+.participants-popup,
+.broadcast-popup {
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  font-size: 16px;
+  text-align: left;
+}
+
+.broadcast-window {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.broadcast-msg {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+  font-size: 14px;
+  min-height: 100px;
+}
+
+.broadcast-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.broadcast-btn:hover {
+  background-color: #45a049;
+}
+
+
+/* Add any other custom styles below */
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
