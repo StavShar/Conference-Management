@@ -142,14 +142,14 @@ a {
 }
 
 .con-description {
-    padding: 10px; /* Adjust padding as needed */
-    border-radius: 5px; /* Rounded corners for better aesthetics */
-    max-height: 200px; /* Set maximum height for the container */
-    overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    text-align: left; /* Align text to the left */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    white-space: pre-wrap; /* Ensure long text wraps to the next line */
-    word-wrap: break-word; /* Break long words onto the next line if necessary */
+    border-radius: 5px;
+    max-width: 1300px;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden; 
+    text-align: left;
+    box-sizing: border-box;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
 }
 

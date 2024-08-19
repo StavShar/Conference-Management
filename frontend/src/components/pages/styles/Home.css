@@ -12,8 +12,7 @@
     padding-left: 30px;
     padding-right: 30px;
     box-shadow: rgba(0, 0, 0, 0.712) 0px 4px 10px 5px;
-    max-width: 80%;
-    width: 50%; 
+    width: 80%;
     margin: 0 auto; /* Center the box within its container */
     box-sizing: border-box; /* Include padding and border in the element's total width */
 }
