@@ -14,7 +14,7 @@ function EditPage() {
   const [inputDateType, setInputDateType] = useState('text');
   const [inputType, setInputType] = useState('text');
   const [selectedFile, setSelectedFile] = useState(null);
-  
+
 
   const { lecture } = useLocation().state || {};
   const navigate = useNavigate();
@@ -167,7 +167,7 @@ function EditPage() {
       const res = await editLecture(data);
       if (res && res.status === 200) {
         console.log('lecture title: ' + document.getElementById('title').value);
-        navigate(`/LecturePage/${document.getElementById('title').value}`, { state: { lecture: data } });
+        navigate(`/LecturePage/${document.getElementById('title').value}`, { state: { lecture: lecture } });
       } else {
         printErrorMsg(res);
       }
@@ -301,7 +301,7 @@ function EditPage() {
           <input className='edit-field' type="text" id="lecturer-info" defaultValue={lecture.lecturerInfo} />
         </div>
         <div className='edit-btns'>
-          <button className='edit-btn' id='button'  type="button" onClick={editLec}>Save</button>
+          <button className='edit-btn' id='button' type="button" onClick={editLec}>Save</button>
           <button className='edit-btn' type="button" onClick={() => window.history.back()}>Cancel</button>
         </div>
         <p id="message"></p>
