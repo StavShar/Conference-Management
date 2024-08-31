@@ -59,7 +59,6 @@ function ConferencePage() {
                         <div>End date: {extractDate(conference.endDate)}</div>
                     </div>
                     <div className="con-description">Description: {conference.description}</div>
-                    <div><img src={conference.picURL} alt="" /></div>
 
                     <div style={{ marginBottom: '20px' }}>
                         {isCreator && !isExpiredCon(conference) && (

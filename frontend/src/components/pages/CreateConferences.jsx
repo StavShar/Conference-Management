@@ -144,7 +144,7 @@ function CreateConferences() {
         </div>
 
         <div className='create-div'>
-          <input className='create-field' type="file" id="conference-picture" placeholder="Conference picture URL" />
+          <input className='create-field' type="file" onChange={handleFileChange} id="conference-picture" placeholder="Conference picture URL" />
         </div>
 
         <p id="message"></p>

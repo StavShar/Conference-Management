@@ -90,7 +90,6 @@ function LecturePage() {
     fetchCreatedLectures();
     fetchParticipants();
 
-
   }, [lecture]);
 
   const joinLec = async (id) => {
@@ -128,7 +127,7 @@ function LecturePage() {
 
       if (res.status && res.status === 200) {
         setJoinedLecture([...joinedLecture, id]);
-        setParticipants([...participants,{_id:localStorage.getItem("userID")}])
+        setParticipants([...participants, { _id: localStorage.getItem("userID") }])
         const updatedParticipants = [...lecture.participants, { _id: localStorage.getItem("userID") }];
         setLecture(prevLecture => ({
           ...prevLecture,
@@ -148,7 +147,7 @@ function LecturePage() {
       const res = await cancelLecture(data);
       if (res.status && res.status === 200) {
         setJoinedLecture(joinedLecture.filter(lecID => lecID !== lecture._id));
-       const updatedParticipants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
+        const updatedParticipants = lecture.participants.filter(participant => participant !== localStorage.getItem("userID"));
         setParticipants(lecture.participants)
         setLecture(prevLecture => ({
           ...prevLecture,
@@ -265,7 +264,7 @@ function LecturePage() {
           <div className="lecture-label">Starting Time: {extractTime(lecture.date)}</div>
           <div className="lecture-label">Duration Time: {lecture.durationTime}</div>
           <div className="lecture-label">Location: {lecture.location}</div>
-        { <div className="lecture-label" id='participants'>Participants: {participants.length + '/' + lecture.maxParticipants}</div>  }
+          <div className="lecture-label" id='participants'>Participants: {participants.length + '/' + lecture.maxParticipants}</div>
           {isCreatedLecture(lecture._id) && (
             <Popup
               trigger={<button id='show-participants'>Show participants</button>}
@@ -290,19 +289,16 @@ function LecturePage() {
             </Popup>
           )}
           <div className="lecture-label">Description: {lecture.description}</div>
-          <div className="lecture-label">Picture:  {lecture.picture ? (
-            <img src={lecture.picture} alt="Lecture" className="lecture-image" />
-          ) : (
-            <span className="no-picture"> No picture</span>
-          )}</div>
+          {lecture.picture &&
+            <div className="lecture-label"><p>Picture:</p>
+              <img src={lecture.picture} alt="Lecture" className="lecture-image" />
+            </div>}
           <div className="lecture-label">Lecturer name: {lecture.lecturerName}</div>
           <div className="lecture-label">Lecturer info: {lecture.lecturerInfo}</div>
-          <div className="lecture-label">Lecturer picture:
-            {lecture.lecturerPic ? (
+          {lecture.lecturerPic &&
+            <div className="lecture-label"><p>Lecturer picture:</p>
               <img src={lecture.lecturerPic} alt="Lecture" className="lecture-image" />
-            ) : (
-              <span className="no-picture"> No picture</span>
-            )}</div>
+            </div>}
           <div>
 
             {!isCreatedLecture(lecture._id) && lecture.form && lecture.form.map((question, qIndex) => (
@@ -375,21 +371,17 @@ function LecturePage() {
               </Popup>
             </>
           )}
-          {isCreatedLecture(lecture._id) && lecture.participants.length > 0 ? (
+          {isCreatedLecture(lecture._id) && participants.length > 0 ? (
             <div>
               <button className='chart-btn' onClick={AgeGraph}>Age Graph</button>
 
-              {lecture.form && lecture.form.length > 0 && (
-              lecture.form.map((formItem, index) => (
-             <button
-                className='chart-btn'
-                key={index}
-                 onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}
-    >
-      Form Chart {index + 1}
-    </button>
-  ))
-)}
+              {lecture.form.length > 0 && (
+                lecture.form.map((formItem, index) => (
+                  <button className='chart-btn' key={index} onClick={() => FormGraph(lecture._id, localStorage.getItem("userID"), index)}>
+                    Form Chart {index + 1}
+                  </button>
+                ))
+              )}
 
             </div>
           ) : (
@@ -400,12 +392,12 @@ function LecturePage() {
 
           {showGraph && <AgeDistributionChart class="chart-btn" ages={ages} />}
           {activeChartIndex !== null && (
-           <FormDistributionChart
-          class="chart-btn"
-          titles={titles}
-          answersData={answers}
-  />
-)}
+            <FormDistributionChart
+              class="chart-btn"
+              titles={titles}
+              answersData={answers}
+            />
+          )}
 
         </div>
       </div>

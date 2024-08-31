@@ -110,8 +110,14 @@ function EditPage() {
     const date = new Date(document.getElementById('date').value);
     const lecturerName = document.getElementById('lecturer-name').value;
     const lecturerInfo = document.getElementById('lecturer-info').value;
-    const lecturerPic = await handlUpload();
+    let lecturerPic = await handlUpload();
     const MAX_PARTICIPANTS = 10;
+
+    if (!lecturerPic) { // If no new photo was uploaded
+      lecturerPic = lecture.lecturerPic || null; // Use the existing photo or set to null if none
+    }
+    
+  
 
     const maxParticipantsValidation = (maxParticipants) => {
       if ((maxParticipants >= MAX_PARTICIPANTS && maxParticipants <= 200) && (maxParticipants >= lecture.participants.length)) return true;
@@ -157,6 +163,8 @@ function EditPage() {
       printErrorMsg("Error! The lecture should start at least 24 hours from now");
       return;
     }
+   
+  
 
     // Pack data to send via web
     const data = {
@@ -301,10 +309,10 @@ function EditPage() {
           <textarea id="description" defaultValue={lecture.description} />
         </div>
         <div className='create-div'>
-          <input className='create-field' type="file" onChange={handleFileChange} id="lecturer-picture" placeholder="Lecturer's picture URL" />
+          <input className='create-field' type="file" onChange={handleFileChange} id="lecturer-picture" placeholder="Lecturer's picture URL"  />
         </div>
         <div>
-          <label>Lecturer Name: </label>
+          <label>Lecturer Name: </label> 
           <input className='edit-field' type="text" id="lecturer-name" defaultValue={lecture.lecturerName} />
         </div>
         <div>
