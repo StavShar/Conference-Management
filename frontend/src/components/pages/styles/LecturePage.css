@@ -153,6 +153,13 @@ button:hover {
   gap: 10px;
 }
 
+.participants-window{
+  background-color: rgba(255, 255, 255, 0.8);
+  padding:10px;
+  border-radius: 20px;
+  margin-top: -10px;
+}
+
 .broadcast-msg {
   padding: 10px;
   border-radius: 5px;
