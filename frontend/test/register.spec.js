@@ -40,7 +40,7 @@ describe("register test", function() {
 
                 await driver.findElement(By.id('firstname')).sendKeys('test');
                 await driver.findElement(By.id('lastname')).sendKeys('test');
-                await driver.findElement(By.id('phone-number')).sendKeys('0521111111');
+                await driver.findElement(By.id('phone-number')).sendKeys('0521111114');
                 await driver.findElement(By.id('email')).sendKeys(userEmail);
                 await driver.findElement(By.id('password')).sendKeys('test123');
                 await driver.findElement(By.id('cnfrm-password')).sendKeys('test123');
