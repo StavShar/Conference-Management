@@ -290,7 +290,7 @@ function CreateLecture() {
           <input className='create-field' type="text" id="lecturer-name" placeholder="Lecturer's name" required />
         </div>
         <div className='create-div'>
-          <input className='create-field' type="text" id="lecturer-info" placeholder="Lecturer's info" required />
+          <textarea className='create-field' type="text" id="lecturer-info" placeholder="Lecturer's info" required />
         </div>
         <div className='create-div'>
           <input className='create-field' type="file" onChange={handleFileChange} id="lecturer-picture" placeholder="Lecturer's picture URL" />

@@ -390,10 +390,10 @@ function LecturePage() {
             )
           )}
 
-          {showGraph && <AgeDistributionChart class="chart-btn" ages={ages} />}
+          {showGraph && <AgeDistributionChart class="chart-container" ages={ages} />}
           {activeChartIndex !== null && (
             <FormDistributionChart
-              class="chart-btn"
+              class="chart-container"
               titles={titles}
               answersData={answers}
             />

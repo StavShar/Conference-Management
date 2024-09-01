@@ -1,18 +1,25 @@
 .chart-container {
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 600px;
-    background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
-    border: 2px solid #000000;
-    border-radius: 10px;
-    box-shadow: #000000b6 0px 8px 10px 0px;
-    text-align: center;
-  }
-  
-  .chart-container canvas {
-    max-width: 100%;
-  }
-  
+  width: 100%;
+  padding: 20px;
+  margin: 20px auto;
+  background: linear-gradient(to right, rgba(169, 133, 241, 0.6), rgba(58, 113, 207, 0.6));
+  border: 2px solid #000000;
+  border-radius: 10px;
+  box-shadow: #000000b6 0px 8px 10px 0px;
+  text-align: center;
+  position: relative;
+  box-sizing: auto;
+ 
+  max-width: 600px;
+  max-height: 600px;
+
+}
+
+.chart-container canvas {
+  width: 100% !important; /* Ensure canvas fits container width */
+  height: auto !important; /* Adjust height automatically */
+  display: block; /* Block level to prevent unwanted space */
+} 
   .chart-container h2 {
     font-weight: 700;
     font-size: 24px;
@@ -37,5 +44,9 @@
   
   .chart-container .chart-bar {
     margin: 20px 0;
+  }
+  .chart-container canvas {
+    width: 100% !important; /* Ensure the canvas takes up the full width of the container */
+    height: auto !important; /* Maintain aspect ratio */
   }
   
