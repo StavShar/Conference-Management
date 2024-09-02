@@ -54,7 +54,7 @@ describe("Join and cancel Lecture test", function () {
         await driver.sleep(2000);
         participantsText = await participantsElement.getText();
         let updatedParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
-        console.log(updatedParticipants + "adar" + initialParticipants);
+        console.log(updatedParticipants + initialParticipants);
 
         assert.equal(updatedParticipants, initialParticipants + 1, 'Expected number of participants does not match actual number of participants');
 
@@ -72,16 +72,19 @@ describe("Join and cancel Lecture test", function () {
         await lectureElement.click();
 
         const participantsElement = await driver.findElement(By.id('participants'));
-
+        await driver.sleep(1000);
         let participantsText = await participantsElement.getText();
+        await driver.sleep(1000);
         let initialParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
         await driver.sleep(2000);
         await driver.findElement(By.id('cancel')).click();
         await driver.sleep(2000);
+        
 
         participantsText = await participantsElement.getText();
         let updatedParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
-
+        console.log(initialParticipants + ' adarrrrrrrrr' + updatedParticipants);
+        await driver.sleep(5000);
         assert.equal(updatedParticipants, initialParticipants - 1, 'Expected number of participants does not match actual number of participants');
 
     });
