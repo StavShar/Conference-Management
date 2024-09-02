@@ -2,17 +2,17 @@ const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-describe("Create Lecture test", function() {
+describe("Create Lecture test", function () {
     this.timeout(30000);
     let driver;
 
-    beforeEach(async function() {
+    beforeEach(async function () {
         driver = await new Builder().forBrowser('chrome').build();
         let options = new chrome.Options();
         options.addArguments('--headless'); // Run in headless mode
         options.addArguments('--no-sandbox'); // Needed if running as root
         options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
-        await driver.get("http://localhost:3000/");
+        await driver.get("https://conference-management-frontend.onrender.com/");
 
         // Login
         await driver.findElement(By.linkText('Login')).click();
@@ -28,15 +28,15 @@ describe("Create Lecture test", function() {
         console.log('Handled unexpected alert: "Login successfully!"');
 
         // Wait for the URL to change
-        await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
+        await driver.wait(until.urlIs('https://conference-management-frontend.onrender.com/'), 2000);
     });
 
-    afterEach(async function() {
+    afterEach(async function () {
         await driver.quit();
     });
 
 
-    it("should show error for empty fields", async function() {
+    it("should show error for empty fields", async function () {
         await driver.findElement(By.linkText('MyConferences')).click();
         await driver.sleep(1000);
         await driver.findElement(By.linkText('TestConference')).click();
@@ -47,7 +47,7 @@ describe("Create Lecture test", function() {
         assert.equal(errorMessage, "Error! fields can't be empty", 'Expected error message does not match actual message');
     });
 
-    it("should show error for invalid participant range", async function() {
+    it("should show error for invalid participant range", async function () {
         await driver.findElement(By.linkText('MyConferences')).click();
         await driver.sleep(1000);
         await driver.findElement(By.linkText('TestConference')).click();
@@ -57,7 +57,7 @@ describe("Create Lecture test", function() {
         await driver.findElement(By.id('max-participants')).sendKeys('5'); // Less than 10 participants
         await driver.findElement(By.id('location')).sendKeys('Test Location');
         await driver.findElement(By.id('duration')).click();
-        await driver.findElement(By.id('hours-duration')).sendKeys('1'); 
+        await driver.findElement(By.id('hours-duration')).sendKeys('1');
         await driver.findElement(By.id('lecturer-name')).sendKeys('Test Lecturer');
         await driver.findElement(By.id('duration')).click();
         await driver.findElement(By.id('minutes-duration')).sendKeys('30');
@@ -72,7 +72,7 @@ describe("Create Lecture test", function() {
         assert.equal(errorMessage, 'Error! max participants must be between 10 to 200', 'Expected error message does not match actual message');
     });
 
-    it("should show error for invalid duration time", async function() {
+    it("should show error for invalid duration time", async function () {
         await driver.findElement(By.linkText('MyConferences')).click();
         await driver.sleep(1000);
         await driver.findElement(By.linkText('TestConference')).click();
@@ -82,7 +82,7 @@ describe("Create Lecture test", function() {
         await driver.findElement(By.id('max-participants')).sendKeys('100');
         await driver.findElement(By.id('location')).sendKeys('Test Location');
         await driver.findElement(By.id('duration')).click();
-        await driver.findElement(By.id('hours-duration')).sendKeys('0'); 
+        await driver.findElement(By.id('hours-duration')).sendKeys('0');
         await driver.findElement(By.id('lecturer-name')).sendKeys('Test Lecturer');
         await driver.findElement(By.id('duration')).click();
         await driver.findElement(By.id('minutes-duration')).sendKeys('20');
@@ -98,7 +98,7 @@ describe("Create Lecture test", function() {
         assert.equal(errorMessage, 'Error! duration time must be between 30 min to 300 min', 'Expected error message does not match actual message');
     });
 
-    it("should show error for lecture date less than 24 hours from now", async function() {
+    it("should show error for lecture date less than 24 hours from now", async function () {
         await driver.findElement(By.linkText('MyConferences')).click();
         await driver.sleep(1000);
         await driver.findElement(By.linkText('TestConference')).click();
@@ -108,7 +108,7 @@ describe("Create Lecture test", function() {
         await driver.findElement(By.id('max-participants')).sendKeys('100');
         await driver.findElement(By.id('location')).sendKeys('Test Location');
         await driver.findElement(By.id('duration')).click();
-        await driver.findElement(By.id('hours-duration')).sendKeys('1'); 
+        await driver.findElement(By.id('hours-duration')).sendKeys('1');
         await driver.findElement(By.id('lecturer-name')).sendKeys('Test Lecturer');
         await driver.findElement(By.id('duration')).click();
         await driver.findElement(By.id('minutes-duration')).sendKeys('30');

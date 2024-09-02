@@ -2,17 +2,17 @@ const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-describe("Join and cancel Lecture test", function() {
+describe("Join and cancel Lecture test", function () {
     this.timeout(30000);
     let driver;
 
-    beforeEach(async function() {
+    beforeEach(async function () {
         driver = await new Builder().forBrowser('chrome').build();
         let options = new chrome.Options();
         options.addArguments('--headless'); // Run in headless mode
         options.addArguments('--no-sandbox'); // Needed if running as root
         options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
-        await driver.get("http://localhost:3000/");
+        await driver.get("https://conference-management-frontend.onrender.com/");
 
         // Login
         await driver.findElement(By.linkText('Login')).click();
@@ -28,61 +28,61 @@ describe("Join and cancel Lecture test", function() {
         console.log('Handled unexpected alert: "Login successfully!"');
 
         // Wait for the URL to change
-        await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
+        await driver.wait(until.urlIs('https://conference-management-frontend.onrender.com/'), 2000);
     });
 
-    afterEach(async function() {
+    afterEach(async function () {
         await driver.quit();
     });
 
 
-    it("should Join successfully", async function() { 
-    
-            const testConferenceElement = await driver.wait(until.elementLocated(By.id('TestConference')), 2000);
-            await testConferenceElement.click();
+    it("should Join successfully", async function () {
 
-            // Locate the 'lecture' element and then click on it
-            const lectureElement = await driver.wait(until.elementLocated(By.id('lecture')), 2000);
-            await lectureElement.click();
+        const testConferenceElement = await driver.wait(until.elementLocated(By.id('TestConference')), 2000);
+        await testConferenceElement.click();
 
-            const participantsElement = await driver.findElement(By.id('participants'));
+        // Locate the 'lecture' element and then click on it
+        const lectureElement = await driver.wait(until.elementLocated(By.id('lecture')), 2000);
+        await lectureElement.click();
 
-            let participantsText = await participantsElement.getText();
-            let initialParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
-            await driver.sleep(2000);   
-           await driver.findElement(By.id('join')).click();
-            await driver.sleep(2000);
-            participantsText = await participantsElement.getText();
-            let updatedParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
-            console.log(updatedParticipants + "adar" + initialParticipants);
-           
-            assert.equal(updatedParticipants, initialParticipants + 1, 'Expected number of participants does not match actual number of participants');
+        const participantsElement = await driver.findElement(By.id('participants'));
+
+        let participantsText = await participantsElement.getText();
+        let initialParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
+        await driver.sleep(2000);
+        await driver.findElement(By.id('join')).click();
+        await driver.sleep(2000);
+        participantsText = await participantsElement.getText();
+        let updatedParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
+        console.log(updatedParticipants + "adar" + initialParticipants);
+
+        assert.equal(updatedParticipants, initialParticipants + 1, 'Expected number of participants does not match actual number of participants');
 
 
 
     }
     );
-    it("should Cancel successfully", async function() { 
-        
-            const testConferenceElement = await driver.wait(until.elementLocated(By.id('TestConference')), 2000);
-            await testConferenceElement.click();
+    it("should Cancel successfully", async function () {
 
-            // Locate the 'lecture' element and then click on it
-            const lectureElement = await driver.wait(until.elementLocated(By.id('lecture')), 2000);
-            await lectureElement.click();
+        const testConferenceElement = await driver.wait(until.elementLocated(By.id('TestConference')), 2000);
+        await testConferenceElement.click();
 
-            const participantsElement = await driver.findElement(By.id('participants'));
+        // Locate the 'lecture' element and then click on it
+        const lectureElement = await driver.wait(until.elementLocated(By.id('lecture')), 2000);
+        await lectureElement.click();
 
-            let participantsText = await participantsElement.getText();
-            let initialParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
-           await driver.sleep(2000);
-           await driver.findElement(By.id('cancel')).click();
-           await driver.sleep(2000);
-            
-            participantsText = await participantsElement.getText();
-            let updatedParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
-           
-            assert.equal(updatedParticipants, initialParticipants - 1, 'Expected number of participants does not match actual number of participants');
+        const participantsElement = await driver.findElement(By.id('participants'));
 
-});
+        let participantsText = await participantsElement.getText();
+        let initialParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
+        await driver.sleep(2000);
+        await driver.findElement(By.id('cancel')).click();
+        await driver.sleep(2000);
+
+        participantsText = await participantsElement.getText();
+        let updatedParticipants = parseInt(participantsText.split('/')[0].split(':')[1].trim());
+
+        assert.equal(updatedParticipants, initialParticipants - 1, 'Expected number of participants does not match actual number of participants');
+
+    });
 });

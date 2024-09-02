@@ -2,17 +2,17 @@ const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-describe("Create conference error test", function() {
+describe("Create conference error test", function () {
     this.timeout(30000);
 
     let driver;
-    beforeEach(async function() {
+    beforeEach(async function () {
         driver = await new Builder().forBrowser('chrome').build();
         let options = new chrome.Options();
         options.addArguments('--headless'); // Run in headless mode
         options.addArguments('--no-sandbox'); // Needed if running as root
         options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
-        await driver.get("http://localhost:3000/");
+        await driver.get("https://conference-management-frontend.onrender.com/");
 
         // Login
         await driver.findElement(By.linkText('Login')).click();
@@ -28,25 +28,25 @@ describe("Create conference error test", function() {
         console.log('Handled unexpected alert: "Login successfully!"');
 
         // Wait for the URL to change
-        await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
+        await driver.wait(until.urlIs('https://conference-management-frontend.onrender.com/'), 2000);
     });
 
-    afterEach(async function() {
+    afterEach(async function () {
         await driver.quit();
     });
 
-    it("should show error for empty fields", async function() {
+    it("should show error for empty fields", async function () {
         await driver.findElement(By.linkText('Create conference')).click();
         await driver.findElement(By.id('button')).click();
         await driver.sleep(1000);
-        
+
         const errorMessage = await driver.findElement(By.id('message')).getText();
-        
-    
+
+
         assert.equal(errorMessage, "Error! fields can't be empty", 'Expected error message does not match actual message');
     });
 
-    it("should show error for incorrect start date", async function() {
+    it("should show error for incorrect start date", async function () {
         await driver.findElement(By.linkText('Create conference')).click();
         await driver.findElement(By.id('title')).sendKeys('TestConference');
         await driver.findElement(By.id('country')).sendKeys('Test Country');
@@ -56,13 +56,13 @@ describe("Create conference error test", function() {
         await driver.findElement(By.id('description')).sendKeys('Test Description');
 
         await driver.findElement(By.id('button')).click();
-       
+
 
         const errorMessage = await driver.findElement(By.id('message')).getText();
         assert.equal(errorMessage, 'Error! dates are invalid', 'Expected error message does not match actual message');
     });
 
-    it("should show error for incorrect end date", async function() {
+    it("should show error for incorrect end date", async function () {
         await driver.findElement(By.linkText('Create conference')).click();
         await driver.findElement(By.id('title')).sendKeys('TestConference');
         await driver.findElement(By.id('country')).sendKeys('Test Country');

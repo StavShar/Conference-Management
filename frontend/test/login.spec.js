@@ -13,7 +13,7 @@ describe("Login test", function () {
             options.addArguments('--no-sandbox'); // Needed if running as root
             options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
 
-            await driver.get("http://localhost:3000/");
+            await driver.get("https://conference-management-frontend.onrender.com/");
             await driver.findElement(By.linkText('Login')).click();
             let pageURL = await driver.getCurrentUrl();
             console.log("URL_Page he:", pageURL);
@@ -32,10 +32,10 @@ describe("Login test", function () {
             console.log('Handled unexpected alert: "Login successfully!"');
 
             // Wait for the URL to change
-            await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
+            await driver.wait(until.urlIs('https://conference-management-frontend.onrender.com/'), 2000);
 
             const currentUrl = await driver.getCurrentUrl();
-            assert.equal(currentUrl, 'http://localhost:3000/', 'Expected URL does not match actual URL');
+            assert.equal(currentUrl, 'https://conference-management-frontend.onrender.com/', 'Expected URL does not match actual URL');
         } finally {
             await driver.quit();
         }

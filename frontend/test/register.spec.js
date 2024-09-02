@@ -33,7 +33,7 @@ describe("register test", function () {
                 const res = await axios.delete(backendURL + "/auth/deleteUser", { data: { email: userEmail } });
                 console.log(res.data.message);
 
-                await driver.get('http://localhost:3000/');
+                await driver.get('https://conference-management-frontend.onrender.com/');
 
                 const registerLink = await driver.wait(until.elementLocated(By.linkText('Register')));
                 await registerLink.click();
@@ -58,7 +58,7 @@ describe("register test", function () {
                 await alert.accept();
 
                 const currentUrl = await driver.getCurrentUrl();
-                assert.equal(currentUrl, 'http://localhost:3000/login', 'Expected URL does not match actual URL');
+                assert.equal(currentUrl, 'https://conference-management-frontend.onrender.com/login', 'Expected URL does not match actual URL');
 
                 resolve(); // Resolve the Promise to indicate the test is complete
             } catch (error) {

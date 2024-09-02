@@ -1,9 +1,9 @@
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-describe("Create Lecture test", function() {
+describe("Create Lecture test", function () {
     this.timeout(20000);
-    it("should create successfully", async function() { 
+    it("should create successfully", async function () {
         let driver = await new Builder().forBrowser('chrome').build();
 
         try {
@@ -13,7 +13,7 @@ describe("Create Lecture test", function() {
             options.addArguments('--no-sandbox'); // Needed if running as root
             options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
 
-            await driver.get("http://localhost:3000/");
+            await driver.get("https://conference-management-frontend.onrender.com/");
 
             /////////////////////////////////////////////////////////// Login ///////////////////////////////////////////////////////////
             await driver.findElement(By.linkText('Login')).click();
@@ -32,8 +32,8 @@ describe("Create Lecture test", function() {
             console.log('Handled unexpected alert: "Login successfully!"');
 
             // Wait for the URL to change
-            await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            await driver.wait(until.urlIs('https://conference-management-frontend.onrender.com/'), 2000);
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             await driver.findElement(By.linkText('MyConferences')).click();
             await driver.sleep(1000);
@@ -45,7 +45,7 @@ describe("Create Lecture test", function() {
             await driver.findElement(By.id('max-participants')).sendKeys('100');
             await driver.findElement(By.id('location')).sendKeys('Test Location');
             await driver.findElement(By.id('duration')).click();
-            await driver.findElement(By.id('hours-duration')).sendKeys('1'); 
+            await driver.findElement(By.id('hours-duration')).sendKeys('1');
             await driver.findElement(By.id('lecturer-name')).sendKeys('Test Lecturer');
             await driver.findElement(By.id('duration')).click();
             await driver.findElement(By.id('minutes-duration')).sendKeys('30');
@@ -57,25 +57,25 @@ describe("Create Lecture test", function() {
             await driver.findElement(By.id('answer-1')).sendKeys('test');
 
 
-           
+
             await driver.sleep(2000);
             await driver.findElement(By.id('button')).click();
             await driver.sleep(2000);
-              // Wait for the alert to appear
-              await driver.wait(until.alertIsPresent(), 2000);
+            // Wait for the alert to appear
+            await driver.wait(until.alertIsPresent(), 2000);
 
-              // Switch to the alert and accept it
-              const alert1 = await driver.switchTo().alert();
-              await alert1.accept();
-              console.log('Handled unexpected alert: "Create successfully!"');
-              
+            // Switch to the alert and accept it
+            const alert1 = await driver.switchTo().alert();
+            await alert1.accept();
+            console.log('Handled unexpected alert: "Create successfully!"');
+
             await driver.sleep(1000);
             await driver.findElement(By.linkText('TestConference')).click();
             await driver.sleep(1000);
             await driver.findElement(By.id('lecture')).click();
 
             const currentUrl = await driver.getCurrentUrl();
-            assert.equal(currentUrl, 'http://localhost:3000/LecturePage/TestLecture', 'Expected URL does not match actual URL');
+            assert.equal(currentUrl, 'https://conference-management-frontend.onrender.com/LecturePage/TestLecture', 'Expected URL does not match actual URL');
         } finally {
             await driver.quit();
         }

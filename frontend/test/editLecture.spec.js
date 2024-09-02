@@ -1,9 +1,9 @@
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-describe("Edit Lecture test", function() {
+describe("Edit Lecture test", function () {
     this.timeout(20000);
-    it("should edit successfully", async function() { 
+    it("should edit successfully", async function () {
         let driver = await new Builder().forBrowser('chrome').build();
 
         try {
@@ -13,7 +13,7 @@ describe("Edit Lecture test", function() {
             options.addArguments('--no-sandbox'); // Needed if running as root
             options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
 
-            await driver.get("http://localhost:3000/");
+            await driver.get("https://conference-management-frontend.onrender.com/");
 
             /////////////////////////////////////////////////////////// Login ///////////////////////////////////////////////////////////
             await driver.findElement(By.linkText('Login')).click();
@@ -32,8 +32,8 @@ describe("Edit Lecture test", function() {
             console.log('Handled unexpected alert: "Login successfully!"');
 
             // Wait for the URL to change
-            await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            await driver.wait(until.urlIs('https://conference-management-frontend.onrender.com/'), 2000);
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             await driver.findElement(By.linkText('MyConferences')).click();
             await driver.sleep(1000);
@@ -56,7 +56,7 @@ describe("Edit Lecture test", function() {
             await driver.findElement(By.id('location')).sendKeys('New Test Location');
 
             await driver.findElement(By.id('duration')).click();
-            await driver.findElement(By.id('hours-duration')).sendKeys('2'); 
+            await driver.findElement(By.id('hours-duration')).sendKeys('2');
 
             await driver.findElement(By.id('lecturer-name')).clear();
             await driver.findElement(By.id('lecturer-name')).sendKeys('New Test Lecturer');
@@ -72,12 +72,12 @@ describe("Edit Lecture test", function() {
             await driver.sleep(5000);
             await driver.findElement(By.id('button')).click();
             await driver.sleep(5000);
-           
-            
 
-           
+
+
+
             const currentUrl = await driver.getCurrentUrl();
-            assert.equal(currentUrl, 'http://localhost:3000/LecturePage/NewTestLecture', 'Expected URL does not match actual URL');
+            assert.equal(currentUrl, 'https://conference-management-frontend.onrender.com/LecturePage/NewTestLecture', 'Expected URL does not match actual URL');
         } finally {
             await driver.quit();
         }
