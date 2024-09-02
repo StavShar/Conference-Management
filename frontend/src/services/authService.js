@@ -1,5 +1,5 @@
 import axios from 'axios';
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 async function registration(data) {
     try {
@@ -46,15 +46,15 @@ async function deleteUser(data) {
 async function uploadPic(data) {
     console.log(data);
     try {
-        const res = await axios.post(backendURL + "/pic/upload",  data, {
+        const res = await axios.post(backendURL + "/pic/upload", data, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
-          });
+        });
         alert("Picture uploaded successfully!");
 
         console.log('file uploaded', res.data.fileURL + " adar " + res);
-        
+
         return (res.data.fileURL);
     } catch (err) {
         if (err.response && err.response.status === 400)
@@ -65,4 +65,4 @@ async function uploadPic(data) {
     }
 }
 
-export { registration, login , deleteUser,uploadPic};
+export { registration, login, deleteUser, uploadPic };

@@ -1,9 +1,9 @@
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-describe("Create conference test", function() {
+describe("Create conference test", function () {
     this.timeout(20000);
-    it("should create successfully", async function() { 
+    it("should create successfully", async function () {
         let driver = await new Builder().forBrowser('chrome').build();
 
         try {
@@ -33,7 +33,7 @@ describe("Create conference test", function() {
 
             // Wait for the URL to change
             await driver.wait(until.urlIs('http://localhost:3000/'), 2000);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
             await driver.findElement(By.linkText('Create conference')).click();
@@ -45,13 +45,13 @@ describe("Create conference test", function() {
             await driver.findElement(By.id('description')).sendKeys('Test Description');
 
             await driver.findElement(By.id('button')).click();
-              // Wait for the alert to appear
-              await driver.wait(until.alertIsPresent(), 2000);
+            // Wait for the alert to appear
+            await driver.wait(until.alertIsPresent(), 2000);
 
-              // Switch to the alert and accept it
-              const alert1 = await driver.switchTo().alert();
-              await alert1.accept();
-              console.log('Handled unexpected alert: "Login successfully!"');
+            // Switch to the alert and accept it
+            const alert1 = await driver.switchTo().alert();
+            await alert1.accept();
+            console.log('Handled unexpected alert: "Login successfully!"');
             await driver.sleep(1000);
             await driver.findElement(By.linkText('TestConference')).click();
             await driver.sleep(1000);

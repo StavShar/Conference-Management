@@ -1,5 +1,5 @@
 import axios from 'axios';
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 async function sendBroadcastMessages(data) {
     try {

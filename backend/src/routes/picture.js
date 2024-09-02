@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middlewares/multer-config'); // Adjust the path based on your folder structure
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 router.post('/upload', upload.single('file'), (req, res) => {
   try {
@@ -9,10 +9,10 @@ router.post('/upload', upload.single('file'), (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
-    
+
     // Return the URL of the uploaded file
 
-    const fileURL = backendURL+`/uploads/${req.file.filename}`;
+    const fileURL = backendURL + `/uploads/${req.file.filename}`;
     console.log('fileURL:', fileURL);
     res.status(200).json({ fileURL: fileURL });
     return fileURL;

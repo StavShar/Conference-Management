@@ -1,5 +1,5 @@
 import axios from 'axios';
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 const headers = {
     headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
@@ -76,7 +76,7 @@ async function joinLecture(data) {
 async function cancelLecture(data) {
 
     try {
-        console.log("inside" , headers.token , headers.userID , headers.headers.token , headers.headers.userID);
+        console.log("inside", headers.token, headers.userID, headers.headers.token, headers.headers.userID);
         const res = await axios.post(backendURL + "/lec/cancelLecture", { data }, headers);
         console.log("Lecture has been cenceled !");
         return (res);
@@ -126,9 +126,9 @@ async function getParticipants(data) {
 
 async function getParticipantsDate(data) {
     try {
-        
+
         const res = await axios.get(backendURL + "/lec/getParticipantsDate", {
-            params: { data  }, 
+            params: { data },
             headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
         })
         console.log("get all dates of birth !");
@@ -144,13 +144,12 @@ async function getParticipantsDate(data) {
     }
 }
 
-async function getForm(data) 
-{
+async function getForm(data) {
     try {
         const res = await axios.get(backendURL + "/lec/getForm", {
-            params: { data  }, 
+            params: { data },
             headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }
-        }) 
+        })
         return (res.data);
     } catch (err) {
         if (err.response && err.response.status === 400)
@@ -164,4 +163,4 @@ async function getForm(data)
 
 }
 
-export { createLecture , getJoinedLectures , getCreatedLectures , joinLecture, cancelLecture , editLecture , getParticipantsDate , getForm , getParticipants}
+export { createLecture, getJoinedLectures, getCreatedLectures, joinLecture, cancelLecture, editLecture, getParticipantsDate, getForm, getParticipants }

@@ -1,12 +1,12 @@
 // deleteService.js
 
 const axios = require('axios');
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 
 
 async function deleteTest() {
-try {
+  try {
     const response = await axios.post(backendURL + '/test/delete');
     console.log('Objects deleted successfully:', response.data);
   } catch (error) {

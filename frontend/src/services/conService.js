@@ -1,5 +1,5 @@
 import axios from 'axios';
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 const headers = {
     headers: { token: localStorage.getItem('access_token'), userID: localStorage.getItem('userID') }

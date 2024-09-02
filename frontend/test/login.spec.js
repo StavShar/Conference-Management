@@ -1,9 +1,9 @@
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-describe("Login test", function() {
+describe("Login test", function () {
     this.timeout(20000);
-    it("should login successfully", async function() { 
+    it("should login successfully", async function () {
         let driver = await new Builder().forBrowser('chrome').build();
 
         try {

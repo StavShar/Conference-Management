@@ -2,30 +2,30 @@ const { Builder, By, until } = require('selenium-webdriver');
 const assert = require('assert');
 const chrome = require('selenium-webdriver/chrome');
 const axios = require('axios');
-const backendURL = 'http://localhost:3001';
+const backendURL = 'https://conference-management.onrender.com';
 
 
-describe("register test", function() {
+describe("register test", function () {
     this.timeout(20000); // Increase timeout to allow for the delete request
     let driver;
 
     // Hook to setup WebDriver instance before tests
-    beforeEach(async function() {
+    beforeEach(async function () {
         let options = new chrome.Options();
         options.addArguments('--headless'); // Run in headless mode
         options.addArguments('--no-sandbox'); // Needed if running as root
         options.addArguments('--disable-dev-shm-usage'); // Overcome limited resource problems
-        
-     
+
+
         driver = await new Builder()
             .forBrowser('chrome')
             .setChromeOptions(options)
             .build();
     });
 
-  
 
-    it("register test", function() { // No need for async function declaration
+
+    it("register test", function () { // No need for async function declaration
         return new Promise(async (resolve, reject) => { // Return a Promise
             try {
                 // First, send a request to delete the user if they exist
